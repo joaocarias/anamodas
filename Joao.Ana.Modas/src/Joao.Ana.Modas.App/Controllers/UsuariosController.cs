@@ -1,11 +1,13 @@
 ﻿using Joao.Ana.Modas.App.Models.Usuarios;
 using Joao.Ana.Modas.Infra.Identity;
+using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
+    [Authorize(Roles = Constants.ADMINISTRADOR)]
     public class UsuariosController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -46,7 +48,7 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 if (result.Succeeded)
                 {
-                    if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    if (signInManager.IsSignedIn(User) && User.IsInRole(Constants.ADMINISTRADOR))
                     {
                         return RedirectToAction("Index", "Usuarios");
                     }
@@ -72,16 +74,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login()
         {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("index", "home");
-            }
+            return View();
         }
 
         [HttpPost]
@@ -166,6 +161,34 @@ namespace Joao.Ana.Modas.App.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
                 return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deletar(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Usuário com Id = {id} não foi encontrado";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await userManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("Index");
             }
         }
     }

@@ -27,7 +27,7 @@ builder.Services.AddControllersWithViews(config =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.AccessDeniedPath = new PathString("Usuarios/AcessoNegado");
+    options.AccessDeniedPath = new PathString("/Usuarios/AcessoNegado");
 });
 
 var app = builder.Build();

@@ -1,4 +1,5 @@
 ﻿@using Joao.Ana.Modas.Infra.Identity
+@using Joao.Ana.Modas.Infra.Utils
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
@@ -33,14 +34,14 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <form method="post" asp-controller="account" asp-action="logout">
+                                <form method="post" asp-controller="usuarios" asp-action="logout">
                                     <button type="submit" style="width:auto"
                                         class="nav-link btn btn-link py-0">
                                         Logout @User.Identity.Name
                                     </button>
                                 </form>
                             </li>
-                             @if (User.IsInRole("Admin"))
+                             @if (User.IsInRole(Constants.ADMINISTRADOR))
                             {
                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"

@@ -1,12 +1,13 @@
 ﻿using Joao.Ana.Modas.App.Models.Regras;
 using Joao.Ana.Modas.Infra.Identity;
+using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = Constants.ADMINISTRADOR)]
     public class RegrasController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

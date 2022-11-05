@@ -24,9 +24,23 @@
                 <h5 class="card-title">@user.UserName</h5>
             </div>
             <div class="card-footer">
-                 <a asp-action="Editar" asp-controller="Usuarios"
-                   asp-route-id="@user.Id" class="btn btn-primary">Editar</a>
-                <a href="#" class="btn btn-danger">Deletar</a>
+                 <form method="post" asp-action="Deletar" asp-route-id="@user.Id">
+                        <a asp-controller="Usuarios" asp-action="Editar"
+                           asp-route-id="@user.Id" class="btn btn-primary">Editar</a>
+
+                        <span id="confirmaDeleteSpan_@user.Id" style="display:none">
+                            <span>Deseja realmente deletar este usuário ?</span>
+                            <button type="submit" class="btn btn-danger">Sim</button>
+                            <a href="#" class="btn btn-primary"
+                               onclick="confirmaDelete('@user.Id', false)">Não</a>
+                        </span>
+
+                        <span id="deleteSpan_@user.Id">
+                            <a href="#" class="btn btn-danger"
+                               onclick="confirmaDelete('@user.Id', true)">Deletar</a>
+                        </span>
+                    </form>
+
             </div>
         </div>
     }
