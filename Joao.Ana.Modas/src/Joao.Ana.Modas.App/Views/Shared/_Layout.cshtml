@@ -40,6 +40,21 @@
                                     </button>
                                 </form>
                             </li>
+                             @if (User.IsInRole("Admin"))
+                            {
+                               <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Usuários
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" asp-controller="Usuarios"
+                                           asp-action="Index">Todos</a>
+                                        <a class="dropdown-item" asp-controller="Regras"
+                                           asp-action="Index">Regras</a>
+                                    </div>
+                                </li>
+                            }
                         }
                         else
                         {

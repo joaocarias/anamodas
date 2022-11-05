@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "5c142647-d16e-472a-949d-a72900de2a7e": {
+      "ProjectGuid": "5c142647-d16e-472a-949d-a72900de2a7e",
+      "DisplayName": "Joao.Ana.Modas.App",
+      "ColorIndex": 0
+    },
+    "40901dd0-980b-4c86-8186-2e6a2f70e635": {
+      "ProjectGuid": "40901dd0-980b-4c86-8186-2e6a2f70e635",
+      "DisplayName": "Joao.Ana.Modas.Dominio",
+      "ColorIndex": 1
+    },
+    "6d7c2190-58f6-4b83-ada4-e849c20903e0": {
+      "ProjectGuid": "6d7c2190-58f6-4b83-ada4-e849c20903e0",
+      "DisplayName": "Joao.Ana.Modas.Infra",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Arquivos Diversos",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 3
+}

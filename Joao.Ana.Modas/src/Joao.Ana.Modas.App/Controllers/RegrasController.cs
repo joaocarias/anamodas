@@ -1,16 +1,21 @@
 ﻿using Joao.Ana.Modas.App.Models.Regras;
+using Joao.Ana.Modas.Infra.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RegrasController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public RegrasController(RoleManager<IdentityRole> roleManager)
+        public RegrasController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -39,7 +44,7 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 // Salva a role na tabela AspNetRole
                 IdentityResult result = await roleManager.CreateAsync(identityRole);
-                                
+
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Regras");
@@ -52,5 +57,175 @@ namespace Joao.Ana.Modas.App.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Editar(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Regra com Id = {id} não foi localizada";
+                return View("NotFound");
+            }
+
+            var model = new EditarViewModel
+            {
+                Id = role.Id,
+                RoleName = role.Name
+            };
+
+            var listaUsuarios = userManager.Users.ToList();
+
+            foreach (var user in listaUsuarios)
+            {
+                if (await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    model.Users.Add(user.UserName);
+                }
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(EditarViewModel model)
+        {
+            var role = await roleManager.FindByIdAsync(model.Id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Regra com Id = {model.Id} não foi encontrada";
+                return View("NotFound");
+            }
+            else
+            {
+                role.Name = model.RoleName;
+
+                var result = await roleManager.UpdateAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditarUsuarioRegra(string roleId)
+        {
+            ViewBag.roleId = roleId;
+
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Regra com Id = {roleId} não foi encontrada";
+                return View("NotFound");
+            }
+
+            var model = new List<EditarUsuarioRegraViewModel>();
+
+            var listaUsuarios = userManager.Users.ToList();
+
+            foreach (var user in listaUsuarios)
+            {
+                var userRoleViewModel = new EditarUsuarioRegraViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+
+                if (await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+
+                model.Add(userRoleViewModel);
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditarUsuarioRegra(List<EditarUsuarioRegraViewModel> model, string roleId)
+        {
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Regra com Id = {roleId} não foi encontrada";
+                return View("NotFound");
+            }
+
+            for (int i = 0; i < model.Count; i++)
+            {
+                var user = await userManager.FindByIdAsync(model[i].UserId);
+
+                IdentityResult result = null;
+
+                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, role.Name)))
+                {
+                    result = await userManager.AddToRoleAsync(user, role.Name);
+                }
+                else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (result.Succeeded)
+                {
+                    if (i < (model.Count - 1))
+                        continue;
+                    else
+                        return RedirectToAction("Editar", new { Id = roleId });
+                }
+            }
+            return RedirectToAction("Editar", new { Id = roleId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deletar(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+
+            if (role == null)
+            {
+                ViewBag.ErrorMessage = $"Regra com Id = {id} não foi encontrada";
+                return View("NotFound");
+            }
+            else
+            {
+                var result = await roleManager.DeleteAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View("Index");
+            }
+        }
+
     }
+
+
 }

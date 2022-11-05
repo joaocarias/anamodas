@@ -25,6 +25,11 @@ builder.Services.AddControllersWithViews(config =>
     config.Filters.Add(new AuthorizeFilter(policy));
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = new PathString("Usuarios/AcessoNegado");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

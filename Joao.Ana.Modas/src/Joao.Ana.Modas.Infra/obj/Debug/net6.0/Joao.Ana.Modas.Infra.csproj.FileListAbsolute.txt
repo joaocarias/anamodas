@@ -4,11 +4,13 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Infra.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\ref\Joao.Ana.Modas.Infra.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Infra.pdb
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Humanizer.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.Extensions.Caching.Abstractions.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
@@ -21,6 +23,8 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\MySqlConnector.dll
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.csproj.AssemblyReference.cache
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.AssemblyInfoInputs.cache
@@ -31,7 +35,3 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\ref\Joao.Ana.Modas.Infra.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.pdb
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.genruntimeconfig.cache
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Humanizer.dll
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\MySqlConnector.dll
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll

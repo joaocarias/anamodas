@@ -4,7 +4,6 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Dominio\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Dominio\bin\Debug\net6.0\ref\Joao.Ana.Modas.Dominio.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Dominio\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.pdb
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Dominio\obj\Debug\net6.0\Joao.Ana.Modas.Dominio.csproj.AssemblyReference.cache
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Dominio\obj\Debug\net6.0\Joao.Ana.Modas.Dominio.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Dominio\obj\Debug\net6.0\Joao.Ana.Modas.Dominio.AssemblyInfoInputs.cache
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Dominio\obj\Debug\net6.0\Joao.Ana.Modas.Dominio.AssemblyInfo.cs

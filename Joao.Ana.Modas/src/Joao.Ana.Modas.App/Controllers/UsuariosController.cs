@@ -19,6 +19,13 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
+        public IActionResult Index()
+        {
+            var users = userManager.Users;
+            return View(users);
+        }
+
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Registrar() => View();
 
@@ -39,6 +46,11 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Index", "Usuarios");
+                    }
+
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("index", "home");
                 }
@@ -90,6 +102,71 @@ namespace Joao.Ana.Modas.App.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AcessoNegado()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Editar(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Usuário com Id = {id} não foi encontrado";
+                return View("NotFound");
+            }
+
+            var userClaims = await userManager.GetClaimsAsync(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            var model = new EditarViewModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                Nome = user.Nome,
+                Claims = userClaims.Select(c => c.Value).ToList(),
+                Roles = userRoles
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(EditarViewModel model)
+        {
+            var user = await userManager.FindByIdAsync(model.Id);
+
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"Usuário com Id = {model.Id} não foi encontrado";
+                return View("NotFound");
+            }
+            else
+            {
+                user.Email = model.Email;
+                user.UserName = model.UserName;
+                user.Nome = model.Nome;
+
+                var result = await userManager.UpdateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View(model);
+            }
         }
     }
 }
