@@ -28,7 +28,11 @@ builder.Services.AddControllersWithViews(config =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.AccessDeniedPath = new PathString("/Usuarios/AcessoNegado");
+    options.LoginPath = new PathString("/Usuarios/Login");
 });
+
+builder.Services.AddRazorPages()
+        .AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
@@ -47,6 +51,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllerRoute(
     name: "default",
