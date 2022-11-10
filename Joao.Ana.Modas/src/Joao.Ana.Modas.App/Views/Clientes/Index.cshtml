@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Joao.Ana.Modas.App.Models.Clientes.ClienteViewModel>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i> Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-12">
+
+        @*@if (session('status'))
+            <div class="row">
+            <div class="col-md-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('status') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            </div>
+            </div>
+            @endif*@
+
+        <div class="row">
+            <div class="col-md-12">
+                <a asp-controller="Clientes" asp-action="Cadastrar" class="btn btn-primary">
+                    <i class="far fa-file-alt"></i> &nbsp;
+                    Cadastrar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-header">@ViewData["Title"]</div>
+            <div class="card-body">
+
+                @if (Model is not null && Model.Any())
+                {
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Telefone</th>
+                                <th scope="col">Cidade</th>
+                                <th scope="col"></th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model.ToList())
+                            {
+                                <tr>
+                                    <td scope="row">@i.Id</td>
+                                    <td>@i.Nome</td>
+                                    <td>@i.Email</td>
+                                    <td>@i.Telefone</td>
+                                    <td>@i.Endereco?.Cidade</td>
+                                    <td>
+                                       Detalhes
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>Nenhum cliente encontrado!</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

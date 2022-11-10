@@ -341,6 +341,16 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "Joao.Ana.Modas.Dominio/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Joao.Ana.Modas.Dominio.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Joao.Ana.Modas.Dominio.dll": {}
+        }
       }
     }
   },
@@ -890,10 +900,16 @@
         "system.runtime.compilerservices.unsafe.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "Joao.Ana.Modas.Dominio/1.0.0": {
+      "type": "project",
+      "path": "../Joao.Ana.Modas.Dominio/Joao.Ana.Modas.Dominio.csproj",
+      "msbuildProject": "../Joao.Ana.Modas.Dominio/Joao.Ana.Modas.Dominio.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "Joao.Ana.Modas.Dominio >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 6.0.10",
       "Microsoft.EntityFrameworkCore >= 6.0.10",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.10",
@@ -931,7 +947,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\joao_franca\\source\\repos\\jcf-ana-modas\\Joao.Ana.Modas\\src\\Joao.Ana.Modas.Dominio\\Joao.Ana.Modas.Dominio.csproj": {
+              "projectPath": "C:\\Users\\joao_franca\\source\\repos\\jcf-ana-modas\\Joao.Ana.Modas\\src\\Joao.Ana.Modas.Dominio\\Joao.Ana.Modas.Dominio.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

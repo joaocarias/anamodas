@@ -1,3 +1,6 @@
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.deps.json
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.runtimeconfig.json
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.exe
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Infra.exe
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Infra.deps.json
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Infra.runtimeconfig.json
@@ -25,6 +28,8 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\MySqlConnector.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.dll
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.pdb
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.csproj.AssemblyReference.cache
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.AssemblyInfoInputs.cache

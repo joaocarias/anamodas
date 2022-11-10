@@ -1,3 +1,7 @@
+using AutoMapper;
+using Joao.Ana.Modas.App.Models.Clientes;
+using Joao.Ana.Modas.App.Models.Enderecos;
+using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +37,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddRazorPages()
         .AddRazorRuntimeCompilation();
+
+var config = new AutoMapper.MapperConfiguration(cfg =>
+{
+    cfg.CreateMap<ClienteViewModel, Cliente>();
+    cfg.CreateMap<EnderecoViewModel, Endereco>();
+});
+
+IMapper mapper = config.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
