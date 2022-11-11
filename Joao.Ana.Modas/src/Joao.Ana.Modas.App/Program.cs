@@ -2,8 +2,10 @@ using AutoMapper;
 using Joao.Ana.Modas.App.Models.Clientes;
 using Joao.Ana.Modas.App.Models.Enderecos;
 using Joao.Ana.Modas.Dominio.Entidades;
+using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Identity;
+using Joao.Ana.Modas.Infra.Repositorios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -38,14 +40,16 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddRazorPages()
         .AddRazorRuntimeCompilation();
 
-var config = new AutoMapper.MapperConfiguration(cfg =>
+var config = new MapperConfiguration(cfg =>
 {
-    cfg.CreateMap<ClienteViewModel, Cliente>();
-    cfg.CreateMap<EnderecoViewModel, Endereco>();
+    cfg.CreateMap<ClienteViewModel, Cliente>().ReverseMap();
+    cfg.CreateMap<EnderecoViewModel, Endereco>().ReverseMap();
 });
 
 IMapper mapper = config.CreateMapper();
 builder.Services.AddSingleton(mapper);
+
+builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 
 var app = builder.Build();
 
@@ -64,8 +68,6 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-
 
 app.MapControllerRoute(
     name: "default",

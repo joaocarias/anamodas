@@ -16,5 +16,10 @@ namespace Joao.Ana.Modas.App.Models.Clientes
         public string? Telefone { get; set; }
 
         public EnderecoViewModel? Endereco { get; set; }
+
+        public ClienteViewModel()
+        {
+            Endereco = new EnderecoViewModel();
+        }
     }
 }

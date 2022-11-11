@@ -1,0 +1,133 @@
+﻿@model Joao.Ana.Modas.App.Models.Clientes.ClienteViewModel
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Clientes">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cadastro</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">Cadastro</div>
+                    <div class="card-body">
+
+                        <form asp-action="Novo" method="post">
+
+                            <div asp-validation-summary="All" class="text-danger">
+                            </div>
+
+                            <div class="mb-3 row">
+
+                                <div class="col-md-6">
+                                    <label asp-for="Nome" class="col-form-label"></label>
+                                    <input asp-for="Nome" class="form-control">
+                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4">
+
+                                    <label asp-for="Email" class="col-form-label"></label>
+                                    <input asp-for="Email" class="form-control" type="email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-md-2">
+                                    <label asp-for="Telefone" class="col-form-label"></label>
+                                    <input asp-for="Telefone" class="form-control">
+                                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <hr />
+
+                            <div class="mb-3 row">
+
+                                <div class="col-md-2">
+                                    <label asp-for="Endereco.Cep" class="col-form-label"></label>
+                                    <input asp-for="Endereco.Cep" class="form-control">
+                                    <span asp-validation-for="Endereco.Cep" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="Endereco.Logradouro" class="col-form-label"></label>
+                                    <input asp-for="Endereco.Logradouro" class="form-control">
+                                    <span asp-validation-for="Endereco.Logradouro" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label asp-for="Endereco.Numero" class="col-form-label"></label>
+                                    <input asp-for="Endereco.Numero" class="form-control">
+                                    <span asp-validation-for="Endereco.Numero" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="Endereco.Complemento" class="col-form-label"></label>
+                                    <input asp-for="Endereco.Complemento" class="form-control">
+                                    <span asp-validation-for="Endereco.Complemento" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3 row">
+
+                                <div class="col-md-4">
+                                    <label asp-for="Endereco.Bairro" class="col-form-label"></label>
+                                    <input asp-for="Endereco.Bairro" class="form-control">
+                                    <span asp-validation-for="Endereco.Bairro" class="text-danger"></span>
+                                </div>
+                                
+                                <div class="col-md-4">
+                                    <label asp-for="Endereco.Cidade" class="col-form-label"></label>
+                                    <input asp-for="Endereco.Cidade" class="form-control">
+                                    <span asp-validation-for="Endereco.Cidade" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="Endereco.Estado" class="col-form-label"></label>
+                                    <input asp-for="Endereco.Estado" class="form-control">
+                                    <span asp-validation-for="Endereco.Estado" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="far fa-save"></i>
+                                        Salvar
+                                    </button>
+
+                                    <a asp-action="Index" asp-controller="Clientes" class="btn btn-warning">
+                                        <i class="far fa-times-circle"></i>
+                                        Cancelar
+                                    </a>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

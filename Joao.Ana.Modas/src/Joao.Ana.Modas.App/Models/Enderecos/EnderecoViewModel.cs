@@ -25,5 +25,10 @@ namespace Joao.Ana.Modas.App.Models.Enderecos
         [StringLength(2)]
         public string? Estado { get; private set; }
 
+        public EnderecoViewModel()
+        {
+
+        }
+
     }
 }
