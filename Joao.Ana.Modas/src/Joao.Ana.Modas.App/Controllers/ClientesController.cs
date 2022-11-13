@@ -2,8 +2,9 @@
 using Joao.Ana.Modas.App.Models.Clientes;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
-using Joao.Ana.Modas.Infra.Contexts;
+using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
@@ -19,15 +20,21 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(IndexViewModel model)
         {
-            var lista = _mapper.Map<IList<ClienteViewModel>>(await _clienteRepositorio.ObteTodosAsync());
-            return View(lista);
+            model = model is null ? new IndexViewModel() : model;   
+            model.Clientes = (!string.IsNullOrEmpty(model?.Filtro)) 
+                ? _mapper.Map<IList<ClienteViewModel>>(await _clienteRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IList<ClienteViewModel>>(await _clienteRepositorio.ObteTodosAsync());
+            
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult Novo()
         {
+            SelectListEstadosBrasilViewBag();
+
             ClienteViewModel model = new();
             return View(model);
         }
@@ -40,10 +47,95 @@ namespace Joao.Ana.Modas.App.Controllers
                 return View(model);
             }
 
-            var c = _mapper.Map<Cliente>(model);
-            await _clienteRepositorio.AdicionarAsync(c);
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var c = _mapper.Map<Cliente>(model);
+                await _clienteRepositorio.AdicionarAsync(c);
+                return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
+            }
+            catch (Exception)
+            {
+                return View(model);
+            }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Detalhar(Guid guid)
+        {
+            try
+            {
+                var model = new DetalharViewModel() { Cliente = _mapper.Map<ClienteViewModel>(await _clienteRepositorio.ObterAsync(guid)) };
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Excluir(Guid guid)
+        {
+            try
+            {
+                var c = await _clienteRepositorio.ObterAsync(guid);
+                if(c is null)
+                    return RedirectToAction(nameof(Detalhar), new { guid = guid });
+
+                c.ApagarRegistro();
+                await _clienteRepositorio.ApagarAsync(c);
+
+                return RedirectToAction(nameof(Index));
+            }catch (Exception)
+            {
+                return RedirectToAction(nameof(Detalhar), new { guid = guid });
+            }
+        }
+
+        public async Task<IActionResult> Editar(Guid guid)
+        {
+            try
+            {
+                SelectListEstadosBrasilViewBag();
+                var model = _mapper.Map<ClienteViewModel>(await _clienteRepositorio.ObterAsync(guid));
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Detalhar), new { guid = guid });
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(ClienteViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                var c = _mapper.Map<Cliente>(model);
+                c.Atualizar();
+                await _clienteRepositorio.AtualizarAsync(c);
+                return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
+            }
+            catch (Exception)
+            {
+                return View(model);
+            }
+        }
+
+        #region viewBags
+
+        private void SelectListEstadosBrasilViewBag(string selected = "RN")
+        {
+            var estadosBrasil = EstadosBrasil.GetLista();
+            ViewBag.EstadosBrasil  = new SelectList(estadosBrasil, "Key", "Value", selected);
+        }
+
+        #endregion
     }
 }

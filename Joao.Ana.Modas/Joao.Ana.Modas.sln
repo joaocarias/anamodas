@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Joao.Ana.Modas.App", "src\Joao.Ana.Modas.App\Joao.Ana.Modas.App.csproj", "{5C142647-D16E-472A-949D-A72900DE2A7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Joao.Ana.Modas.App", "src\Joao.Ana.Modas.App\Joao.Ana.Modas.App.csproj", "{5C142647-D16E-472A-949D-A72900DE2A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Joao.Ana.Modas.Dominio", "src\Joao.Ana.Modas.Dominio\Joao.Ana.Modas.Dominio.csproj", "{40901DD0-980B-4C86-8186-2E6A2F70E635}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Joao.Ana.Modas.Dominio", "src\Joao.Ana.Modas.Dominio\Joao.Ana.Modas.Dominio.csproj", "{40901DD0-980B-4C86-8186-2E6A2F70E635}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Joao.Ana.Modas.Infra", "src\Joao.Ana.Modas.Infra\Joao.Ana.Modas.Infra.csproj", "{6D7C2190-58F6-4B83-ADA4-E849C20903E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Joao.Ana.Modas.Infra", "src\Joao.Ana.Modas.Infra\Joao.Ana.Modas.Infra.csproj", "{6D7C2190-58F6-4B83-ADA4-E849C20903E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

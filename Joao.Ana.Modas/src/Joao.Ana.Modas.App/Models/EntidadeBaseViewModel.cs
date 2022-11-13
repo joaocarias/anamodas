@@ -8,7 +8,7 @@ namespace Joao.Ana.Modas.App.Models
         public Guid Id { get; set; }
 
         [Required]
-        public DateTime DataCadastro { get; set; }
+        public DateTime DataCadastro { get; set; } = DateTime.Now;
 
         public DateTime? DataAlteracao { get; set; } = null;
 

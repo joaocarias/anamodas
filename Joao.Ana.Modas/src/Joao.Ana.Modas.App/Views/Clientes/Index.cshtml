@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Joao.Ana.Modas.App.Models.Clientes.ClienteViewModel>
+﻿@model Joao.Ana.Modas.App.Models.Clientes.IndexViewModel
 
 @{
-    ViewData["Title"] = "Clientes";
+    ViewData["Title"] = Model?.Titulo;
+
 }
 
 <div class="row text-center">
@@ -20,26 +21,66 @@
 
 <div class="row mb-3">
     <div class="col-md-12">
-
-        @*@if (session('status'))
-            <div class="row">
-            <div class="col-md-12">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('status') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            </div>
-            </div>
-            @endif*@
-
         <div class="row">
             <div class="col-md-12">
                 <a asp-controller="Clientes" asp-action="Novo" class="btn btn-primary">
                     <i class="far fa-file-alt"></i> &nbsp;
                     Cadastrar
                 </a>
+            </div>
+        </div>
+    </div>
+
+    @if (Model is not null && !string.IsNullOrEmpty(Model.Informacao))
+    {
+        <div class="col-md-12">
+            <div class="row">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @Model.Informacao
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (Model is not null && !string.IsNullOrEmpty(Model.Informacao))
+    {
+        <div class="col-md-12">
+            <div class="row">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    @Model.Informacao
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-header">Pesquisar</div>
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <form method="GET" class="form-inline" asp-action="Index">
+                        <div class="row g-3 offset-md-6">
+                            <div class="col-md-8">
+                                <input asp-for="@Model.Filtro" class="form-control" required maxlength="255">
+                            </div>
+                            <div class="col-md-4  btn-block">
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="fas fa-search"></i>
+                                    Pesquisar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -51,7 +92,7 @@
             <div class="card-header">@ViewData["Title"]</div>
             <div class="card-body">
 
-                @if (Model is not null && Model.Any())
+                @if (Model is not null && Model.Clientes.Any())
                 {
                     <table class="table table-hover">
                         <thead>
@@ -59,20 +100,25 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Telefone</th>
-                                <th scope="col">Cidade</th>
+                                <th scope="col">Cidade/UF</th>
                                 <th scope="col"></th>
                             <tr>
                         </thead>
                         <tbody>
-                            @foreach (var i in Model.ToList())
+                            @foreach (var i in Model.Clientes.ToList())
                             {
+                                var _cidadeEstado = (i.Endereco is not null
+                                && (!string.IsNullOrEmpty(i.Endereco?.Cidade) ||
+                                !string.IsNullOrEmpty(i.Endereco?.Estado))
+                                ) ? i.Endereco?.Cidade + "/" + i.Endereco?.Estado : string.Empty;
+
                                 <tr>
                                     <td scope="row">@i.Nome</td>
                                     <td>@i.Email</td>
                                     <td>@i.Telefone</td>
-                                    <td>@i.Endereco?.Cidade</td>
+                                    <td>@_cidadeEstado</td>
                                     <td>
-                                       Detalhes
+                                       <a asp-action="Detalhar" asp-controller="Clientes" asp-route-guid="@i.Id">Detalhes</a>
                                     </td>
                                 </tr>
                             }

@@ -7,5 +7,6 @@
         Task<bool> AdicionarAsync(T t);
         Task<bool> AtualizarAsync(T t);
         Task<bool> ApagarAsync(T t);
+        Task<IList<T>> ObteTodosPaginadoAsync(int? paginaAtual);
     }
 }

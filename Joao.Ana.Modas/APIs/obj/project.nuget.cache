@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "01na8Jh51/exKk/jFTSPp4c0aJ2u4J4j42O4N45NWI6rhjQnLVdSTLXeNTkYpnAeLcqt+0LB2NfR7ciaiaDYVg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\joao_franca\\source\\repos\\jcf-ana-modas\\Joao.Ana.Modas\\APIs\\APIs.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\joao_franca\\.nuget\\packages\\refit\\6.3.2\\refit.6.3.2.nupkg.sha512",
+    "C:\\Users\\joao_franca\\.nuget\\packages\\system.net.http.json\\6.0.0\\system.net.http.json.6.0.0.nupkg.sha512",
+    "C:\\Users\\joao_franca\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\joao_franca\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
+    "C:\\Users\\joao_franca\\.nuget\\packages\\system.text.json\\6.0.0\\system.text.json.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

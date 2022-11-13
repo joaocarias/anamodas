@@ -28,5 +28,10 @@ namespace Joao.Ana.Modas.Dominio.Entidades
             DataAlteracao = DateTime.Now;
             Ativo = false;
         }
+
+        public void Atualizar()
+        {
+            DataAlteracao = DateTime.Now;
+        }
     }
 }

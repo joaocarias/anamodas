@@ -20,6 +20,7 @@ namespace Joao.Ana.Modas.App.Models.Clientes
         public ClienteViewModel()
         {
             Endereco = new EnderecoViewModel();
+            
         }
     }
 }
