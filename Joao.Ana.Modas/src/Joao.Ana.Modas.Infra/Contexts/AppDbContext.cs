@@ -10,6 +10,7 @@ namespace Joao.Ana.Modas.Infra.Contexts
         public DbSet<Produto> Produtos { get; set; }     
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Fornecedor> Fornecedores { get; set;}
 
         public AppDbContext(DbContextOptions options) : base(options) { }
     }

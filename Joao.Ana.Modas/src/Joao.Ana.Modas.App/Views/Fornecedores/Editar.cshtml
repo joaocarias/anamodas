@@ -1,7 +1,7 @@
-﻿@model Joao.Ana.Modas.App.Models.Clientes.ClienteViewModel
+﻿@model Joao.Ana.Modas.App.Models.Fornecedores.FornecedorViewModel
 
 @{
-    ViewData["Title"] = "Clientes";
+    ViewData["Title"] = "Fornecedores";
 }
 
 <div class="row text-center">
@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Clientes">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Fornecedores">@ViewData["Title"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Editar Cadastro</li>
             </ol>
         </nav>
@@ -119,7 +119,7 @@
                                         Salvar
                                     </button>
 
-                                    <a asp-action="Index" asp-controller="Clientes" class="btn btn-warning">
+                                    <a asp-action="Index" asp-controller="Fornecedores" class="btn btn-warning">
                                         <i class="far fa-times-circle"></i>
                                         Cancelar
                                     </a>

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Joao.Ana.Modas.App.Models.Clientes;
+using Joao.Ana.Modas.App.Models.Fornecedores;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
@@ -8,25 +8,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-    public class ClientesController : MeuController
+    public class FornecedoresController : Controller
     {
-        private readonly IMapper _mapper; 
-        private readonly IClienteRepositorio _clienteRepositorio;
+        private readonly IMapper _mapper;
+        private readonly IFornecedorRepositorio _fornecedorRepositorio;
 
-        public ClientesController(IClienteRepositorio clienteRepositorio, IMapper mapper)
+        public FornecedoresController(IMapper mapper, IFornecedorRepositorio fornecedorRepositorio)
         {
-            _clienteRepositorio = clienteRepositorio;
             _mapper = mapper;
+            _fornecedorRepositorio = fornecedorRepositorio;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
-            model = model is null ? new IndexViewModel() : model;   
-            model.Clientes = (!string.IsNullOrEmpty(model?.Filtro)) 
-                ? _mapper.Map<IList<ClienteViewModel>>(await _clienteRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<ClienteViewModel>>(await _clienteRepositorio.ObteTodosAsync());
-            
+            model = model is null ? new IndexViewModel() : model;
+            model.Fornecedores = (!string.IsNullOrEmpty(model?.Filtro))
+                ? _mapper.Map<IList<FornecedorViewModel>>(await _fornecedorRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IList<FornecedorViewModel>>(await _fornecedorRepositorio.ObteTodosAsync());
+
             return View(model);
         }
 
@@ -35,12 +34,12 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             SelectListEstadosBrasilViewBag();
 
-            ClienteViewModel model = new();
+            FornecedorViewModel model = new();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Novo(ClienteViewModel model)
+        public async Task<IActionResult> Novo(FornecedorViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -50,8 +49,8 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<Cliente>(model);
-                await _clienteRepositorio.AdicionarAsync(c);
+                var c = _mapper.Map<Fornecedor>(model);
+                await _fornecedorRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
             catch (Exception)
@@ -65,7 +64,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                var model = new DetalharViewModel() { Cliente = _mapper.Map<ClienteViewModel>(await _clienteRepositorio.ObterAsync(guid)) };
+                var model = new DetalharViewModel() { Fornecedor = _mapper.Map<FornecedorViewModel>(await _fornecedorRepositorio.ObterAsync(guid)) };
                 return View(model);
             }
             catch (Exception)
@@ -79,15 +78,16 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                var c = await _clienteRepositorio.ObterAsync(guid);
-                if(c is null)
+                var c = await _fornecedorRepositorio.ObterAsync(guid);
+                if (c is null)
                     return RedirectToAction(nameof(Detalhar), new { guid = guid });
 
                 c.ApagarRegistro();
-                await _clienteRepositorio.ApagarAsync(c);
+                await _fornecedorRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));
-            }catch (Exception)
+            }
+            catch (Exception)
             {
                 return RedirectToAction(nameof(Detalhar), new { guid = guid });
             }
@@ -98,7 +98,7 @@ namespace Joao.Ana.Modas.App.Controllers
             try
             {
                 SelectListEstadosBrasilViewBag();
-                var model = _mapper.Map<ClienteViewModel>(await _clienteRepositorio.ObterAsync(guid));
+                var model = _mapper.Map<FornecedorViewModel>(await _fornecedorRepositorio.ObterAsync(guid));
                 return View(model);
             }
             catch (Exception)
@@ -109,7 +109,7 @@ namespace Joao.Ana.Modas.App.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Editar(ClienteViewModel model)
+        public async Task<IActionResult> Editar(FornecedorViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -118,9 +118,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<Cliente>(model);
+                var c = _mapper.Map<Fornecedor>(model);
                 c.Atualizar();
-                await _clienteRepositorio.AtualizarAsync(c);
+                await _fornecedorRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
             catch (Exception)
@@ -134,7 +134,7 @@ namespace Joao.Ana.Modas.App.Controllers
         private void SelectListEstadosBrasilViewBag(string selected = "RN")
         {
             var estadosBrasil = EstadosBrasil.GetLista();
-            ViewBag.EstadosBrasil  = new SelectList(estadosBrasil, "Key", "Value", selected);
+            ViewBag.EstadosBrasil = new SelectList(estadosBrasil, "Key", "Value", selected);
         }
 
         #endregion

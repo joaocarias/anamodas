@@ -1,7 +1,7 @@
-﻿@model Joao.Ana.Modas.App.Models.Clientes.ClienteViewModel
+﻿@model Joao.Ana.Modas.App.Models.Fornecedores.FornecedorViewModel
 
 @{
-    ViewData["Title"] = "Clientes";
+    ViewData["Title"] = "Fornecedores";
 }
 
 <div class="row text-center">
@@ -12,13 +12,12 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Clientes">@ViewData["Title"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Editar Cadastro</li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Fornecedores">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cadastro</li>
             </ol>
         </nav>
     </div>
 </div>
-
 
 <div class="row">
     <div class="col-md-12">
@@ -26,14 +25,13 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <div class="card-header">Editar</div>
+                    <div class="card-header">Cadastro</div>
                     <div class="card-body">
 
-                        <form asp-action="Editar" method="post">
+                        <form asp-action="Novo" method="post">
 
                             <div asp-validation-summary="All" class="text-danger">
                             </div>
-                            @Html.HiddenFor(m => m.Id)
 
                             <div class="mb-3 row">
 
@@ -119,7 +117,7 @@
                                         Salvar
                                     </button>
 
-                                    <a asp-action="Index" asp-controller="Clientes" class="btn btn-warning">
+                                    <a asp-action="Index" asp-controller="Fornecedores" class="btn btn-warning">
                                         <i class="far fa-times-circle"></i>
                                         Cancelar
                                     </a>

@@ -32,6 +32,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
         {
             try
             {
+                t.ApagarRegistro();
                 _appDbContext.Clientes.Update(t);
                 await _appDbContext.SaveChangesAsync();
                 return true;
@@ -121,11 +122,10 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<IList<Cliente>> ObteTodosPaginadoAsync(int? paginaAtual)
+        public async Task<IList<Cliente>> ObteTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
         {
             try
             {
-                var totalPaginas = 3;
                 var l = _appDbContext.Clientes.Where(c => c.Ativo)
                                 .Include(x => x.Endereco)
                                 .OrderBy(c => c.Nome);

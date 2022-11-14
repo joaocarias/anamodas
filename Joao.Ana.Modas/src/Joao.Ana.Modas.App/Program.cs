@@ -1,6 +1,7 @@
 using AutoMapper;
 using Joao.Ana.Modas.App.Models.Clientes;
 using Joao.Ana.Modas.App.Models.Enderecos;
+using Joao.Ana.Modas.App.Models.Fornecedores;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
@@ -44,12 +45,14 @@ var config = new MapperConfiguration(cfg =>
 {
     cfg.CreateMap<ClienteViewModel, Cliente>().ReverseMap();
     cfg.CreateMap<EnderecoViewModel, Endereco>().ReverseMap();
+    cfg.CreateMap<FornecedorViewModel, Fornecedor>().ReverseMap();
 });
 
 IMapper mapper = config.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
+builder.Services.AddScoped<IFornecedorRepositorio, FornecedorRepositorio>();
 
 var app = builder.Build();
 
