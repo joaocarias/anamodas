@@ -66,6 +66,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();

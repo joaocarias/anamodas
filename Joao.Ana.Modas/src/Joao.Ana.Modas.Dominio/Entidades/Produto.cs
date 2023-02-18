@@ -6,27 +6,34 @@ namespace Joao.Ana.Modas.Dominio.Entidades
     {
         [Required]
         [StringLength(200)]
-        public string Nome { get; private set; } 
-        
-        public double? PrecoUnitario { get; private set; }
-        
-        public double? PrecoVenda { get; private set; }
+        public string Nome { get; private set; } = string.Empty;
+
+        public double? PrecoUnitario { get; private set; } = 0;
+
+        public double? PrecoVenda { get; private set; } = 0;
         
         [Required]
-        [StringLength(10)]
-        public string Tamanho { get; private set; }
+        [StringLength(5)]
+        public string Tamanho { get; private set; } = string.Empty;
 
-        public Produto(string nome, double? precoUnitario, double? precoVenda, string tamanho)
+        [Required]
+        [StringLength(50)]
+        public string Cor { get; private set; } = string.Empty;
+
+        public Fornecedor? Fornecedor { get; private set; }
+        public Guid? FornecedorId { get; private set; } = null;
+                
+        public Produto(string nome, double? precoUnitario, double? precoVenda, string tamanho, string cor, Guid? fornecedorId = null)
         {
             Nome = nome;
             PrecoUnitario = precoUnitario;
             PrecoVenda = precoVenda;
+
             Tamanho = tamanho;
+            Cor = cor;
+            FornecedorId = fornecedorId; 
         }
 
-        private Produto() {
-            Nome = string.Empty;
-            Tamanho= string.Empty;  
-        }
+        private Produto() {}
     }
 }

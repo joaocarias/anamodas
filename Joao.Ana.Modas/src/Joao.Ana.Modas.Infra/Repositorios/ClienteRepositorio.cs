@@ -57,7 +57,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<Cliente>? ObterAsync(Guid id)
+        public async Task<Cliente?> ObterAsync(Guid id)
         {
             try
             {
