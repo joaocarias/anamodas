@@ -2,11 +2,11 @@
 {
     public interface IRepositorioBase<T> where T : class
     {
-        Task<IList<T>> ObteTodosAsync();
+        Task<IList<T>> ObterTodosAsync();
         Task<T?> ObterAsync(Guid id);
         Task<bool> AdicionarAsync(T t);
         Task<bool> AtualizarAsync(T t);
         Task<bool> ApagarAsync(T t);
-        Task<IList<T>> ObteTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10);
+        Task<IList<T>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10);
     }
 }

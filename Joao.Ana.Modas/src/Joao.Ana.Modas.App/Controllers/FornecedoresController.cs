@@ -24,7 +24,7 @@ namespace Joao.Ana.Modas.App.Controllers
             model = model is null ? new IndexViewModel() : model;
             model.Fornecedores = (!string.IsNullOrEmpty(model?.Filtro))
                 ? _mapper.Map<IList<FornecedorViewModel>>(await _fornecedorRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<FornecedorViewModel>>(await _fornecedorRepositorio.ObteTodosAsync());
+                : _mapper.Map<IList<FornecedorViewModel>>(await _fornecedorRepositorio.ObterTodosAsync());
 
             return View(model);
         }
@@ -133,8 +133,7 @@ namespace Joao.Ana.Modas.App.Controllers
 
         private void SelectListEstadosBrasilViewBag(string selected = "RN")
         {
-            var estadosBrasil = EstadosBrasil.GetLista();
-            ViewBag.EstadosBrasil = new SelectList(estadosBrasil, "Key", "Value", selected);
+            ViewBag.EstadosBrasil = new SelectList(EstadosBrasil.GetLista(), "Key", "Value", selected);
         }
 
         #endregion

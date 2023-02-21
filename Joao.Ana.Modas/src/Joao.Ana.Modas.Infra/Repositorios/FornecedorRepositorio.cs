@@ -88,7 +88,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<IList<Fornecedor>> ObteTodosAsync()
+        public async Task<IList<Fornecedor>> ObterTodosAsync()
         {
             try
             {
@@ -105,7 +105,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<IList<Fornecedor>> ObteTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
+        public async Task<IList<Fornecedor>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
         {
             try
             {

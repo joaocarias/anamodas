@@ -71,7 +71,23 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<IList<Produto>> ObteTodosAsync()
+        public async Task<IList<Produto>> ObterPorNomeAsync(string filtro)
+        {
+            try
+            {
+                var l = await _appDbContext.Produtos.Where(c => c.Ativo && c.Nome.Contains(filtro))                                
+                                .AsNoTracking()
+                                .OrderBy(c => c.Nome)
+                                .ToListAsync();
+                return l;
+            }
+            catch (Exception)
+            {
+                return new List<Produto>();
+            }
+        }
+
+        public async Task<IList<Produto>> ObterTodosAsync()
         {
             try
             {
@@ -88,7 +104,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<IList<Produto>> ObteTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
+        public async Task<IList<Produto>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
         {
             try
             {

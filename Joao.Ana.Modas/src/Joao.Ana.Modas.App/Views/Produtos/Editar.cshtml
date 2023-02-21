@@ -1,0 +1,108 @@
+﻿@model Joao.Ana.Modas.App.Models.Produtos.ProdutoViewModel
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Produtos">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Editar Cadastro</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">Editar</div>
+                    <div class="card-body">
+
+                        <form asp-action="Editar" method="post">
+
+                            <div asp-validation-summary="All" class="text-danger">
+                            </div>
+                            @Html.HiddenFor(m => m.Id)
+
+                             <div class="mb-3 row">
+
+                                <div class="col-md-6">
+                                    <label asp-for="Nome" class="col-form-label"></label>
+                                    <input asp-for="Nome" class="form-control">
+                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    <label asp-for="PrecoUnitario" class="col-form-label"></label>
+                                    <input asp-for="PrecoUnitario" class="form-control">
+                                    <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <label asp-for="PrecoVenda" class="col-form-label"></label>
+                                    <input asp-for="PrecoVenda" class="form-control">
+                                    <span asp-validation-for="PrecoVenda" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <hr />
+
+                            <div class="mb-3 row">
+
+                                 <div class="col-md-3">
+                                    <label asp-for="Tamanho" class="col-form-label"></label>
+                                    <select asp-for="Tamanho" asp-items="ViewBag.Tamanhos" class="form-control"></select>                                    
+                                    <span asp-validation-for="Tamanho" class="text-danger"></span>
+                                </div>
+
+                                 <div class="col-md-3">
+                                    <label asp-for="Cor" class="col-form-label"></label>
+                                    <select asp-for="Cor" asp-items="ViewBag.Cores" class="form-control"></select>                                    
+                                    <span asp-validation-for="Cor" class="text-danger"></span>
+                                </div>
+
+                                 <div class="col-md-6">
+                                    <label asp-for="FornecedorId" class="col-form-label"></label>
+                                    <select asp-for="FornecedorId" asp-items="ViewBag.Fornecedores" class="form-control"></select>                                    
+                                    <span asp-validation-for="FornecedorId" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="far fa-save"></i>
+                                        Salvar
+                                    </button>
+
+                                    <a asp-action="Index" asp-controller="Produtos" class="btn btn-warning">
+                                        <i class="far fa-times-circle"></i>
+                                        Cancelar
+                                    </a>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -35,12 +35,33 @@
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item" asp-controller="Clientes"
-                                       asp-action="Index">Clientes</a>
+                                       asp-action="Index">
+                                        <i class="fas fa-user"></i> &nbsp;
+                                       Clientes</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Produtos"
+                                       asp-action="Index">
+                                       <i class="fas fa-shirt"></i>
+                                       Produtos</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" asp-controller="Fornecedores"
-                                       asp-action="Index">Fornecedores</a>
+                                       asp-action="Index">
+                                            <i class="fas fa-chalkboard-teacher"></i> &nbsp;
+                                            Fornecedores
+                                        </a>
                                     </li>
+
+                                    <li class="dropdown-divider"></li>
+
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Usuarios"
+                                       asp-action="Index">
+                                       <i class="fas fa-users"></i> &nbsp;
+                                       Usuários</a>
+                                    </li>
+
                                 </ul>
                             </li>
                         }
@@ -105,18 +126,18 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted main-footer">
         <div class="container">
-            &copy; 2022 - Joao.Ana.Modas.App - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Ana Modas App - Desenvolvido por João Carias de França - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js" integrity="sha512-naukR7I+Nk6gp7p5TMA4ycgfxaZBJ7MO5iC3Fp6ySQyKFHOGfpkSZkYVWV5R7u7cfAicxanwYQ5D1e17EfJcMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   
-    <script src="~/js/site.js" asp-append-version="true"></script>    
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -2,9 +2,8 @@
 {
     public static class EstadosBrasil
     {
-        public static Dictionary<string, string> GetLista()
-        {
-            return new Dictionary<string, string>
+        public static Dictionary<string, string> GetLista() =>
+            new Dictionary<string, string>
             {
                 { "AC", "Acre" },
                 { "AL", "Alagoas" },
@@ -35,6 +34,5 @@
                 { "TO", "Tocantins" },
                 { "EX", "Estrangeiro" }
             };
-        }
     }
 }

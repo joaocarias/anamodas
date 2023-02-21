@@ -7,7 +7,7 @@ namespace Joao.Ana.Modas.App.Models.Fornecedores
     {
         [Required]
         [StringLength(200)]
-        public string Nome { get; set; }
+        public string Nome { get; set; } = string.Empty;
 
         [StringLength(200)]
         public string? Email { get; set; }
