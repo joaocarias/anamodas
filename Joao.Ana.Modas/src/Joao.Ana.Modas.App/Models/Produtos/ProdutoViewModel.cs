@@ -1,6 +1,5 @@
-﻿using Joao.Ana.Modas.App.Models.Cores;
-using Joao.Ana.Modas.App.Models.Fornecedores;
-using Joao.Ana.Modas.App.Models.Tamanhos;
+﻿using Joao.Ana.Modas.App.Models.Fornecedores;
+using Joao.Ana.Modas.App.Models.ProdutoEstoques;
 using System.ComponentModel.DataAnnotations;
 
 namespace Joao.Ana.Modas.App.Models.Produtos
@@ -15,16 +14,13 @@ namespace Joao.Ana.Modas.App.Models.Produtos
 
         public double? PrecoVenda { get; set; } = 0.00;
 
-        public IEnumerable<TamanhoViewModel> Tamanhos { get; set; }
-
-        public IEnumerable<CorViewModel> Cores { get; set; }
-
         public FornecedorViewModel? Fornecedor { get; set; }
         public Guid? FornecedorId { get; set; } = null;
 
-       public ProdutoViewModel() {
-            Tamanhos = new List<TamanhoViewModel>();
-            Cores = new List<CorViewModel>();
+        public IEnumerable<ProdutoEstoqueViewModel> ProdutosEstoques { get; set; }
+
+        public ProdutoViewModel() {
+            ProdutosEstoques = new List<ProdutoEstoqueViewModel>(); 
         }
     }
 }

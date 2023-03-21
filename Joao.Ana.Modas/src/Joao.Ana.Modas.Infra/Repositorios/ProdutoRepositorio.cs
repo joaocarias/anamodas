@@ -62,7 +62,13 @@ namespace Joao.Ana.Modas.Infra.Repositorios
         {
             try
             {
-                var c = await _appDbContext.Produtos.Include(_ => _.Fornecedor).Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();
+                var c = await _appDbContext.Produtos
+                                            .Include(_ => _.Fornecedor)
+                                            .Include(_ => _.ProdutosEstoques)
+                                                .ThenInclude(_ => _.Cor)
+                                            .Include(_ => _.ProdutosEstoques)
+                                                .ThenInclude(_ => _.Tamanho)
+                                            .Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();
                 return c;
             }
             catch (Exception)

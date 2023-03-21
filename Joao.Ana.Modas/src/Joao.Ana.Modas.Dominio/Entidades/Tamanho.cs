@@ -8,16 +8,13 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         [StringLength(50)]
         public string Nome { get; private set; } = string.Empty;
 
-        public IEnumerable<Produto> Produtos { get; private set; }  
-
         public Tamanho(string nome)
         {
-            Nome = nome;
-            Produtos = new List<Produto>(); 
+            Nome = nome; 
         }
 
         private Tamanho() {
-            Produtos = new List<Produto>();
+        
         }
     }
 }

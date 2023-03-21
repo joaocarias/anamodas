@@ -68,18 +68,46 @@
                             Preço de Venda: <strong>R$ @Model?.Produto?.PrecoVenda?.ToString("N2")</strong>
                         </div>
                     </div>
-                                      
+
                     <div class="row">
-                    @*    <div class="col-md-3">
-                            Tamanho: <strong>@Model?.Produto?.Tamanhos.ToString()</strong>
-                        </div>
-
-                        <div class="col-md-3">
-                            Cor: <strong>@Model?.Produto?.Cores.ToString()</strong>
-                        </div>*@
-
                         <div class="col-md-6">
                             Fornecedor: <strong>@Model?.Produto?.Fornecedor?.Nome</strong>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong>Disponibilidade</strong>
+                            <br />
+
+                             @if (Model is not null && Model.Produto.ProdutosEstoques.Any())
+                {
+
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Cor</th>
+                                            <th scope="col">Tamanho</th>
+                                            <th scope="col">Quantidade</th>
+                                            <th scope="col"></th>
+                                            <tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                            }
+                            else
+                            {
+                                <p>Nenhuma disponibilidade encontrada para esse produto!</p>
+                            }
+
                         </div>
                     </div>
 
