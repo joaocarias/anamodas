@@ -12,28 +12,27 @@ namespace Joao.Ana.Modas.Dominio.Entidades
 
         public double? PrecoVenda { get; private set; } = 0;
         
-        [Required]
-        [StringLength(5)]
-        public string Tamanho { get; private set; } = string.Empty;
+        public IEnumerable<Tamanho> Tamanhos { get; private set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Cor { get; private set; } = string.Empty;
+        public IEnumerable<Cor> Cores { get; private set; }
 
         public Fornecedor? Fornecedor { get; private set; }
         public Guid? FornecedorId { get; private set; } = null;
                 
-        public Produto(string nome, double? precoUnitario, double? precoVenda, string tamanho, string cor, Guid? fornecedorId = null)
+        public Produto(string nome, double? precoUnitario, double? precoVenda, IEnumerable<Tamanho> tamanhos, IEnumerable<Cor> cores, Guid? fornecedorId = null)
         {
             Nome = nome;
             PrecoUnitario = precoUnitario;
             PrecoVenda = precoVenda;
 
-            Tamanho = tamanho;
-            Cor = cor;
-            FornecedorId = fornecedorId; 
+            Tamanhos = tamanhos;
+            Cores = cores;
+            FornecedorId = fornecedorId;
         }
 
-        private Produto() {}
+        private Produto() {
+            Tamanhos = new List<Tamanho>();
+            Cores = new List<Cor>();
+        }
     }
 }

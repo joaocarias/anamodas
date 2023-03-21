@@ -97,10 +97,10 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Telefone</th>
-                                <th scope="col">Cidade/UF</th>
+                                <th scope="col">Descrição</th>
+                               @* <th scope="col">Tamanhos</th>
+                                <th scope="col">Cores</th>*@
+                                <th scope="col">Preço</th>
                                 <th scope="col"></th>
                             <tr>
                         </thead>
@@ -109,10 +109,10 @@
                             {   
                                 <tr>
                                     <td scope="row">@i.Nome</td>
-                                    <td>@i.Tamanho</td>
-                                    <td>@i.Cor</td>
-                                    <td>@i.PrecoVenda</td>
-                                    <td>
+                                   @* <td>@i.Tamanhos.ToString()</td>
+                                    <td>@i.Cores.ToString()</td>*@
+                                    <td>R$ @i.PrecoVenda?.ToString("N2")</td>
+                                    <td> 
                                        <a asp-action="Detalhar" asp-controller="Produtos" asp-route-guid="@i.Id">Detalhes</a>
                                     </td>
                                 </tr>

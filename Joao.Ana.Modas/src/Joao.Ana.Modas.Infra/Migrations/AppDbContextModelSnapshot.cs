@@ -19,6 +19,21 @@ namespace Joao.Ana.Modas.Infra.Migrations
                 .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("CorProduto", b =>
+                {
+                    b.Property<Guid>("CoresId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ProdutosId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("CoresId", "ProdutosId");
+
+                    b.HasIndex("ProdutosId");
+
+                    b.ToTable("CorProduto");
+                });
+
             modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Cliente", b =>
                 {
                     b.Property<Guid>("Id")
@@ -55,6 +70,31 @@ namespace Joao.Ana.Modas.Infra.Migrations
                     b.HasIndex("EnderecoId");
 
                     b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Cor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cores");
                 });
 
             modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Endereco", b =>
@@ -152,11 +192,6 @@ namespace Joao.Ana.Modas.Infra.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Cor")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
                     b.Property<DateTime?>("DataAlteracao")
                         .HasColumnType("datetime(6)");
 
@@ -177,16 +212,36 @@ namespace Joao.Ana.Modas.Infra.Migrations
                     b.Property<double?>("PrecoVenda")
                         .HasColumnType("double");
 
-                    b.Property<string>("Tamanho")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("varchar(5)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FornecedorId");
 
                     b.ToTable("Produtos");
+                });
+
+            modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Tamanho", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("DataAlteracao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tamanhos");
                 });
 
             modelBuilder.Entity("Joao.Ana.Modas.Infra.Identity.ApplicationUser", b =>
@@ -385,6 +440,36 @@ namespace Joao.Ana.Modas.Infra.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ProdutoTamanho", b =>
+                {
+                    b.Property<Guid>("ProdutosId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("TamanhosId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("ProdutosId", "TamanhosId");
+
+                    b.HasIndex("TamanhosId");
+
+                    b.ToTable("ProdutoTamanho");
+                });
+
+            modelBuilder.Entity("CorProduto", b =>
+                {
+                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Cor", null)
+                        .WithMany()
+                        .HasForeignKey("CoresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Produto", null)
+                        .WithMany()
+                        .HasForeignKey("ProdutosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Cliente", b =>
                 {
                     b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Endereco", "Endereco")
@@ -459,6 +544,21 @@ namespace Joao.Ana.Modas.Infra.Migrations
                     b.HasOne("Joao.Ana.Modas.Infra.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProdutoTamanho", b =>
+                {
+                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Produto", null)
+                        .WithMany()
+                        .HasForeignKey("ProdutosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Tamanho", null)
+                        .WithMany()
+                        .HasForeignKey("TamanhosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

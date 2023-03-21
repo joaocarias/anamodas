@@ -1,3 +1,12 @@
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.csproj.AssemblyReference.cache
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.AssemblyInfoInputs.cache
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.AssemblyInfo.cs
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.csproj.CoreCompileInputs.cache
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.RazorAssemblyInfo.cache
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.RazorAssemblyInfo.cs
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\Joao.Ana.Modas.Infra.deps.json
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\Joao.Ana.Modas.Infra.runtimeconfig.json
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.deps.json
@@ -295,6 +304,7 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\refs\System.Xml.XPath.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\refs\System.Xml.XPath.XDocument.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\refs\WindowsBase.dll
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\Humanizer.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\MessagePack.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\MessagePack.Annotations.dll
@@ -374,6 +384,7 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\System.Drawing.Common.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\System.Runtime.Caching.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\System.Security.Permissions.dll
@@ -550,15 +561,6 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\Joao.Ana.Modas.Infra.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\Joao.Ana.Modas.Infra.pdb
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\Joao.Ana.Modas.Dominio.pdb
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.csproj.AssemblyReference.cache
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.AssemblyInfoInputs.cache
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.AssemblyInfo.cs
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.csproj.CoreCompileInputs.cache
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.RazorAssemblyInfo.cache
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.RazorAssemblyInfo.cs
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
@@ -569,4 +571,3 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\ref\Joao.Ana.Modas.App.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.pdb
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.genruntimeconfig.cache
-C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\AutoMapper.dll

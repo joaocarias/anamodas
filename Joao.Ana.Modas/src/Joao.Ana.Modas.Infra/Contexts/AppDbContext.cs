@@ -12,6 +12,9 @@ namespace Joao.Ana.Modas.Infra.Contexts
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Fornecedor> Fornecedores { get; set;}
 
+        public DbSet<Cor> Cores { get; set; }
+        public DbSet<Tamanho> Tamanhos { get; set; }
+
         public AppDbContext(DbContextOptions options) : base(options) { }
     }
 }

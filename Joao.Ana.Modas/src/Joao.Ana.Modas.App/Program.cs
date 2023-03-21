@@ -1,8 +1,10 @@
 using AutoMapper;
 using Joao.Ana.Modas.App.Models.Clientes;
+using Joao.Ana.Modas.App.Models.Cores;
 using Joao.Ana.Modas.App.Models.Enderecos;
 using Joao.Ana.Modas.App.Models.Fornecedores;
 using Joao.Ana.Modas.App.Models.Produtos;
+using Joao.Ana.Modas.App.Models.Tamanhos;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
@@ -48,6 +50,9 @@ var config = new MapperConfiguration(cfg =>
     cfg.CreateMap<EnderecoViewModel, Endereco>().ReverseMap();
     cfg.CreateMap<FornecedorViewModel, Fornecedor>().ReverseMap();
     cfg.CreateMap<ProdutoViewModel, Produto>().ReverseMap();
+
+    cfg.CreateMap<TamanhoViewModel, Tamanho>().ReverseMap();
+    cfg.CreateMap<CorViewModel, Cor>().ReverseMap();
 });
 
 IMapper mapper = config.CreateMapper();

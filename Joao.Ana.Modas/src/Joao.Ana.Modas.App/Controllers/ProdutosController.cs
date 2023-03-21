@@ -46,8 +46,8 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             if (!ModelState.IsValid)
             {
-                SelectListCoresViewBag(model.Cor);
-                SelectListTamanhosViewBag(model.Tamanho);
+               // SelectListCoresViewBag(model.Cores);
+               // SelectListTamanhosViewBag(model.Tamanho);
                 SelectListFornecedoresViewBag(model.FornecedorId);
                 return View(model);
             }
@@ -60,8 +60,8 @@ namespace Joao.Ana.Modas.App.Controllers
             }
             catch (Exception)
             {
-                SelectListCoresViewBag(model.Cor);
-                SelectListTamanhosViewBag(model.Tamanho);
+                //SelectListCoresViewBag(model.Cor);
+                //SelectListTamanhosViewBag(model.Tamanho);
                 SelectListFornecedoresViewBag(model.FornecedorId);
                 return View(model);
             }

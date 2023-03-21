@@ -61,22 +61,22 @@
                         </div>
 
                         <div class="col-md-4">
-                            Preço Unitário: <strong>@Model?.Produto?.PrecoUnitario</strong>
+                            Preço Unitário: <strong>R$ @Model?.Produto?.PrecoUnitario?.ToString("N2")</strong>
                         </div>
 
                         <div class="col-md-3">
-                            Preço de Venda: <strong>@Model?.Produto?.PrecoVenda</strong>
+                            Preço de Venda: <strong>R$ @Model?.Produto?.PrecoVenda?.ToString("N2")</strong>
                         </div>
                     </div>
                                       
                     <div class="row">
-                        <div class="col-md-3">
-                            Tamanho: <strong>@Model?.Produto?.Tamanho</strong>
+                    @*    <div class="col-md-3">
+                            Tamanho: <strong>@Model?.Produto?.Tamanhos.ToString()</strong>
                         </div>
 
                         <div class="col-md-3">
-                            Cor: <strong>@Model?.Produto?.Cor</strong>
-                        </div>
+                            Cor: <strong>@Model?.Produto?.Cores.ToString()</strong>
+                        </div>*@
 
                         <div class="col-md-6">
                             Fornecedor: <strong>@Model?.Produto?.Fornecedor?.Nome</strong>
