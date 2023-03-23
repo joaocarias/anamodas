@@ -1,4 +1,4 @@
-﻿@model Joao.Ana.Modas.App.Models.Produtos.DetalharViewModel
+﻿@model Joao.Ana.Modas.App.Models.Produtos.IncluirViewModel
 
 @{
     ViewData["Title"] = Model?.Titulo;
@@ -81,6 +81,47 @@
                         </div>
                     </div>
 
+                    
+
+                            <form asp-action="Incluir" method="post">
+<div class="row">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+
+                                @Html.HiddenFor(m => m.Produto.Id)
+
+                                <div class="col-md-2">
+                                    <label asp-for="Quantidade" class="col-form-label"></label>
+                                    <input asp-for="Quantidade" class="form-control">
+                                    <span asp-validation-for="Quantidade" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label asp-for="CorId" class="col-form-label"></label>
+                                    <select asp-for="CorId" asp-items="ViewBag.Cores" class="form-control"></select>
+                                    <span asp-validation-for="CorId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label asp-for="TamanhoId" class="col-form-label"></label>
+                                    <select asp-for="TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control"></select>
+                                    <span asp-validation-for="TamanhoId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3">
+
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <strong>Disponibilidade</strong>
@@ -105,56 +146,17 @@
                             {
                                 <p>
                                     Nenhuma disponibilidade encontrada para esse produto!
-                                    <a asp-action="Incluir" asp-controller="Produtos" asp-route-guid="@Model?.Produto?.Id" >Clique aqui para Incluir!</a>                                    
                                 </p>
                             }
 
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <hr />
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a asp-action="Editar" asp-controller="Produtos" asp-route-guid="@Model?.Produto?.Id" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Editar </a>
-                            <a href="#" class="btn btn-danger btn-sm btn-excluir" id="@Model?.Produto?.Id"> <i class="far fa-trash-alt"></i> Excluir </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 }
 
-<!-- Modal Excluir -->
-<div class="modal fade" id="ModalExcluir" tabindex="-1" aria-labelledby="TituloModalExcluir" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="TituloModalExcluir"> <i class="fas fa-exclamation-circle"></i>Excluir!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-                <p>Deseja Excluir o Cadastro?</p>
-            </div>
-            <div class="modal-footer">
-                <a id="url-modal-excluir" href="#" class="btn btn-danger"> <i class="far fa-trash-alt"></i> Confirmar e Excluir</a>
-                <button type="button" class="btn btn-dark" data-bs-dismiss="modal"> <i class="fas fa-ban"></i> Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-@section Scripts{
-<script type="text/javascript">
-    $('.btn-excluir').on('click', function() {
-        var id = $(this).attr('id');
-        $('#url-modal-excluir').attr('href', '/Produtos/Excluir?guid=' + id);
-        $('#ModalExcluir').modal('show');
-    });
-</script>
-}

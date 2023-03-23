@@ -10,14 +10,14 @@ namespace Joao.Ana.Modas.App.Models.ProdutoEstoques
         public Guid ProdutoId { get; set; }
 
         public CorViewModel Cor { get; set; }
-        public Guid CorId { get; set; }
+        public Guid? CorId { get; set; }
 
-        public TamanhoViewModel Tamanho { get; private set; }
-        public Guid TamanhoId { get; private set; }
+        public TamanhoViewModel Tamanho { get; set; }
+        public Guid? TamanhoId { get; set; }
 
-        public int Quantidade { get; private set; }
+        public int Quantidade { get; set; }
 
-        public ProdutoEstoqueViewModel(Guid produtoId, Guid corId, Guid tamanhoId, int quantidade)
+        public ProdutoEstoqueViewModel(Guid produtoId, Guid? corId, Guid? tamanhoId, int quantidade)
         {
             ProdutoId = produtoId;
             CorId = corId;

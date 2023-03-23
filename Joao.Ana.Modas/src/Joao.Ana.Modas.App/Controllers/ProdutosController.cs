@@ -139,6 +139,19 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Incluir(Guid guid)
+        {
+            try
+            {
+                var model = new IncluirViewModel() { Produto = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(guid)) };
+                return View(model);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(Detalhar), new { guid });
+            }
+        }
 
         #region viewBags
 

@@ -6,14 +6,14 @@
         public Guid ProdutoId { get; private set; }
 
         public Cor Cor { get; private set; }
-        public Guid CorId { get; private set; }
+        public Guid? CorId { get; private set; }
 
         public Tamanho Tamanho { get; private set; }
-        public Guid TamanhoId { get; private set; }
+        public Guid? TamanhoId { get; private set; }
 
         public int Quantidade { get; private set; }
 
-        public ProdutoEstoque(Guid produtoId, Guid corId, Guid tamanhoId, int quantidade)
+        public ProdutoEstoque(Guid produtoId, Guid? corId, Guid? tamanhoId, int quantidade)
         {
             ProdutoId = produtoId;
             CorId = corId;

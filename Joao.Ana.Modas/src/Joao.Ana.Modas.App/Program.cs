@@ -63,6 +63,7 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddScoped<IClienteRepositorio, ClienteRepositorio>();
 builder.Services.AddScoped<IFornecedorRepositorio, FornecedorRepositorio>();
 builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+builder.Services.AddScoped<ITamanhoRepositorio, TamanhoRepositorio>();
 
 var app = builder.Build();
 
