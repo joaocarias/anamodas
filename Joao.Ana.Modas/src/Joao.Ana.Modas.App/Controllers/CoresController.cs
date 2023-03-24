@@ -1,28 +1,28 @@
 ﻿using AutoMapper;
-using Joao.Ana.Modas.App.Models.Tamanhos;
+using Joao.Ana.Modas.App.Models.Cores;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-    public class TamanhosController : MeuController
+    public class CoresController : MeuController
     {
         private readonly IMapper _mapper;
-        private readonly ITamanhoRepositorio _tamanhoRepositorio;
+        private readonly ICorRepositorio _corRepositorio;
 
-        public TamanhosController(IMapper mapper, ITamanhoRepositorio tamanhoRepositorio)
+        public CoresController(IMapper mapper, ICorRepositorio corRepositorio)
         {
             _mapper = mapper;
-            _tamanhoRepositorio = tamanhoRepositorio;
+            _corRepositorio = corRepositorio;
         }
 
         public async Task<IActionResult> Index(IndexViewModel model)
         {
             model = model is null ? new IndexViewModel() : model;
-            model.Tamanhos = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<TamanhoViewModel>>(await _tamanhoRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<TamanhoViewModel>>(await _tamanhoRepositorio.ObterTodosAsync());
+            model.Cores = (!string.IsNullOrEmpty(model?.Filtro))
+                ? _mapper.Map<IList<CorViewModel>>(await _corRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IList<CorViewModel>>(await _corRepositorio.ObterTodosAsync());
 
             return View(model);
         }
@@ -30,11 +30,11 @@ namespace Joao.Ana.Modas.App.Controllers
         [HttpGet]
         public IActionResult Novo()
         {
-            return View(new TamanhoViewModel());
+            return View(new CorViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Novo(TamanhoViewModel model)
+        public async Task<IActionResult> Novo(CorViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -43,8 +43,8 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<Tamanho>(model);
-                await _tamanhoRepositorio.AdicionarAsync(c);
+                var c = _mapper.Map<Cor>(model);
+                await _corRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
             catch (Exception)
@@ -58,7 +58,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                return View(new DetalharViewModel() { Tamanho = _mapper.Map<TamanhoViewModel>(await _tamanhoRepositorio.ObterAsync(guid)) });
+                return View(new DetalharViewModel() { Cor = _mapper.Map<CorViewModel>(await _corRepositorio.ObterAsync(guid)) });
             }
             catch (Exception)
             {
@@ -71,12 +71,12 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                var c = await _tamanhoRepositorio.ObterAsync(guid);
+                var c = await _corRepositorio.ObterAsync(guid);
                 if (c is null)
                     return RedirectToAction(nameof(Detalhar), new { guid });
 
                 c.ApagarRegistro();
-                await _tamanhoRepositorio.ApagarAsync(c);
+                await _corRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -90,7 +90,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                return View(_mapper.Map<TamanhoViewModel>(await _tamanhoRepositorio.ObterAsync(guid)));
+                return View(_mapper.Map<CorViewModel>(await _corRepositorio.ObterAsync(guid)));
             }
             catch (Exception)
             {
@@ -99,7 +99,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(TamanhoViewModel model)
+        public async Task<IActionResult> Editar(CorViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -108,9 +108,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<Tamanho>(model);
+                var c = _mapper.Map<Cor>(model);
                 c.Atualizar();
-                await _tamanhoRepositorio.AtualizarAsync(c);
+                await _corRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
             catch (Exception)

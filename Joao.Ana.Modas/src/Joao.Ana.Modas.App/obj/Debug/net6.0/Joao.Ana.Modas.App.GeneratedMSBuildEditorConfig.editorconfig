@@ -31,6 +31,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcTm92by5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Cores/Detalhar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29yZXNcRGV0YWxoYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Cores/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29yZXNcRWRpdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Cores/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29yZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Cores/Novo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29yZXNcTm92by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Entradas/Nova.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50cmFkYXNcTm92YS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -103,8 +119,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Tamanhos/Detalhar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFtYW5ob3NcRGV0YWxoYXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Tamanhos/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFtYW5ob3NcRWRpdGFyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Tamanhos/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFtYW5ob3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Tamanhos/Novo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFtYW5ob3NcTm92by5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Usuarios/AcessoNegado.cshtml]

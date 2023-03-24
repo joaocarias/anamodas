@@ -1,0 +1,109 @@
+﻿@model Joao.Ana.Modas.App.Models.Tamanhos.DetalharViewModel
+
+@{
+    ViewData["Title"] = Model?.Titulo;
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"><i class="fas fa-home"></i>Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="@ViewData["Title"]">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tamanhos</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+@if (Model is not null && !string.IsNullOrEmpty(Model.Informacao))
+{
+    <div class="col-md-12">
+        <div class="row">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @Model.Informacao
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model is not null && !string.IsNullOrEmpty(Model.Informacao))
+{
+    <div class="col-md-12">
+        <div class="row">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                @Model.Informacao
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model is not null && Model.Tamanho is not null && !string.IsNullOrEmpty(Model.Tamanho.Id.ToString()))
+{
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-header">@Model?.Tamanho?.Id</div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            Nome: <strong>@Model?.Tamanho?.Nome</strong>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a asp-action="Editar" asp-controller="Tamanhos" asp-route-guid="@Model?.Tamanho?.Id" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Editar </a>
+                            <a href="#" class="btn btn-danger btn-sm btn-excluir" id="@Model?.Tamanho?.Id"> <i class="far fa-trash-alt"></i> Excluir </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal Excluir -->
+<div class="modal fade" id="ModalExcluir" tabindex="-1" aria-labelledby="TituloModalExcluir" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TituloModalExcluir"> <i class="fas fa-exclamation-circle"></i>Excluir!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja Excluir o Cadastro?</p>
+            </div>
+            <div class="modal-footer">
+                <a id="url-modal-excluir" href="#" class="btn btn-danger"> <i class="far fa-trash-alt"></i> Confirmar e Excluir</a>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal"> <i class="fas fa-ban"></i> Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script type="text/javascript">
+    $('.btn-excluir').on('click', function() {
+        var id = $(this).attr('id');
+        $('#url-modal-excluir').attr('href', '/Tamanhos/Excluir?guid=' + id);
+        $('#ModalExcluir').modal('show');
+    });
+</script>
+}

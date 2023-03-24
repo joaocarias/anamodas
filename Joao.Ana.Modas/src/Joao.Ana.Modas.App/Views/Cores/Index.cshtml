@@ -1,4 +1,4 @@
-﻿@model Joao.Ana.Modas.App.Models.Tamanhos.IndexViewModel
+﻿@model Joao.Ana.Modas.App.Models.Cores.IndexViewModel
 
 @{
     ViewData["Title"] = Model?.Titulo;
@@ -22,7 +22,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <a asp-controller="Tamanhos" asp-action="Novo" class="btn btn-primary">
+                <a asp-controller="Cores" asp-action="Novo" class="btn btn-primary">
                     <i class="far fa-file-alt"></i> &nbsp;
                     Cadastrar
                 </a>
@@ -66,24 +66,24 @@
             <div class="card-header">@ViewData["Title"]</div>
             <div class="card-body">
 
-                @if (Model is not null && Model.Tamanhos.Any())
+                @if (Model is not null && Model.Cores.Any())
                 {
                     <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th scope="col">Id</th>                             
-                                <th scope="col">Tamanho</th>
+                                <th scope="col">Cor</th>
                                 <th scope="col"></th>
                             <tr>
                         </thead>
                         <tbody>
-                            @foreach (var i in Model.Tamanhos.ToList())
+                            @foreach (var i in Model.Cores.ToList())
                             {   
                                 <tr>
                                     <td scope="row">@i.Id</td>                                  
                                     <td>@i.Nome</td>
                                     <td> 
-                                       <a asp-action="Detalhar" asp-controller="Tamanhos" asp-route-guid="@i.Id">Detalhes</a>
+                                       <a asp-action="Detalhar" asp-controller="Cores" asp-route-guid="@i.Id">Detalhes</a>
                                     </td>
                                 </tr>
                             }

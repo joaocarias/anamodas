@@ -1,0 +1,77 @@
+﻿@model Joao.Ana.Modas.App.Models.Cores.CorViewModel
+
+@{
+    ViewData["Title"] = "Cores";
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Cores">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cadastro</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-header">Cadastro</div>
+                    <div class="card-body">
+
+                        <form asp-action="Novo" method="post">
+
+                            <div asp-validation-summary="All" class="text-danger">
+                            </div>
+
+                            <div class="mb-3 row">
+
+                                <div class="col-md-6">
+                                    <label asp-for="Nome" class="col-form-label"></label>
+                                    <input asp-for="Nome" class="form-control">
+                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="far fa-save"></i>
+                                        Salvar
+                                    </button>
+
+                                    <a asp-action="Index" asp-controller="Cores" class="btn btn-warning">
+                                        <i class="far fa-times-circle"></i>
+                                        Cancelar
+                                    </a>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+<script>
+  
+</script>
+}
+
