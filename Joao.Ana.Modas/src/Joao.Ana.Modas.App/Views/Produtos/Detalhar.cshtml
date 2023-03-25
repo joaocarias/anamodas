@@ -91,6 +91,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
+                                            <th scope="col"></th>
                                             <th scope="col">Cor</th>
                                             <th scope="col">Tamanho</th>
                                             <th scope="col">Quantidade</th>
@@ -98,6 +99,18 @@
                                         <tr>
                                     </thead>
                                     <tbody>
+                                        @foreach (var i in Model.Produto.ProdutosEstoques.ToList())
+                                        {
+                                            <tr>
+                                                <td scope="row">@i.Id</td>
+                                                <td>@i.Cor.Nome</td>
+                                                <td>@i.Tamanho.Nome</td>
+                                                <td>@i.Quantidade</td>
+                                                <td>
+                                                    <a asp-action="Detalhar" asp-controller="Produtos" asp-route-guid="@i.Id">Detalhes</a>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             }
@@ -105,9 +118,11 @@
                             {
                                 <p>
                                     Nenhuma disponibilidade encontrada para esse produto!
-                                    <a asp-action="Incluir" asp-controller="Produtos" asp-route-guid="@Model?.Produto?.Id" >Clique aqui para Incluir!</a>                                    
                                 </p>
                             }
+
+                            <br />
+                            <a asp-action="Incluir" asp-controller="Produtos" asp-route-guid="@Model?.Produto?.Id">Clique aqui para Incluir!</a>
 
                         </div>
                     </div>

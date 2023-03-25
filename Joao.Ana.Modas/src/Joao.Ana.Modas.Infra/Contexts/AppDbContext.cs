@@ -15,6 +15,8 @@ namespace Joao.Ana.Modas.Infra.Contexts
         public DbSet<Cor> Cores { get; set; }
         public DbSet<Tamanho> Tamanhos { get; set; }
 
+        public DbSet<ProdutoEstoque> ProdutoEstoque { get; set; }
+
         public AppDbContext(DbContextOptions options) : base(options) { }
     }
 }

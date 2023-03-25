@@ -22,5 +22,11 @@
         }
 
         private ProdutoEstoque() { }
+
+        public void AtualizarEstoque(int quantidade)
+        {
+            Quantidade += quantidade;
+            Atualizar();
+        }
     }
 }

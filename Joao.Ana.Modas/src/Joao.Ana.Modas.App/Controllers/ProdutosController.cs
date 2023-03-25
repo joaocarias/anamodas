@@ -2,7 +2,6 @@
 using Joao.Ana.Modas.App.Models.Produtos;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
-using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -13,12 +12,18 @@ namespace Joao.Ana.Modas.App.Controllers
         private readonly IMapper _mapper;
         private readonly IProdutoRepositorio _produtoRepositorio;
         private readonly IFornecedorRepositorio _fornecedorRepositorio;
+        private readonly ICorRepositorio _corRepositorio;
+        private readonly ITamanhoRepositorio _tamanhoRepositorio;
+        private readonly IProdutoEstoqueRepositorio _produtoEstoqueRepositorio;
 
-        public ProdutosController(IMapper mapper, IProdutoRepositorio produtoRepositorio, IFornecedorRepositorio fornecedorRepositorio)
+        public ProdutosController(IMapper mapper, IProdutoRepositorio produtoRepositorio, IFornecedorRepositorio fornecedorRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IProdutoEstoqueRepositorio produtoEstoqueRepositorio)
         {
             _mapper = mapper;
             _produtoRepositorio = produtoRepositorio;
             _fornecedorRepositorio = fornecedorRepositorio;
+            _corRepositorio = corRepositorio;
+            _tamanhoRepositorio = tamanhoRepositorio;
+            _produtoEstoqueRepositorio = produtoEstoqueRepositorio;
         }
 
         public async Task<IActionResult> Index(IndexViewModel model)
@@ -32,11 +37,9 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
-        public IActionResult Novo()
+        public async Task<IActionResult> Novo()
         {
-            SelectListCoresViewBag();
-            SelectListTamanhosViewBag();
-            SelectListFornecedoresViewBag();
+            await SelectListFornecedoresViewBag();
             ProdutoViewModel model = new();
             return View(model);
         }
@@ -46,9 +49,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             if (!ModelState.IsValid)
             {
-               // SelectListCoresViewBag(model.Cores);
-               // SelectListTamanhosViewBag(model.Tamanho);
-                SelectListFornecedoresViewBag(model.FornecedorId);
+                await SelectListFornecedoresViewBag(model.FornecedorId);
                 return View(model);
             }
 
@@ -60,9 +61,7 @@ namespace Joao.Ana.Modas.App.Controllers
             }
             catch (Exception)
             {
-                //SelectListCoresViewBag(model.Cor);
-                //SelectListTamanhosViewBag(model.Tamanho);
-                SelectListFornecedoresViewBag(model.FornecedorId);
+                await SelectListFornecedoresViewBag(model.FornecedorId);
                 return View(model);
             }
         }
@@ -105,9 +104,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                SelectListCoresViewBag();
-                SelectListTamanhosViewBag();
-                SelectListFornecedoresViewBag();
+                await SelectListFornecedoresViewBag();
                 var model = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(guid));
                 return View(model);
             }
@@ -144,7 +141,11 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
+                await SelectListCoresViewBag();
+                await SelectListTamanhosViewBag();
+
                 var model = new IncluirViewModel() { Produto = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(guid)) };
+                model.ProdutoId = guid;
                 return View(model);
             }
             catch (Exception)
@@ -152,23 +153,62 @@ namespace Joao.Ana.Modas.App.Controllers
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> Incluir(IncluirViewModel model)
+        {   
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    await SelectListTamanhosViewBag();
+                    await SelectListCoresViewBag();
+
+                    model.Produto = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(model.ProdutoId));
+
+                    return View(model);
+                }
+
+                var produtoEstoque = await _produtoEstoqueRepositorio.GetInclusoAsync(model.ProdutoId, model.CorId, model.TamanhoId);
+
+                if (produtoEstoque is not null)
+                {
+                    produtoEstoque.AtualizarEstoque(model.Quantidade);
+                    await _produtoEstoqueRepositorio.AtualizarAsync(produtoEstoque);
+                }
+                else
+                {
+                    await _produtoEstoqueRepositorio.AdicionarAsync(new ProdutoEstoque(model.ProdutoId, model.CorId, model.TamanhoId, model.Quantidade));
+                }
+
+                return RedirectToAction(nameof(Detalhar), new { guid = model.ProdutoId });
+            }
+            catch (Exception)
+            {
+                await SelectListCoresViewBag();
+                await SelectListTamanhosViewBag();
+
+                model.Produto = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(model.ProdutoId));
+
+                return View(model);
+            }
+        }
 
         #region viewBags
 
-        private void SelectListTamanhosViewBag(string? selected = null)
+        private async Task SelectListTamanhosViewBag(Guid? selected = null)
         {
-            ViewBag.Tamanhos = new SelectList(Tamanhos.GetLista(), "Key", "Value", selected);
+            ViewBag.Tamanhos = new SelectList(await _tamanhoRepositorio.ObterTodosAsync(), "Id", "Nome", selected);
         }
 
-        private void SelectListCoresViewBag(string? selected = null)
+        private async Task SelectListCoresViewBag(Guid? selected = null)
         {
-            ViewBag.Cores = new SelectList(Cores.GetLista(), "Key", "Value", selected);            
+            ViewBag.Cores = new SelectList(await _corRepositorio.ObterTodosAsync(), "Id", "Nome", selected);            
         }
 
-        private async void SelectListFornecedoresViewBag(Guid? selected = null)
+        private async Task SelectListFornecedoresViewBag(Guid? selected = null)
         {
-            var lista = await _fornecedorRepositorio.ObterTodosAsync();
-            ViewBag.Fornecedores = new SelectList(lista, "Id", "Nome", selected);
+            ViewBag.Fornecedores = new SelectList(await _fornecedorRepositorio.ObterTodosAsync(), "Id", "Nome", selected);
         }
 
         #endregion

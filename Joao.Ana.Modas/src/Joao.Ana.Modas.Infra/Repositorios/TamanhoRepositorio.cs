@@ -97,7 +97,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .ToListAsync();
                 return l;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return new List<Tamanho>();
             }

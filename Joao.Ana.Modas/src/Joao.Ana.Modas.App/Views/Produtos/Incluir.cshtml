@@ -47,12 +47,12 @@
     </div>
 }
 
-@if (Model is not null && Model.Produto is not null && !string.IsNullOrEmpty(Model.Produto.Id.ToString()))
+@if (Model is not null && Model.Produto is not null && !string.IsNullOrEmpty(Model.ProdutoId.ToString()))
 {
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card mb-3">
-                <div class="card-header">@Model?.Produto?.Id</div>
+                <div class="card-header">@Model?.ProdutoId</div>
 
                 <div class="card-body">
                     <div class="row">
@@ -81,39 +81,49 @@
                         </div>
                     </div>
 
-                    
+                    <form asp-action="Incluir" method="post">
+                        <div class="row">
+                            <div asp-validation-summary="All" class="text-danger"></div>
 
-                            <form asp-action="Incluir" method="post">
-<div class="row">
-                                <div asp-validation-summary="All" class="text-danger"></div>
+                            @Html.HiddenFor(m => m.ProdutoId)
 
-                                @Html.HiddenFor(m => m.Produto.Id)
+                            <div class="col-md-2">
+                                <label asp-for="Quantidade" class="col-form-label"></label>
+                                <input asp-for="Quantidade" class="form-control">
+                                <span asp-validation-for="Quantidade" class="text-danger"></span>
+                            </div>
 
-                                <div class="col-md-2">
-                                    <label asp-for="Quantidade" class="col-form-label"></label>
-                                    <input asp-for="Quantidade" class="form-control">
-                                    <span asp-validation-for="Quantidade" class="text-danger"></span>
+                            <div class="col-md-4">
+                                <label asp-for="CorId" class="col-form-label"></label>
+                                <select asp-for="CorId" asp-items="ViewBag.Cores" class="form-control"></select>
+                                <span asp-validation-for="CorId" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="TamanhoId" class="col-form-label"></label>
+                                <select asp-for="TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control"></select>
+                                <span asp-validation-for="TamanhoId" class="text-danger"></span>
+                            </div>
+                                                        
+                        </div>
+
+                          <hr />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="far fa-save"></i>
+                                        Incluir
+                                    </button>
+
+                                    <a asp-action="Detalhar" asp-route-guid="@Model?.ProdutoId" asp-controller="Produtos" class="btn btn-warning">
+                                        <i class="far fa-times-circle"></i>
+                                        Cancelar
+                                    </a>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
-                                    <label asp-for="CorId" class="col-form-label"></label>
-                                    <select asp-for="CorId" asp-items="ViewBag.Cores" class="form-control"></select>
-                                    <span asp-validation-for="CorId" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <label asp-for="TamanhoId" class="col-form-label"></label>
-                                    <select asp-for="TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control"></select>
-                                    <span asp-validation-for="TamanhoId" class="text-danger"></span>
-                                </div>
-
-                                <div class="col-md-3">
-
-                                    </div>
-
-                                </div>
-
-                            </form>
+                    </form>
 
 
                     <div class="row">
@@ -132,6 +142,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
+                                           <th scope="col"></th>
                                             <th scope="col">Cor</th>
                                             <th scope="col">Tamanho</th>
                                             <th scope="col">Quantidade</th>
@@ -139,6 +150,18 @@
                                         <tr>
                                     </thead>
                                     <tbody>
+                                         @foreach (var i in Model.Produto.ProdutosEstoques.ToList())
+                                        {
+                                            <tr>
+                                                <td scope="row">@i.Id</td>
+                                                <td>@i.Cor.Nome</td>
+                                                <td>@i.Tamanho.Nome</td>
+                                                <td>@i.Quantidade</td>
+                                                <td>
+                                                    <a asp-action="Detalhar" asp-controller="Produtos" asp-route-guid="@i.Id">Detalhes</a>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             }
