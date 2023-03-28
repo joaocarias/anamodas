@@ -17,6 +17,8 @@ namespace Joao.Ana.Modas.Infra.Contexts
 
         public DbSet<ProdutoEstoque> ProdutoEstoque { get; set; }
 
+        public DbSet<TipoPagamento> TipoPagamentos { get; set; }
+
         public AppDbContext(DbContextOptions options) : base(options) { }
     }
 }

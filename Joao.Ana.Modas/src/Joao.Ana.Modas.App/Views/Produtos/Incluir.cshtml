@@ -104,24 +104,24 @@
                                 <select asp-for="TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control"></select>
                                 <span asp-validation-for="TamanhoId" class="text-danger"></span>
                             </div>
-                                                        
+
                         </div>
 
-                          <hr />
+                        <hr />
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="far fa-save"></i>
-                                        Incluir
-                                    </button>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="far fa-save"></i>
+                                    Incluir
+                                </button>
 
-                                    <a asp-action="Detalhar" asp-route-guid="@Model?.ProdutoId" asp-controller="Produtos" class="btn btn-warning">
-                                        <i class="far fa-times-circle"></i>
-                                        Cancelar
-                                    </a>
-                                </div>
+                                <a asp-action="Detalhar" asp-route-guid="@Model?.ProdutoId" asp-controller="Produtos" class="btn btn-warning">
+                                    <i class="far fa-times-circle"></i>
+                                    Cancelar
+                                </a>
                             </div>
+                        </div>
 
                     </form>
 
@@ -142,7 +142,7 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                           <th scope="col"></th>
+                                            <th scope="col"></th>
                                             <th scope="col">Cor</th>
                                             <th scope="col">Tamanho</th>
                                             <th scope="col">Quantidade</th>
@@ -150,7 +150,7 @@
                                         <tr>
                                     </thead>
                                     <tbody>
-                                         @foreach (var i in Model.Produto.ProdutosEstoques.ToList())
+                                        @foreach (var i in Model.Produto.ProdutosEstoques.ToList())
                                         {
                                             <tr>
                                                 <td scope="row">@i.Id</td>

@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Caixa/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FpeGFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Clientes/Detalhar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZXNcRGV0YWxoYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -133,6 +137,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Tamanhos/Novo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFtYW5ob3NcTm92by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/TipoPagamento/Detalhar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1BhZ2FtZW50b1xEZXRhbGhhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/TipoPagamento/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1BhZ2FtZW50b1xFZGl0YXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/TipoPagamento/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1BhZ2FtZW50b1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/TipoPagamento/Novo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb1BhZ2FtZW50b1xOb3ZvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Usuarios/AcessoNegado.cshtml]

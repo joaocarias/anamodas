@@ -12,11 +12,17 @@ namespace Joao.Ana.Modas.App.Models.Produtos
         public ProdutoViewModel? Produto { get; set; }
         public Guid ProdutoId { get; set; } 
         
-        [Required]
+        [Required(ErrorMessage = "Campo Obrigatório")]
         public int Quantidade { get; set; }
+        
         public CorViewModel? Cor { get; set; }
+
+        [Display(Name = "Cor")]
         public Guid CorId { get; set; }    
+        
         public TamanhoViewModel? Tamanho { get; set; }
+
+        [Display(Name = "Tamanho")]
         public Guid TamanhoId { get; set; }
 
         public IncluirViewModel()
