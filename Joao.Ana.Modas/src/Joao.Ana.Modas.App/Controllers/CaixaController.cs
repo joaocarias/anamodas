@@ -1,12 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Joao.Ana.Modas.App.Models.Caixa;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
     public class CaixaController : MeuController
     {
-        public IActionResult Index()
+        private readonly IMapper _mapper;
+
+        public CaixaController(IMapper mapper)
         {
-            return View();
+            _mapper = mapper;
+        }
+
+        [HttpGet]
+        public IActionResult Pedido()
+        {
+            return View(new PedidoViewModel());
         }
     }
 }

@@ -15,8 +15,8 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Caixa/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FpeGFcSW5kZXguY3NodG1s
+[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Caixa/Pedido.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FpeGFcUGVkaWRvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Clientes/Detalhar.cshtml]
@@ -49,10 +49,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Cores/Novo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29yZXNcTm92by5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Entradas/Nova.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW50cmFkYXNcTm92YS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/joao_franca/source/repos/jcf-ana-modas/Joao.Ana.Modas/src/Joao.Ana.Modas.App/Views/Fornecedores/Detalhar.cshtml]

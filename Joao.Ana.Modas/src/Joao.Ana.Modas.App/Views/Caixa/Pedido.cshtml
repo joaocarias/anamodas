@@ -1,24 +1,51 @@
-﻿@model Joao.Ana.Modas.App.Models.Entradas.EntradaViewModel
+﻿@model Joao.Ana.Modas.App.Models.Caixa.PedidoViewModel
 
 @{
-    ViewData["Title"] = "Entrada";
+    ViewData["Title"] = "Caixa";
 }
 
 
 <div class="row text-center">
     <div class="col-md-12">
-        <h1>@ViewData["Title"]</h1>
+        <h1>Pedido</h1>
     </div>
     <div class="col-md-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="Nova" asp-controller="Entrada">@ViewData["Title"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Novo Registro</li>
+                <li class="breadcrumb-item"><a asp-action="Pedido" asp-controller="Caixa">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Novo Pedido</li>
             </ol>
         </nav>
     </div>
 </div>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mb-3">                    
+                    <div class="card-body">
+                              <h4 class="card-title">Total de Itens: <strong>20</strong></h4>                               
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-3">                    
+                    <div class="card-body">
+                              <h4 class="card-title">Valor Total: <strong>R$ 2020,28</strong></h4>                               
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 
 <div class="row">
@@ -27,7 +54,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card mb-3">
-                    <div class="card-header">Novo Registro</div>
+                    <div class="card-header">Incluir Produto no Pedido</div>
                     <div class="card-body">
 
                         <form asp-action="Novo" method="post">

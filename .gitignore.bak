@@ -12,12 +12,6 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
-# Include dlls if theyfre in the NuGet packages directory
-!/packages/*/lib/*.dll
-!/packages/*/lib/*/*.dll
-# Include dlls if they're in the CommonReferences directory
-!*CommonReferences/*.dll
-
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
