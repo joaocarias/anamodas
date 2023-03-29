@@ -117,5 +117,21 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 return new List<Tamanho>();
             }
         }
+
+        public async Task<IList<Tamanho>> ObterTodosPorOrdemAsync()
+        {
+            try
+            {
+                var l = await _appDbContext.Tamanhos.Where(c => c.Ativo)
+                                .AsNoTracking()
+                                .OrderBy(c => c.Ordem)
+                                .ToListAsync();
+                return l;
+            }
+            catch (Exception ex)
+            {
+                return new List<Tamanho>();
+            }
+        }
     }
 }

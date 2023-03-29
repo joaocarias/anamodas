@@ -198,7 +198,7 @@ namespace Joao.Ana.Modas.App.Controllers
 
         private async Task SelectListTamanhosViewBag(Guid? selected = null)
         {
-            ViewBag.Tamanhos = new SelectList(await _tamanhoRepositorio.ObterTodosAsync(), "Id", "Nome", selected);
+            ViewBag.Tamanhos = new SelectList(await _tamanhoRepositorio.ObterTodosPorOrdemAsync(), "Id", "Nome", selected);
         }
 
         private async Task SelectListCoresViewBag(Guid? selected = null)

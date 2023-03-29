@@ -35,7 +35,7 @@
                             </div>
                             @Html.HiddenFor(m => m.Id)
 
-                             <div class="mb-3 row">
+                            <div class="mb-3 row">
 
                                 <div class="col-md-6">
                                     <label asp-for="Nome" class="col-form-label"></label>
@@ -43,8 +43,14 @@
                                     <span asp-validation-for="Nome" class="text-danger"></span>
                                 </div>
 
+                                 <div class="col-md-3">
+                                    <label asp-for="Ordem" class="col-form-label"></label>
+                                    <input asp-for="Ordem" class="form-control">
+                                    <span asp-validation-for="Ordem" class="text-danger"></span>
+                                </div>
+
                             </div>
-                                                       
+
                             <hr />
 
                             <div class="row">

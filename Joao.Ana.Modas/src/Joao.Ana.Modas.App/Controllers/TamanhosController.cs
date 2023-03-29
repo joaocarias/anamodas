@@ -22,7 +22,7 @@ namespace Joao.Ana.Modas.App.Controllers
             model = model is null ? new IndexViewModel() : model;
             model.Tamanhos = (!string.IsNullOrEmpty(model?.Filtro))
                 ? _mapper.Map<IList<TamanhoViewModel>>(await _tamanhoRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<TamanhoViewModel>>(await _tamanhoRepositorio.ObterTodosAsync());
+                : _mapper.Map<IList<TamanhoViewModel>>(await _tamanhoRepositorio.ObterTodosPorOrdemAsync());
 
             return View(model);
         }
