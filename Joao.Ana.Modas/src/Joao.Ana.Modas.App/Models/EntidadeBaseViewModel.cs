@@ -14,5 +14,9 @@ namespace Joao.Ana.Modas.App.Models
 
         [Required]
         public bool Ativo { get; set; } = true;
+
+        public Guid? UsuarioCadastro { get; set; } = null;
+
+        public Guid? UsuarioAlteracao { get; set; } = null;
     }
 }

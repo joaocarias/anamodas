@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Joao.Ana.Modas.Infra.Utils;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Joao.Ana.Modas.App.Controllers
@@ -7,26 +8,26 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         protected string GetUserId()
         {
-            var cid = (HttpContext.User.Identity as ClaimsIdentity)?.Claims.FirstOrDefault(x => x.Type.Equals("ID"));
-            return cid?.Value;
+            var claim = (HttpContext.User.Identity as ClaimsIdentity)?.Claims.FirstOrDefault(x => x.Type.Equals(Constants.USER_ID));
+            return claim?.Value;
         }
 
         protected string GetUserPrimeiroNome()
         {
-            var cid = (HttpContext.User.Identity as ClaimsIdentity)?.Claims.FirstOrDefault(x => x.Type.Equals("USER_PRIMEIRO_NOME"));
-            return cid?.Value;
+            var claim = (HttpContext.User.Identity as ClaimsIdentity)?.Claims.FirstOrDefault(x => x.Type.Equals(Constants.USER_PRIMEIRO_NOME));
+            return claim?.Value;
         }
         
         protected string GetUserNome()
         {
-            var cid = (HttpContext.User.Identity as ClaimsIdentity)?.Claims.FirstOrDefault(x => x.Type.Equals("USER_NAME"));
-            return cid?.Value;
+            var claim = (HttpContext.User.Identity as ClaimsIdentity)?.Claims.FirstOrDefault(x => x.Type.Equals(Constants.USER_NAME));
+            return claim?.Value;
         }
 
         protected string GetUserLogin()
         {
-            var cid = (HttpContext.User.Identity as ClaimsIdentity)?.Claims.FirstOrDefault(x => x.Type.Equals("USER_LOGIN"));
-            return cid?.Value;
+            var claim = (HttpContext.User.Identity as ClaimsIdentity)?.Claims.FirstOrDefault(x => x.Type.Equals(Constants.USER_LOGIN));
+            return claim?.Value;
         }
 
     }

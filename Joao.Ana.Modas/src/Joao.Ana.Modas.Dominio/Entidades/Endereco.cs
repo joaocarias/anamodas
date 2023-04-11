@@ -37,5 +37,18 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         }
 
         private Endereco() { }
+
+        public void Atualizar(string? logradouro, string? numero, string? bairro, string? complemento, string? cep, string? cidade, string? estado, Guid? usuarioAlteracao = null)
+        {
+            Logradouro = logradouro;
+            Numero = numero;
+            Bairro = bairro;
+            Complemento = complemento;
+            Cep = cep;
+            Cidade = cidade;
+            Estado = estado;
+
+            Atualizar(usuarioAlteracao);
+        }
     }
 }

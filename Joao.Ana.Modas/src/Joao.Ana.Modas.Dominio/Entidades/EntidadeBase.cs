@@ -16,22 +16,29 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         [Required]
         public bool Ativo { get; private set; } = true;
 
-        public EntidadeBase()
+        public Guid? UsuarioCadastro { get; private set; }
+
+        public Guid? UsuarioAlteracao { get; private set; }
+
+        public EntidadeBase(Guid? usuarioCadastro = null)
         {
             Id = Guid.NewGuid();
             DataCadastro = DateTime.Now;
             Ativo = true;
+            UsuarioCadastro = usuarioCadastro;
         }
 
-        public void ApagarRegistro()
+        public void ApagarRegistro(Guid? usuarioAlteracao = null)
         {
             DataAlteracao = DateTime.Now;
             Ativo = false;
+            UsuarioAlteracao = usuarioAlteracao;
         }
 
-        public void Atualizar()
+        public void Atualizar(Guid? usuarioAlteracao = null)
         {
             DataAlteracao = DateTime.Now;
+            UsuarioAlteracao = usuarioAlteracao;
         }
     }
 }

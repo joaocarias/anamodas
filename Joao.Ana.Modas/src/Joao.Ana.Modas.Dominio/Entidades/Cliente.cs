@@ -20,7 +20,7 @@ namespace Joao.Ana.Modas.Dominio.Entidades
                
         public Guid? EnderecoId { get; private set; }
 
-        public Cliente(string nome, string? email, string? telefone, Endereco? endereco)
+        public Cliente(string nome, string? email, string? telefone, Endereco? endereco) 
         {
             Nome = nome;
             Email = email;
@@ -29,5 +29,15 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         }
 
         private Cliente() { Nome = string.Empty; }
+
+        public void Atualizar(string nome, string? email, string? telefone, Endereco? endereco, Guid? usuarioAlteracao = null) 
+        {
+            Nome = nome;
+            Email = email;
+            Telefone = telefone;
+            Endereco = endereco;
+
+            Atualizar(usuarioAlteracao);
+        } 
     }
 }

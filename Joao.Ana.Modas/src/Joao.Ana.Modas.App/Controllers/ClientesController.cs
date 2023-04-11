@@ -52,6 +52,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                model.UsuarioCadastro = userId;
+
                 var c = _mapper.Map<Cliente>(model);
                 await _clienteRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
@@ -77,7 +80,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Constants.BASICO)]
+        [Authorize(Roles = Constants.ADMINISTRADOR)]
         public async Task<IActionResult> Excluir(Guid guid)
         {
             try
@@ -86,7 +89,8 @@ namespace Joao.Ana.Modas.App.Controllers
                 if(c is null)
                     return RedirectToAction(nameof(Detalhar), new { guid = guid });
 
-                c.ApagarRegistro();
+                _ = Guid.TryParse(GetUserId(), out Guid userId);                
+                c.ApagarRegistro(userId);
                 await _clienteRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));
@@ -121,10 +125,31 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<Cliente>(model);
-                c.Atualizar();
-                await _clienteRepositorio.AtualizarAsync(c);
-                return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                var cliente = await _clienteRepositorio.ObterAsync(model.Id);
+                if(cliente is null) return View(model);
+
+                var endereco = cliente.Endereco;
+                if(endereco is null)
+                {
+                    model.Endereco.UsuarioCadastro = userId;
+                    endereco = _mapper.Map<Endereco>(model.Endereco);
+                }
+                else
+                {
+                    endereco.Atualizar(model.Endereco.Logradouro, model.Endereco.Numero, model.Endereco.Bairro, model.Endereco.Complemento, model.Endereco.Cep, model.Endereco.Cidade, model.Endereco.Estado, userId);
+                }
+
+                cliente.Atualizar(
+                            model.Nome,
+                            model.Email,
+                            model.Telefone,
+                            endereco,
+                            userId
+                        );
+                
+                await _clienteRepositorio.AtualizarAsync(cliente);
+                return RedirectToAction(nameof(Detalhar), new { guid = cliente.Id });
             }
             catch (Exception)
             {
