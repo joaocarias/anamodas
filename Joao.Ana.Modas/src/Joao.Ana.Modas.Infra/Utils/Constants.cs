@@ -4,6 +4,7 @@
     {
         public const string ADMINISTRADOR = "Administrador";
         public const string BASICO = "Basico";
+        public const string LOGISTAASSOCIADO = "Logista_Associado";
 
         public const string USER_ID = "USER_ID";
         public const string USER_LOGIN = "USER_LOGIN";

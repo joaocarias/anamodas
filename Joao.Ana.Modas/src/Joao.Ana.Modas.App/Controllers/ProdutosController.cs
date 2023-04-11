@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.BASICO)]
+    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.BASICO + "," + Constants.LOGISTAASSOCIADO)]
     public class ProdutosController : MeuController
     {
         private readonly IMapper _mapper;
@@ -60,6 +60,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                model.UsuarioCadastro = userId;
+
                 var p = _mapper.Map<Produto>(model);
                 await _produtoRepositorio.AdicionarAsync(p);
                 return RedirectToAction(nameof(Detalhar), new { guid = p.Id });
@@ -77,6 +80,8 @@ namespace Joao.Ana.Modas.App.Controllers
             try
             {
                 var model = new DetalharViewModel() { Produto = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(guid)) };
+                model.PermitirExcluir = User.IsInRole(Constants.LOGISTAASSOCIADO) || User.IsInRole(Constants.ADMINISTRADOR);
+
                 return View(model);
             }
             catch (Exception)
@@ -86,6 +91,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.LOGISTAASSOCIADO)]
         public async Task<IActionResult> Excluir(Guid guid)
         {
             try
@@ -94,7 +100,8 @@ namespace Joao.Ana.Modas.App.Controllers
                 if (c is null)
                     return RedirectToAction(nameof(Detalhar), new { guid = guid });
 
-                c.ApagarRegistro();
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                c.ApagarRegistro(userId);
                 await _produtoRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));

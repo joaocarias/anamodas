@@ -7,6 +7,8 @@
         public string Titulo { get; set; } = "Produtos";
         public ProdutoViewModel Produto { get; set; }
 
+        public bool? PermitirExcluir { get; set; }  
+
         public DetalharViewModel()
         {
             Produto = new ProdutoViewModel();

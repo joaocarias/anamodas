@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.BASICO)]
+    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.BASICO + "," + Constants.LOGISTAASSOCIADO)]
     public class ClientesController : MeuController
     {
         private readonly IMapper _mapper; 
@@ -71,6 +71,7 @@ namespace Joao.Ana.Modas.App.Controllers
             try
             {
                 var model = new DetalharViewModel() { Cliente = _mapper.Map<ClienteViewModel>(await _clienteRepositorio.ObterAsync(guid)) };
+                model.PermitirExcluir = User.IsInRole(Constants.LOGISTAASSOCIADO) || User.IsInRole(Constants.ADMINISTRADOR);
                 return View(model);
             }
             catch (Exception)
@@ -80,7 +81,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Constants.ADMINISTRADOR)]
+        [Authorize(Roles = Constants.ADMINISTRADOR + ","+ Constants.LOGISTAASSOCIADO)]
         public async Task<IActionResult> Excluir(Guid guid)
         {
             try

@@ -35,5 +35,19 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         private Produto() {
             ProdutosEstoques = new List<ProdutoEstoque>();  
         }
+
+        public void Atualizar(string nome, double? precoUnitario, double? precoVenda, IEnumerable<ProdutoEstoque> produtosEstoques, Guid? fornecedorId = null, Guid? logistaAssociadoId = null, Guid? usuarioAlteracao = null)
+        {
+            Nome = nome;
+            PrecoUnitario = precoUnitario;
+            PrecoVenda = precoVenda;
+
+            ProdutosEstoques = produtosEstoques;
+
+            FornecedorId = fornecedorId;
+            LogistaAssociadoId = logistaAssociadoId;
+
+            Atualizar(usuarioAlteracao);
+        }
     }
 }
