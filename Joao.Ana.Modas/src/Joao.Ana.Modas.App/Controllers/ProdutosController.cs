@@ -2,11 +2,14 @@
 using Joao.Ana.Modas.App.Models.Produtos;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
+using Joao.Ana.Modas.Infra.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
+    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.BASICO)]
     public class ProdutosController : MeuController
     {
         private readonly IMapper _mapper;
@@ -15,8 +18,9 @@ namespace Joao.Ana.Modas.App.Controllers
         private readonly ICorRepositorio _corRepositorio;
         private readonly ITamanhoRepositorio _tamanhoRepositorio;
         private readonly IProdutoEstoqueRepositorio _produtoEstoqueRepositorio;
+        private readonly ILogistaAssociadoRepositorio _logistaAssociadoRepositorio;
 
-        public ProdutosController(IMapper mapper, IProdutoRepositorio produtoRepositorio, IFornecedorRepositorio fornecedorRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IProdutoEstoqueRepositorio produtoEstoqueRepositorio)
+        public ProdutosController(IMapper mapper, IProdutoRepositorio produtoRepositorio, IFornecedorRepositorio fornecedorRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IProdutoEstoqueRepositorio produtoEstoqueRepositorio, ILogistaAssociadoRepositorio logistaAssociadoRepositorio)
         {
             _mapper = mapper;
             _produtoRepositorio = produtoRepositorio;
@@ -24,6 +28,7 @@ namespace Joao.Ana.Modas.App.Controllers
             _corRepositorio = corRepositorio;
             _tamanhoRepositorio = tamanhoRepositorio;
             _produtoEstoqueRepositorio = produtoEstoqueRepositorio;
+            _logistaAssociadoRepositorio = logistaAssociadoRepositorio;
         }
 
         public async Task<IActionResult> Index(IndexViewModel model)
@@ -39,7 +44,7 @@ namespace Joao.Ana.Modas.App.Controllers
         [HttpGet]
         public async Task<IActionResult> Novo()
         {
-            await SelectListFornecedoresViewBag();
+            await ViewBagsDefault();
             ProdutoViewModel model = new();
             return View(model);
         }
@@ -49,7 +54,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             if (!ModelState.IsValid)
             {
-                await SelectListFornecedoresViewBag(model.FornecedorId);
+                await ViewBagsDefault(model.FornecedorId, model.LogistaAssociadoId);
                 return View(model);
             }
 
@@ -61,7 +66,7 @@ namespace Joao.Ana.Modas.App.Controllers
             }
             catch (Exception)
             {
-                await SelectListFornecedoresViewBag(model.FornecedorId);
+                await ViewBagsDefault(model.FornecedorId, model.LogistaAssociadoId);
                 return View(model);
             }
         }
@@ -103,9 +108,9 @@ namespace Joao.Ana.Modas.App.Controllers
         public async Task<IActionResult> Editar(Guid guid)
         {
             try
-            {
-                await SelectListFornecedoresViewBag();
+            {                
                 var model = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(guid));
+                await ViewBagsDefault(model.FornecedorId, model.LogistaAssociadoId);
                 return View(model);
             }
             catch (Exception)
@@ -120,6 +125,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             if (!ModelState.IsValid)
             {
+                await ViewBagsDefault(model.FornecedorId, model.LogistaAssociadoId);
                 return View(model);
             }
 
@@ -196,6 +202,12 @@ namespace Joao.Ana.Modas.App.Controllers
 
         #region viewBags
 
+        private async Task ViewBagsDefault(Guid? fornecedorId = null, Guid? logistaAssociadoId = null)
+        {
+            await SelectListFornecedoresViewBag(fornecedorId);
+            await SelectListLogistasAssociadosViewBag(logistaAssociadoId);
+        }
+
         private async Task SelectListTamanhosViewBag(Guid? selected = null)
         {
             ViewBag.Tamanhos = new SelectList(await _tamanhoRepositorio.ObterTodosPorOrdemAsync(), "Id", "Nome", selected);
@@ -209,6 +221,11 @@ namespace Joao.Ana.Modas.App.Controllers
         private async Task SelectListFornecedoresViewBag(Guid? selected = null)
         {
             ViewBag.Fornecedores = new SelectList(await _fornecedorRepositorio.ObterTodosAsync(), "Id", "Nome", selected);
+        }
+
+        private async Task SelectListLogistasAssociadosViewBag(Guid? selected = null)
+        {
+            ViewBag.LogistasAssociados = new SelectList(await _logistaAssociadoRepositorio.ObterTodosAsync(), "Id", "Nome", selected);
         }
 
         #endregion

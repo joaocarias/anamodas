@@ -4,6 +4,7 @@ using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
@@ -12,12 +13,14 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public UsuariosController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
         [HttpGet]
@@ -41,13 +44,22 @@ namespace Joao.Ana.Modas.App.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,  
-                    Nome = model.Nome,
+                    Nome = model.Nome                    
                 };
 
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
-                {
+                {                    
+                    await userManager.AddToRoleAsync(user, Constants.BASICO);
+                    await userManager.AddClaimsAsync(user, new List<Claim>()
+                    {
+                        new Claim(Constants.USER_ID, user.Id),
+                        new Claim(Constants.USER_LOGIN, user.UserName),
+                        new Claim(Constants.USER_PRIMEIRO_NOME, user.PrimeiroNome),
+                        new Claim(Constants.USER_NAME, user.Nome)
+                    }) ;
+
                     if (signInManager.IsSignedIn(User) && User.IsInRole(Constants.ADMINISTRADOR))
                     {
                         return RedirectToAction("Index", "Usuarios");
@@ -145,11 +157,68 @@ namespace Joao.Ana.Modas.App.Controllers
                 return View("NotFound");
             }
             else
-            {
+            {                
                 user.Email = model.Email;
                 user.UserName = model.UserName;
                 user.Nome = model.Nome;
+                
+                var userClaims = await userManager.GetClaimsAsync(user);
+                if (userClaims.Where(x => x.Type.Equals(Constants.USER_ID)).Any())
+                {
+                    var claim = userClaims.Where(x => x.Type.Equals(Constants.USER_ID)).FirstOrDefault();
+                    if (claim is not null && !claim.Value.Equals(user.UserName))
+                    {
+                        await userManager.RemoveClaimAsync(user, claim);
+                        await userManager.AddClaimAsync(user, new Claim(Constants.USER_ID, user.Id));
+                    }
+                }
+                else
+                {
+                    await userManager.AddClaimAsync(user, new Claim(Constants.USER_ID, user.Id));
+                }
 
+                if (userClaims.Where(x => x.Type.Equals(Constants.USER_LOGIN)).Any())
+                {
+                    var claim = userClaims.Where(x => x.Type.Equals(Constants.USER_LOGIN)).FirstOrDefault();
+                    if (claim is not null && !claim.Value.Equals(user.UserName))
+                    {
+                        await userManager.RemoveClaimAsync(user, claim);
+                        await userManager.AddClaimAsync(user, new Claim(Constants.USER_LOGIN, user.UserName));                        
+                    }
+                }
+                else
+                {
+                    await userManager.AddClaimAsync(user, new Claim(Constants.USER_LOGIN, user.UserName));
+                }
+
+                if (userClaims.Where(x => x.Type.Equals(Constants.USER_PRIMEIRO_NOME)).Any())
+                {
+                    var claim = userClaims.Where(x => x.Type.Equals(Constants.USER_PRIMEIRO_NOME)).FirstOrDefault();
+                    if (claim is not null && !claim.Value.Equals(user.PrimeiroNome))
+                    {
+                        await userManager.RemoveClaimAsync(user, claim);
+                        await userManager.AddClaimAsync(user, new Claim(Constants.USER_PRIMEIRO_NOME, user.PrimeiroNome));
+                    }
+                }
+                else
+                {
+                    await userManager.AddClaimAsync(user, new Claim(Constants.USER_PRIMEIRO_NOME, user.PrimeiroNome));
+                }
+
+                if (userClaims.Where(x => x.Type.Equals(Constants.USER_NAME)).Any())
+                {
+                    var claim = userClaims.Where(x => x.Type.Equals(Constants.USER_NAME)).FirstOrDefault();
+                    if (claim is not null && !claim.Value.Equals(user.Nome))
+                    {
+                        await userManager.RemoveClaimAsync(user, claim);
+                        await userManager.AddClaimAsync(user, new Claim(Constants.USER_NAME, user.Nome));
+                    }
+                }
+                else
+                {
+                    await userManager.AddClaimAsync(user, new Claim(Constants.USER_NAME, user.Nome));
+                }
+                               
                 var result = await userManager.UpdateAsync(user);
 
                 if (result.Succeeded)

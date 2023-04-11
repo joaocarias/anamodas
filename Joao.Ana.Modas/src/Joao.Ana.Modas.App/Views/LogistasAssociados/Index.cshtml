@@ -1,8 +1,7 @@
-﻿@model Joao.Ana.Modas.App.Models.Produtos.IndexViewModel
+﻿@model Joao.Ana.Modas.App.Models.LogistaAssociado.IndexViewModel
 
 @{
     ViewData["Title"] = Model?.Titulo;
-
 }
 
 <div class="row text-center">
@@ -23,7 +22,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <a asp-controller="Produtos" asp-action="Novo" class="btn btn-primary">
+                <a asp-controller="LogistasAssociados" asp-action="Novo" class="btn btn-primary">
                     <i class="far fa-file-alt"></i> &nbsp;
                     Cadastrar
                 </a>
@@ -64,58 +63,33 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-3">
-            <div class="card-header">Pesquisar</div>
-            <div class="card-body">
-                <div class="row justify-content-center">
-                    <form method="GET" class="form-inline" asp-action="Index">
-                        <div class="row g-3 offset-md-6">
-                            <div class="col-md-8">
-                                <input asp-for="@Model.Filtro" class="form-control" required maxlength="255">
-                            </div>
-                            <div class="col-md-4  btn-block">
-                                <button type="submit" class="btn btn-dark">
-                                    <i class="fas fa-search"></i>
-                                    Pesquisar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="card mb-3">
             <div class="card-header">@ViewData["Title"]</div>
             <div class="card-body">
 
-                @if (Model is not null && Model.Produtos.Any())
+                @if (Model is not null && Model.LogistasAssociados.Any())
                 {
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Descrição</th>  
+                                <th scope="col">Id</th>                             
                                 <th scope="col">Logista</th>
-                                <th scope="col">Fornecedor</th>
-                                <th scope="col">Preço</th>
+                                <th scope="col">Nome Fantasia</th>
+                                <th scope="col">E-Mail</th>
+                                <th scope="col">Telefone</th>
                                 <th scope="col"></th>
                             <tr>
                         </thead>
                         <tbody>
-                            @foreach (var i in Model.Produtos.ToList())
+                            @foreach (var i in Model.LogistasAssociados.ToList())
                             {   
                                 <tr>
-                                    <td scope="row">@i.Id</td>
-                                    <td>@i.Nome</td>      
-                                    <td>@i?.LogistaAssociado?.Nome</td>
-                                    <td>@i?.Fornecedor?.Nome</td>
-                                    <td>R$ @i?.PrecoVenda?.ToString("N2")</td>
+                                    <td scope="row">@i.Id</td>                                  
+                                    <td>@i.Nome</td>
+                                    <td>@i.NomeFantasia</td>
+                                    <td>@i.Email</td>
+                                    <td>@i.Telefone</td>
                                     <td> 
-                                       <a asp-action="Detalhar" asp-controller="Produtos" asp-route-guid="@i.Id">Detalhes</a>
+                                       <a asp-action="Detalhar" asp-controller="LogistasAssociados" asp-route-guid="@i.Id">Detalhes</a>
                                     </td>
                                 </tr>
                             }
@@ -124,7 +98,7 @@
                 }
                 else
                 {
-                    <p>Nenhum produto encontrado!</p>
+                    <p>Nenhum registro encontrado!</p>
                 }
 
             </div>

@@ -2,6 +2,7 @@
 @using Joao.Ana.Modas.Infra.Utils
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,6 +83,13 @@
 
                                     <li class="dropdown-divider"></li>
 
+                                     <li>
+                                        <a class="dropdown-item" asp-controller="LogistasAssociados"
+                                            asp-action="Index">
+                                           <i class="fa-solid fa-city"></i> &nbsp;
+                                                Logistas</a>
+                                    </li>
+
                                     <li>
                                         <a class="dropdown-item" asp-controller="Usuarios"
                                        asp-action="Index">
@@ -120,7 +128,7 @@
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                               role="button" aria-expanded="false">Gerenciar</a>
+                                        role="button" aria-expanded="false">Gerenciar</a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item" asp-controller="Usuarios"
@@ -136,6 +144,10 @@
                             }
 
                             <li class="nav-item">
+                                <div class=nav-link> Olá, @User.Identity.Name </div>
+                            </li>
+
+                            <li class="nav-item">
                                 <form method="post" asp-controller="Usuarios" asp-action="logout">
                                     <button type="submit" style="width:auto"
                                         class="nav-link btn btn-link">
@@ -143,15 +155,15 @@
                                     </button>
                                 </form>
                             </li>
-
+                                                        
                         }
                         else
                         {
-                            <li class="nav-item">
+                           @* <li class="nav-item">
                                 <a class="nav-link" asp-controller="usuarios" asp-action="registrar">
                                     Registrar
                                 </a>
-                            </li>
+                            </li>*@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="usuarios" asp-action="login">
                                     Login

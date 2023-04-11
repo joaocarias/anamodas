@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Joao.Ana.Modas.App.Models.TipoPagamento;
+using Joao.Ana.Modas.App.Models.LogistaAssociado;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
@@ -9,23 +9,23 @@ using Microsoft.AspNetCore.Mvc;
 namespace Joao.Ana.Modas.App.Controllers
 {
     [Authorize(Roles = Constants.ADMINISTRADOR)]
-    public class TipoPagamentoController : MeuController
+    public class LogistasAssociadosController : MeuController
     {
         private readonly IMapper _mapper;
-        private readonly ITipoPagamentoRepositorio _tipoPagamentoRepositorio;
+        private readonly ILogistaAssociadoRepositorio _logistaAssociadoRepositorio;
 
-        public TipoPagamentoController(IMapper mapper, ITipoPagamentoRepositorio tipoPagamentoRepositorio)
+        public LogistasAssociadosController(IMapper mapper, ILogistaAssociadoRepositorio logistaAssociadoRepositorio)
         {
             _mapper = mapper;
-            _tipoPagamentoRepositorio = tipoPagamentoRepositorio;
+            _logistaAssociadoRepositorio = logistaAssociadoRepositorio;
         }
 
         public async Task<IActionResult> Index(IndexViewModel model)
         {
             model = model is null ? new IndexViewModel() : model;
-            model.TipoPagamentos = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<TipoPagamentoViewModel>>(await _tipoPagamentoRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<TipoPagamentoViewModel>>(await _tipoPagamentoRepositorio.ObterTodosPorOrdemAsync());
+            model.LogistasAssociados = (!string.IsNullOrEmpty(model?.Filtro))
+                ? _mapper.Map<IList<LogistaAssociadoViewModel>>(await _logistaAssociadoRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IList<LogistaAssociadoViewModel>>(await _logistaAssociadoRepositorio.ObterTodosAsync());
 
             return View(model);
         }
@@ -33,11 +33,11 @@ namespace Joao.Ana.Modas.App.Controllers
         [HttpGet]
         public IActionResult Novo()
         {
-            return View(new TipoPagamentoViewModel());
+            return View(new LogistaAssociadoViewModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Novo(TipoPagamentoViewModel model)
+        public async Task<IActionResult> Novo(LogistaAssociadoViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -46,8 +46,8 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<TipoPagamento>(model);
-                await _tipoPagamentoRepositorio.AdicionarAsync(c);
+                var c = _mapper.Map<LogistaAssociado>(model);
+                await _logistaAssociadoRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
             catch (Exception)
@@ -61,7 +61,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                return View(new DetalharViewModel() { TipoPagamento = _mapper.Map<TipoPagamentoViewModel>(await _tipoPagamentoRepositorio.ObterAsync(guid)) });
+                return View(new DetalharViewModel() { LogistaAssociado = _mapper.Map<LogistaAssociadoViewModel>(await _logistaAssociadoRepositorio.ObterAsync(guid)) });
             }
             catch (Exception)
             {
@@ -74,12 +74,12 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                var c = await _tipoPagamentoRepositorio.ObterAsync(guid);
+                var c = await _logistaAssociadoRepositorio.ObterAsync(guid);
                 if (c is null)
                     return RedirectToAction(nameof(Detalhar), new { guid });
 
                 c.ApagarRegistro();
-                await _tipoPagamentoRepositorio.ApagarAsync(c);
+                await _logistaAssociadoRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -93,7 +93,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                return View(_mapper.Map<TipoPagamentoViewModel>(await _tipoPagamentoRepositorio.ObterAsync(guid)));
+                return View(_mapper.Map<LogistaAssociadoViewModel>(await _logistaAssociadoRepositorio.ObterAsync(guid)));
             }
             catch (Exception)
             {
@@ -102,7 +102,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(TipoPagamentoViewModel model)
+        public async Task<IActionResult> Editar(LogistaAssociadoViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -111,9 +111,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<TipoPagamento>(model);
+                var c = _mapper.Map<LogistaAssociado>(model);
                 c.Atualizar();
-                await _tipoPagamentoRepositorio.AtualizarAsync(c);
+                await _logistaAssociadoRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
             catch (Exception)

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-   // [Authorize(Roles = Constants.ADMINISTRADOR)]
+    [Authorize(Roles = Constants.ADMINISTRADOR)]
     public class RegrasController : Controller
     {
         private readonly RoleManager<IdentityRole> roleManager;

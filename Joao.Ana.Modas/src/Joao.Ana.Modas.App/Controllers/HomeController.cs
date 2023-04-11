@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace Joao.Ana.Modas.App.Controllers
 {
     [AllowAnonymous]
-    public class HomeController : Controller
+    public class HomeController : MeuController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -17,6 +17,10 @@ namespace Joao.Ana.Modas.App.Controllers
 
         public IActionResult Index()
         {
+            var g = GetUserId();
+            var n = GetUserNome();
+            var p = GetUserPrimeiroNome();
+            var l = GetUserLogin();
             return View();
         }
 

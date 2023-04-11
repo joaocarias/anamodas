@@ -3,11 +3,13 @@ using Joao.Ana.Modas.App.Models.Clientes;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
+    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.BASICO)]
     public class ClientesController : MeuController
     {
         private readonly IMapper _mapper; 
@@ -75,6 +77,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Constants.BASICO)]
         public async Task<IActionResult> Excluir(Guid guid)
         {
             try

@@ -64,6 +64,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             {
                 var c = await _appDbContext.Produtos
                                             .Include(_ => _.Fornecedor)
+                                            .Include(_ => _.LogistaAssociado)
                                             .Include(_ => _.ProdutosEstoques)
                                                 .ThenInclude(_ => _.Cor)
                                             .Include(_ => _.ProdutosEstoques)
@@ -81,7 +82,13 @@ namespace Joao.Ana.Modas.Infra.Repositorios
         {
             try
             {
-                var l = await _appDbContext.Produtos.Where(c => c.Ativo && c.Nome.Contains(filtro))                                
+                var l = await _appDbContext.Produtos.Where(c => c.Ativo && c.Nome.Contains(filtro))
+                                .Include(_ => _.Fornecedor)
+                                .Include(_ => _.LogistaAssociado)
+                                .Include(_ => _.ProdutosEstoques)
+                                    .ThenInclude(_ => _.Cor)
+                                .Include(_ => _.ProdutosEstoques)
+                                    .ThenInclude(_ => _.Tamanho)
                                 .AsNoTracking()
                                 .OrderBy(c => c.Nome)
                                 .ToListAsync();
@@ -98,7 +105,12 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             try
             {
                 var l = await _appDbContext.Produtos.Where(c => c.Ativo)
-                                .Include(x => x.Fornecedor)
+                                .Include(_ => _.Fornecedor) 
+                                .Include(_ => _.LogistaAssociado)
+                                .Include(_ => _.ProdutosEstoques)
+                                    .ThenInclude(_ => _.Cor)
+                                .Include(_ => _.ProdutosEstoques)
+                                    .ThenInclude(_ => _.Tamanho)
                                 .AsNoTracking()
                                 .OrderBy(c => c.Nome)
                                 .ToListAsync();
@@ -115,7 +127,12 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             try
             {
                 var l = _appDbContext.Produtos.Where(c => c.Ativo)
-                                .Include(x => x.Fornecedor)
+                                .Include(_ => _.Fornecedor)
+                                .Include(_ => _.LogistaAssociado)
+                                .Include(_ => _.ProdutosEstoques)
+                                    .ThenInclude(_ => _.Cor)
+                                .Include(_ => _.ProdutosEstoques)
+                                    .ThenInclude(_ => _.Tamanho)
                                 .OrderBy(c => c.Nome);
 
                 return await Paginacao<Produto>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);

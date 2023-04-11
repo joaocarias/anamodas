@@ -57,14 +57,18 @@
                             </div>
                             <hr />
 
-                            <div class="mb-3 row">
-                                                             
+                            <div class="mb-3 row">                                                             
                                  <div class="col-md-6">
                                     <label asp-for="FornecedorId" class="col-form-label"></label>
                                     <select asp-for="FornecedorId" asp-items="ViewBag.Fornecedores" class="form-control"></select>                                    
                                     <span asp-validation-for="FornecedorId" class="text-danger"></span>
-                                </div>
+                                 </div>
 
+                                 <div class="col-md-6">
+                                    <label asp-for="LogistaAssociadoId" class="col-form-label"></label>
+                                    <select asp-for="LogistaAssociadoId" asp-items="ViewBag.LogistasAssociados" class="form-control"></select>                                    
+                                    <span asp-validation-for="LogistaAssociadoId" class="text-danger"></span>
+                                 </div>
                             </div>
 
                             <hr />

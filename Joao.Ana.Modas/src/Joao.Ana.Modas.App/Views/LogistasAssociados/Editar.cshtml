@@ -1,7 +1,7 @@
-﻿@model Joao.Ana.Modas.App.Models.Produtos.ProdutoViewModel
+﻿@model Joao.Ana.Modas.App.Models.LogistaAssociado.LogistaAssociadoViewModel
 
 @{
-    ViewData["Title"] = "Produtos";
+    ViewData["Title"] = "Logistas";
 }
 
 <div class="row text-center">
@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Produtos">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="LogistasAssociados">@ViewData["Title"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Editar Cadastro</li>
             </ol>
         </nav>
@@ -35,7 +35,7 @@
                             </div>
                             @Html.HiddenFor(m => m.Id)
 
-                             <div class="mb-3 row">
+                            <div class="mb-3 row">
 
                                 <div class="col-md-6">
                                     <label asp-for="Nome" class="col-form-label"></label>
@@ -43,37 +43,30 @@
                                     <span asp-validation-for="Nome" class="text-danger"></span>
                                 </div>
 
-                                <div class="col-md-3">
-
-                                    <label asp-for="PrecoUnitario" class="col-form-label"></label>
-                                    <input asp-for="PrecoUnitario" class="form-control">
-                                    <span asp-validation-for="PrecoUnitario" class="text-danger"></span>
-
-                                </div>
-                                <div class="col-md-3">
-                                    <label asp-for="PrecoVenda" class="col-form-label"></label>
-                                    <input asp-for="PrecoVenda" class="form-control">
-                                    <span asp-validation-for="PrecoVenda" class="text-danger"></span>
+                                <div class="col-md-6">
+                                    <label asp-for="NomeFantasia" class="col-form-label"></label>
+                                    <input asp-for="NomeFantasia" class="form-control">
+                                    <span asp-validation-for="NomeFantasia" class="text-danger"></span>
                                 </div>
 
                             </div>
-                            
+
                             <div class="mb-3 row">
-                                
-                                <div class="col-md-6">
-                                    <label asp-for="FornecedorId" class="col-form-label"></label>
-                                    <select asp-for="FornecedorId" asp-items="ViewBag.Fornecedores" class="form-control"></select>                                    
-                                    <span asp-validation-for="FornecedorId" class="text-danger"></span>
+                                <div class="col-md-4">
+
+                                    <label asp-for="Email" class="col-form-label"></label>
+                                    <input asp-for="Email" class="form-control" type="email">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label asp-for="LogistaAssociadoId" class="col-form-label"></label>
-                                    <select asp-for="LogistaAssociadoId" asp-items="ViewBag.LogistasAssociados" class="form-control"></select>                                    
-                                    <span asp-validation-for="LogistaAssociadoId" class="text-danger"></span>
-                                 </div>
-
+                                <div class="col-md-2">
+                                    <label asp-for="Telefone" class="col-form-label"></label>
+                                    <input asp-for="Telefone" class="form-control telefone">
+                                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                                </div>
                             </div>
-                                                       
+
                             <hr />
 
                             <div class="row">
@@ -83,7 +76,7 @@
                                         Salvar
                                     </button>
 
-                                    <a asp-action="Index" asp-controller="Produtos" class="btn btn-warning">
+                                    <a asp-action="Index" asp-controller="LogistasAssociados" class="btn btn-warning">
                                         <i class="far fa-times-circle"></i>
                                         Cancelar
                                     </a>

@@ -7,6 +7,10 @@
         public string Titulo { get; set; } = "Clientes";
         public ClienteViewModel Cliente { get; set; }
 
+        public bool? PermitirExcluir { get; set; }
+
+        public bool? PermitirVerCompras { get; set; }   
+
         public DetalharViewModel()
         {
             Cliente = new ClienteViewModel();

@@ -3,6 +3,7 @@ using Joao.Ana.Modas.App.Models.Clientes;
 using Joao.Ana.Modas.App.Models.Cores;
 using Joao.Ana.Modas.App.Models.Enderecos;
 using Joao.Ana.Modas.App.Models.Fornecedores;
+using Joao.Ana.Modas.App.Models.LogistaAssociado;
 using Joao.Ana.Modas.App.Models.ProdutoEstoques;
 using Joao.Ana.Modas.App.Models.Produtos;
 using Joao.Ana.Modas.App.Models.Tamanhos;
@@ -57,6 +58,7 @@ var config = new MapperConfiguration(cfg =>
     cfg.CreateMap<CorViewModel, Cor>().ReverseMap();
     cfg.CreateMap<ProdutoEstoqueViewModel, ProdutoEstoque>().ReverseMap();
     cfg.CreateMap<TipoPagamentoViewModel, TipoPagamento>().ReverseMap();
+    cfg.CreateMap<LogistaAssociadoViewModel, LogistaAssociado>().ReverseMap();
 });
 
 IMapper mapper = config.CreateMapper();
@@ -69,6 +71,7 @@ builder.Services.AddScoped<ITamanhoRepositorio, TamanhoRepositorio>();
 builder.Services.AddScoped<ICorRepositorio, CorRepositorio>();
 builder.Services.AddScoped<IProdutoEstoqueRepositorio, ProdutoEstoqueRepositorio>();
 builder.Services.AddScoped<ITipoPagamentoRepositorio, TipoPagamentoRepositorio>();
+builder.Services.AddScoped<ILogistaAssociadoRepositorio, LogistaAssociadoRepositorio>();
 
 var app = builder.Build();
 

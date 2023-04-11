@@ -1,4 +1,4 @@
-﻿@model Joao.Ana.Modas.App.Models.Clientes.DetalharViewModel
+﻿@model Joao.Ana.Modas.App.Models.LogistaAssociado.DetalharViewModel
 
 @{
     ViewData["Title"] = Model?.Titulo;
@@ -12,8 +12,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"><i class="fas fa-home"></i>Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="@ViewData["Title"]">@ViewData["Title"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Cliente</li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="LogistasAssociados">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
             </ol>
         </nav>
     </div>
@@ -47,25 +47,31 @@
     </div>
 }
 
-@if (Model is not null && Model.Cliente is not null && !string.IsNullOrEmpty(Model.Cliente.Id.ToString()))
+@if (Model is not null && Model.LogistaAssociado is not null && !string.IsNullOrEmpty(Model.LogistaAssociado.Id.ToString()))
 {
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card mb-3">
-                <div class="card-header">@Model?.Cliente?.Id</div>
+                <div class="card-header">@Model?.LogistaAssociado?.Id</div>
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-5">
-                            Nome: <strong>@Model?.Cliente?.Nome</strong>
+                        <div class="col-md-6">
+                            Nome: <strong>@Model?.LogistaAssociado?.Nome</strong>
                         </div>
 
-                        <div class="col-md-4">
-                            E-mail: <strong>@Model?.Cliente?.Email</strong>
+                          <div class="col-md-6">
+                            Nome Fantasia: <strong>@Model?.LogistaAssociado?.NomeFantasia</strong>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            Nome: <strong>@Model?.LogistaAssociado?.Email</strong>
                         </div>
 
-                        <div class="col-md-3">
-                            Telefone: <strong>@Model?.Cliente?.Telefone</strong>
+                          <div class="col-md-6">
+                            Nome Fantasia: <strong>@Model?.LogistaAssociado?.Telefone</strong>
                         </div>
                     </div>
 
@@ -76,46 +82,9 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-5">
-                            Rua: <strong>@Model?.Cliente?.Endereco?.Logradouro</strong>
-                        </div>
-
-                        <div class="col-md-3">
-                            Nº: <strong>@Model?.Cliente?.Endereco?.Numero</strong>
-                        </div>
-
-                        <div class="col-md-4">
-                            Complemento: <strong>@Model?.Cliente?.Endereco?.Complemento</strong>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            Bairro: <strong>@Model?.Cliente?.Endereco?.Bairro</strong>
-                        </div>
-
-                        <div class="col-md-7">
-                            Cep: <strong>@Model?.Cliente?.Endereco?.Cep</strong>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-12">
-                            Cidade/UF: <strong>@Model?.Cliente?.Endereco?.Cidade - @Model?.Cliente?.Endereco?.Estado </strong>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <hr />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a asp-action="Editar" asp-controller="Clientes" asp-route-guid="@Model?.Cliente?.Id" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Editar </a>
-
-                            @if (Model.PermitirExcluir is not null && Model.PermitirExcluir.Equals(true))
-                            {
-                                <a href="#" class="btn btn-danger btn-sm btn-excluir" id="@Model?.Cliente?.Id"> <i class="far fa-trash-alt"></i> Excluir </a>
-                            }
+                            <a asp-action="Editar" asp-controller="LogistasAssociados" asp-route-guid="@Model?.LogistaAssociado?.Id" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Editar </a>
+                            <a href="#" class="btn btn-danger btn-sm btn-excluir" id="@Model?.LogistaAssociado?.Id"> <i class="far fa-trash-alt"></i> Excluir </a>
                         </div>
                     </div>
                 </div>
@@ -124,7 +93,6 @@
     </div>
 }
 
- 
 <!-- Modal Excluir -->
 <div class="modal fade" id="ModalExcluir" tabindex="-1" aria-labelledby="TituloModalExcluir" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" ">
@@ -144,12 +112,11 @@
     </div>
 </div>
 
-
 @section Scripts{
 <script type="text/javascript">
     $('.btn-excluir').on('click', function() {
         var id = $(this).attr('id');
-        $('#url-modal-excluir').attr('href', '/Clientes/Excluir?guid=' + id);
+        $('#url-modal-excluir').attr('href', '/LogistasAssociados/Excluir?guid=' + id);
         $('#ModalExcluir').modal('show');
     });
 </script>

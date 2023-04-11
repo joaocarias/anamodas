@@ -2,10 +2,13 @@
 using Joao.Ana.Modas.App.Models.Tamanhos;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
+using Joao.Ana.Modas.Infra.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
+    [Authorize(Roles = Constants.ADMINISTRADOR)]
     public class TamanhosController : MeuController
     {
         private readonly IMapper _mapper;

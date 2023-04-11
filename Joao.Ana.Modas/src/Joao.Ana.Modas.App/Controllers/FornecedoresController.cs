@@ -3,11 +3,13 @@ using Joao.Ana.Modas.App.Models.Fornecedores;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
+    [Authorize(Roles = Constants.ADMINISTRADOR)]
     public class FornecedoresController : Controller
     {
         private readonly IMapper _mapper;

@@ -2,8 +2,16 @@
 
 @{
     ViewData["Title"] = "Caixa";
-}
 
+    int _contItem = 0;
+    double _valorTotal = 0.00;
+
+    if(Model.Produtos is not null && Model.Produtos.Any())
+    {
+        _contItem = Model.Produtos.Count();
+        _valorTotal = Model.Produtos.Select(c => c.Produto.PrecoVenda.GetValueOrDefault()).Sum();
+    }
+}
 
 <div class="row text-center">
     <div class="col-md-12">
@@ -20,16 +28,14 @@
     </div>
 </div>
 
-
-
 <div class="row">
     <div class="col-md-12">
 
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card mb-3">                    
-                    <div class="card-body">
-                              <h4 class="card-title">Total de Itens: <strong>20</strong></h4>                               
+                    <div class="card-body">                        
+                         <h4 class="card-title">Total de Itens: <strong>@_contItem</strong></h4>                               
                     </div>
                 </div>
             </div>
@@ -37,7 +43,7 @@
             <div class="col-md-6">
                 <div class="card mb-3">                    
                     <div class="card-body">
-                              <h4 class="card-title">Valor Total: <strong>R$ 2020,28</strong></h4>                               
+                              <h4 class="card-title">Valor Total: <strong>R$ @_valorTotal.ToString("N2")</strong></h4>                               
                     </div>
                 </div>
             </div>

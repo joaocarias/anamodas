@@ -15,9 +15,12 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         public Fornecedor? Fornecedor { get; private set; }
         public Guid? FornecedorId { get; private set; } = null;
 
+        public LogistaAssociado? LogistaAssociado { get; private set; } = null;
+        public Guid? LogistaAssociadoId { get; private set; } = null;
+
         public IEnumerable<ProdutoEstoque> ProdutosEstoques { get; private set; }
                 
-        public Produto(string nome, double? precoUnitario, double? precoVenda, IEnumerable<ProdutoEstoque> produtosEstoques, Guid? fornecedorId = null)
+        public Produto(string nome, double? precoUnitario, double? precoVenda, IEnumerable<ProdutoEstoque> produtosEstoques, Guid? fornecedorId = null, Guid? logistaAssociadoId = null)
         {
             Nome = nome;
             PrecoUnitario = precoUnitario;
@@ -26,6 +29,7 @@ namespace Joao.Ana.Modas.Dominio.Entidades
             ProdutosEstoques = produtosEstoques; 
 
             FornecedorId = fornecedorId;
+            LogistaAssociadoId = logistaAssociadoId;
         }
 
         private Produto() {
