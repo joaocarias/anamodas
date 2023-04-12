@@ -24,7 +24,7 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         {
             Nome = nome;
 
-            Atualizar(UsuarioAlteracao);
+            Atualizar(usuarioAlteracao);
         }
     }
 }
