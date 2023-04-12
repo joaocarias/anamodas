@@ -46,6 +46,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                model.UsuarioCadastro = userId;
+
                 var c = _mapper.Map<LogistaAssociado>(model);
                 await _logistaAssociadoRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
@@ -78,7 +81,8 @@ namespace Joao.Ana.Modas.App.Controllers
                 if (c is null)
                     return RedirectToAction(nameof(Detalhar), new { guid });
 
-                c.ApagarRegistro();
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                c.ApagarRegistro(userId);
                 await _logistaAssociadoRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));
@@ -111,8 +115,11 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<LogistaAssociado>(model);
-                c.Atualizar();
+                var c = await _logistaAssociadoRepositorio.ObterAsync(model.Id);
+                if (c is null) return View(model);
+
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                c.Atualizar(model.Nome, userId);
                 await _logistaAssociadoRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }

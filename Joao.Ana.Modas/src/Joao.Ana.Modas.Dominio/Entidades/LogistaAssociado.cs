@@ -27,5 +27,15 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         }
 
         private LogistaAssociado() { }
+
+        public void Atualizar(string nome, string nomeFantasia, string? email, string? telefone, Guid? usuarioAlteracao)
+        {
+            Nome = nome;
+            NomeFantasia = nomeFantasia;
+            Email = email;
+            Telefone = telefone;
+
+            Atualizar(usuarioAlteracao);
+        }
     }
 }

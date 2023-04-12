@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-    [Authorize(Roles = Constants.ADMINISTRADOR)]
+    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.LOGISTAASSOCIADO)]
     public class CoresController : MeuController
     {
         private readonly IMapper _mapper;
@@ -46,6 +46,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                model.UsuarioCadastro = userId;
+
                 var c = _mapper.Map<Cor>(model);
                 await _corRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
@@ -78,7 +81,8 @@ namespace Joao.Ana.Modas.App.Controllers
                 if (c is null)
                     return RedirectToAction(nameof(Detalhar), new { guid });
 
-                c.ApagarRegistro();
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                c.ApagarRegistro(userId);
                 await _corRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));
@@ -111,8 +115,12 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<Cor>(model);
-                c.Atualizar();
+                var c = await _corRepositorio.ObterAsync(model.Id);
+                if (c is null) return View(model);
+
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                c.Atualizar(model.Nome, userId);
+
                 await _corRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }

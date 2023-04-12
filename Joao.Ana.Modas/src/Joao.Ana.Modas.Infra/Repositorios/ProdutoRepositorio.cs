@@ -52,8 +52,9 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 await _appDbContext.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                var text = ex.Message;
                 return false;
             }
         }

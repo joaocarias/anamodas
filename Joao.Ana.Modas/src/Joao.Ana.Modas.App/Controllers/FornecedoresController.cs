@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace Joao.Ana.Modas.App.Controllers
 {
     [Authorize(Roles = Constants.ADMINISTRADOR)]
-    public class FornecedoresController : Controller
+    public class FornecedoresController : MeuController
     {
         private readonly IMapper _mapper;
         private readonly IFornecedorRepositorio _fornecedorRepositorio;
@@ -51,6 +51,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                model.UsuarioCadastro = userId;
+
                 var c = _mapper.Map<Fornecedor>(model);
                 await _fornecedorRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
@@ -84,7 +87,8 @@ namespace Joao.Ana.Modas.App.Controllers
                 if (c is null)
                     return RedirectToAction(nameof(Detalhar), new { guid = guid });
 
-                c.ApagarRegistro();
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+                c.ApagarRegistro(userId);
                 await _fornecedorRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));
@@ -109,7 +113,6 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Editar(FornecedorViewModel model)
         {
@@ -120,8 +123,24 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {
-                var c = _mapper.Map<Fornecedor>(model);
-                c.Atualizar();
+                var c = await _fornecedorRepositorio.ObterAsync(model.Id);
+                if (c is null) return View(model);
+
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
+
+                var endereco = c.Endereco;
+                if (endereco is null)
+                {
+                    model.Endereco.UsuarioCadastro = userId;
+                    endereco = _mapper.Map<Endereco>(model.Endereco);
+                }
+                else
+                {
+                    endereco.Atualizar(model.Endereco.Logradouro, model.Endereco.Numero, model.Endereco.Bairro, model.Endereco.Complemento, model.Endereco.Cep, model.Endereco.Cidade, model.Endereco.Estado, userId);
+                }
+
+                c.Atualizar(model.Nome, model.Email, model.Telefone, endereco, userId);
+                               
                 await _fornecedorRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }

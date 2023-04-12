@@ -29,5 +29,15 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         }
 
         private Fornecedor() { Nome = string.Empty; }
+
+        public void Atualizar(string nome, string? email, string? telefone, Endereco? endereco, Guid? usuarioAlteracao)
+        {
+            Nome = nome;
+            Email = email;
+            Telefone = telefone;
+            Endereco = endereco;
+
+            Atualizar(usuarioAlteracao);
+        }
     }
 }

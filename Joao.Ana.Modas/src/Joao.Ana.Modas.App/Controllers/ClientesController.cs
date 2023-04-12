@@ -115,7 +115,6 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Editar(ClienteViewModel model)
         {
@@ -125,11 +124,11 @@ namespace Joao.Ana.Modas.App.Controllers
             }
 
             try
-            {
-                _ = Guid.TryParse(GetUserId(), out Guid userId);
+            {               
                 var cliente = await _clienteRepositorio.ObterAsync(model.Id);
                 if(cliente is null) return View(model);
 
+                _ = Guid.TryParse(GetUserId(), out Guid userId);
                 var endereco = cliente.Endereco;
                 if(endereco is null)
                 {

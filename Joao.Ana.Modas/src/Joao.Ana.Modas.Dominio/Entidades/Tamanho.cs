@@ -18,5 +18,12 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         private Tamanho() {
         
         }
+
+        public void Atualizar(string nome, Guid? usuarioAlteracao)
+        {
+            Nome = nome;
+
+            Atualizar(usuarioAlteracao);
+        }
     }
 }
