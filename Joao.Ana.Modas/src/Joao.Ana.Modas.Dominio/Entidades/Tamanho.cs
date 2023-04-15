@@ -19,9 +19,10 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         
         }
 
-        public void Atualizar(string nome, Guid? usuarioAlteracao)
+        public void Atualizar(string nome, int? ordem, Guid? usuarioAlteracao)
         {
             Nome = nome;
+            Ordem = ordem;
 
             Atualizar(usuarioAlteracao);
         }
