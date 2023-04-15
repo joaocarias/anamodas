@@ -31,11 +31,9 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Registrar() => View();
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Registrar(RegistrarViewModel model)
         {
             if (ModelState.IsValid)
@@ -51,7 +49,7 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 if (result.Succeeded)
                 {                    
-                    await userManager.AddToRoleAsync(user, Constants.ADMINISTRADOR);
+                    await userManager.AddToRoleAsync(user, Constants.BASICO);
                     await userManager.AddClaimsAsync(user, new List<Claim>()
                     {
                         new Claim(Constants.USER_ID, user.Id),
