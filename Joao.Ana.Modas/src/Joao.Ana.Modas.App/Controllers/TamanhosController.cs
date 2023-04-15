@@ -121,7 +121,7 @@ namespace Joao.Ana.Modas.App.Controllers
                 if (c is null) return View(model);
 
                 _ = Guid.TryParse(GetUserId(), out Guid userId);
-                c.Atualizar(model.Nome, userId);
+                c.Atualizar(model.Nome, model.Ordem, userId);
 
                 await _tamanhoRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
