@@ -227,6 +227,4 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
     }
-
-
 }

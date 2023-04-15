@@ -571,3 +571,4 @@ C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Moda
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\ref\Joao.Ana.Modas.App.dll
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.pdb
 C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\obj\Debug\net6.0\Joao.Ana.Modas.App.genruntimeconfig.cache
+C:\Users\joao_franca\source\repos\jcf-ana-modas\Joao.Ana.Modas\src\Joao.Ana.Modas.App\bin\Debug\net6.0\aws-beanstalk-tools-defaults.json

@@ -51,7 +51,7 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 if (result.Succeeded)
                 {                    
-                    await userManager.AddToRoleAsync(user, Constants.BASICO);
+                    await userManager.AddToRoleAsync(user, Constants.ADMINISTRADOR);
                     await userManager.AddClaimsAsync(user, new List<Claim>()
                     {
                         new Claim(Constants.USER_ID, user.Id),
