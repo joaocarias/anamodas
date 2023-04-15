@@ -101,6 +101,7 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Editar(Guid guid)
         {
             try

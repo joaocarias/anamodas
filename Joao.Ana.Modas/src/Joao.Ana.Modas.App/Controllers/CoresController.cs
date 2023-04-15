@@ -20,6 +20,7 @@ namespace Joao.Ana.Modas.App.Controllers
             _corRepositorio = corRepositorio;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
             model = model is null ? new IndexViewModel() : model;

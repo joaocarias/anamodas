@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-    [Authorize(Roles = Constants.ADMINISTRADOR)]
+    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.LOGISTAASSOCIADO)]
     public class FornecedoresController : MeuController
     {
         private readonly IMapper _mapper;

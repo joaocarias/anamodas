@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
-    [Authorize(Roles = Constants.ADMINISTRADOR)]
+    [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.LOGISTAASSOCIADO)]
     public class TipoPagamentoController : MeuController
     {
         private readonly IMapper _mapper;
@@ -20,6 +20,7 @@ namespace Joao.Ana.Modas.App.Controllers
             _tipoPagamentoRepositorio = tipoPagamentoRepositorio;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
             model = model is null ? new IndexViewModel() : model;
@@ -94,6 +95,7 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Editar(Guid guid)
         {
             try

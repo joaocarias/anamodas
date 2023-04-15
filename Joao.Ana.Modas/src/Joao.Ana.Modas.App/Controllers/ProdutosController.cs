@@ -31,6 +31,7 @@ namespace Joao.Ana.Modas.App.Controllers
             _logistaAssociadoRepositorio = logistaAssociadoRepositorio;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
             model = model is null ? new IndexViewModel() : model;
@@ -112,6 +113,7 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
+        [HttpGet]
         public async Task<IActionResult> Editar(Guid guid)
         {
             try
@@ -125,7 +127,6 @@ namespace Joao.Ana.Modas.App.Controllers
                 return RedirectToAction(nameof(Detalhar), new { guid = guid });
             }
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Editar(ProdutoViewModel model)
