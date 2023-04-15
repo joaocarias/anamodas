@@ -3,12 +3,17 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 
+    @{
+
+        var appName = "Ana's Store App";
+    }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Joao.Ana.Modas.App</title>
+    <title>@appName - @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Joao.Ana.Modas.App.styles.css" asp-append-version="true" />
@@ -181,7 +186,7 @@
 
     <footer class="border-top footer text-muted main-footer">
         <div class="container">
-            &copy; 2023 - Ana Modas App - Desenvolvido por João Carias de França - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - @appName - Desenvolvido por João Carias de França - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
