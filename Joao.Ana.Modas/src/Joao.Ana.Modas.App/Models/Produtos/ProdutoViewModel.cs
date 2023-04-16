@@ -14,7 +14,6 @@ namespace Joao.Ana.Modas.App.Models.Produtos
         public string Nome { get; set; } = string.Empty;
 
         [Display(Name = "Preço Unitário R$")]
-        //  [DisplayFormat(DataFormatString = "{0:C0}")]
         [Range(0.01, double.MaxValue)]
         public decimal? PrecoUnitario { get; set; }
 
