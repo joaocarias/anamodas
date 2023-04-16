@@ -15,8 +15,10 @@ using Joao.Ana.Modas.Infra.Identity;
 using Joao.Ana.Modas.Infra.Repositorios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,6 +76,27 @@ builder.Services.AddScoped<ITipoPagamentoRepositorio, TipoPagamentoRepositorio>(
 builder.Services.AddScoped<ILogistaAssociadoRepositorio, LogistaAssociadoRepositorio>();
 
 var app = builder.Build();
+
+var defaultDateCulture = "pt-BR";
+
+// Formatter number
+var ci = new CultureInfo(defaultDateCulture);
+ci.NumberFormat.NumberDecimalSeparator = ".";
+ci.NumberFormat.CurrencyDecimalSeparator = ".";
+
+// Configure the Localization middleware
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(ci),
+    SupportedCultures = new List<CultureInfo>
+        {
+             ci,
+        },
+    SupportedUICultures = new List<CultureInfo>
+        {
+             ci,
+        }
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
