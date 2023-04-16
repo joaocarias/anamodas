@@ -2,6 +2,7 @@
 using Joao.Ana.Modas.App.Models.LogistaAssociado;
 using Joao.Ana.Modas.App.Models.ProdutoEstoques;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace Joao.Ana.Modas.App.Models.Produtos
 {
@@ -9,16 +10,18 @@ namespace Joao.Ana.Modas.App.Models.Produtos
     {
         [Required]
         [StringLength(200)]
+        [Display(Name = "Nome do Produto")]
         public string Nome { get; set; } = string.Empty;
 
         [Display(Name = "Preço Unitário R$")]
-        [DisplayFormat(DataFormatString = "{0:C0}")]
-        public double? PrecoUnitario { get; set; } = 0.00;
+        //  [DisplayFormat(DataFormatString = "{0:C0}")]
+        [Range(0.01, double.MaxValue)]
+        public decimal? PrecoUnitario { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         [Display(Name = "Preço De Venda R$")]
-        [DisplayFormat(DataFormatString = "{0:C0}")]
-        public double? PrecoVenda { get; set; } = 0.00;
+        [Range(0.01, double.MaxValue)]
+        public decimal? PrecoVenda { get; set; }
 
         public FornecedorViewModel? Fornecedor { get; set; }
 
@@ -34,6 +37,21 @@ namespace Joao.Ana.Modas.App.Models.Produtos
 
         public ProdutoViewModel() {
             ProdutosEstoques = new List<ProdutoEstoqueViewModel>(); 
+        }
+
+        public string? PrecoUnitarioFormatodo
+        {
+            get {
+                    return PrecoUnitario is null ? "0,00" : PrecoUnitario?.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"));
+                }
+        }
+
+        public string? PrecoVendaFormatodo
+        {
+            get
+            {
+                return PrecoVenda is null ? "0,00" : PrecoVenda?.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"));
+            }
         }
     }
 }

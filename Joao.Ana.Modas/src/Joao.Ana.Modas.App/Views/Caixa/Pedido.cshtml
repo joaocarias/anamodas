@@ -4,9 +4,9 @@
     ViewData["Title"] = "Caixa";
 
     int _contItem = 0;
-    double _valorTotal = 0.00;
+    decimal _valorTotal = 0;
 
-    if(Model.Produtos is not null && Model.Produtos.Any())
+    if(Model?.Produtos is not null && Model.Produtos.Any())
     {
         _contItem = Model.Produtos.Count();
         _valorTotal = Model.Produtos.Select(c => c.Produto.PrecoVenda.GetValueOrDefault()).Sum();

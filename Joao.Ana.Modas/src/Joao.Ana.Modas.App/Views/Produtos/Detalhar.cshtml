@@ -1,4 +1,5 @@
-﻿@model Joao.Ana.Modas.App.Models.Produtos.DetalharViewModel
+﻿@using System.Globalization
+@model Joao.Ana.Modas.App.Models.Produtos.DetalharViewModel
 
 @{
     ViewData["Title"] = Model?.Titulo;
@@ -61,11 +62,12 @@
                         </div>
 
                         <div class="col-md-4">
-                            Preço Unitário: <strong>R$ @Model?.Produto?.PrecoUnitario?.ToString("N2")</strong>
+                           @* Preço Unitário: <strong>R$ @Model?.Produto?.PrecoUnitario?.ToString("N2")</strong>*@
+                            Preço Unitário: <strong>@Model?.Produto?.PrecoUnitarioFormatodo</strong>
                         </div>
 
                         <div class="col-md-3">
-                            Preço de Venda: <strong>R$ @Model?.Produto?.PrecoVenda?.ToString("N2")</strong>
+                            Preço de Venda: <strong>@Model?.Produto?.PrecoVendaFormatodo</strong>
                         </div>
                     </div>
 

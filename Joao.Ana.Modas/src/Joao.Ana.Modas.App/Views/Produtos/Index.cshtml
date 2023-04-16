@@ -113,7 +113,7 @@
                                     <td>@i.Nome</td>      
                                     <td>@i?.LogistaAssociado?.Nome</td>
                                     <td>@i?.Fornecedor?.Nome</td>
-                                    <td>R$ @i?.PrecoVenda?.ToString("N2")</td>
+                                    <td>@i?.PrecoVendaFormatodo</td>
                                     <td> 
                                        <a asp-action="Detalhar" asp-controller="Produtos" asp-route-guid="@i.Id">Detalhes</a>
                                     </td>

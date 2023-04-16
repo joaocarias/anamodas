@@ -3,6 +3,7 @@ using System;
 using Joao.Ana.Modas.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Joao.Ana.Modas.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230416000400_ProdutoPrecoDecimal")]
+    partial class ProdutoPrecoDecimal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,8 +267,8 @@ namespace Joao.Ana.Modas.Infra.Migrations
                     b.Property<decimal?>("PrecoUnitario")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<decimal?>("PrecoVenda")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<double?>("PrecoVenda")
+                        .HasColumnType("double");
 
                     b.Property<Guid?>("UsuarioAlteracao")
                         .HasColumnType("char(36)");

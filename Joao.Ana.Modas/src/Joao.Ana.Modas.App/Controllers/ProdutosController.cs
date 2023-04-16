@@ -99,7 +99,7 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 var c = await _produtoRepositorio.ObterAsync(guid);
                 if (c is null)
-                    return RedirectToAction(nameof(Detalhar), new { guid = guid });
+                    return RedirectToAction(nameof(Detalhar), new { guid });
 
                 _ = Guid.TryParse(GetUserId(), out Guid userId);
                 c.ApagarRegistro(userId);
@@ -109,7 +109,7 @@ namespace Joao.Ana.Modas.App.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction(nameof(Detalhar), new { guid = guid });
+                return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
 
@@ -124,7 +124,7 @@ namespace Joao.Ana.Modas.App.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction(nameof(Detalhar), new { guid = guid });
+                return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
 
