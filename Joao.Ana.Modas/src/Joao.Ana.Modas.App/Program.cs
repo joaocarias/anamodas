@@ -59,6 +59,8 @@ var config = new MapperConfiguration(cfg =>
     cfg.CreateMap<TamanhoViewModel, Tamanho>().ReverseMap();
     cfg.CreateMap<CorViewModel, Cor>().ReverseMap();
     cfg.CreateMap<ProdutoEstoqueViewModel, ProdutoEstoque>().ReverseMap();
+    cfg.CreateMap<ItemCheckViewModel, ProdutoEstoque>().ReverseMap();
+    
     cfg.CreateMap<TipoPagamentoViewModel, TipoPagamento>().ReverseMap();
     cfg.CreateMap<LogistaAssociadoViewModel, LogistaAssociado>().ReverseMap();
 });

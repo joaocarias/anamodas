@@ -139,12 +139,12 @@ namespace Joao.Ana.Modas.App.Controllers
 
             try
             {                
-                var p = await _produtoRepositorio.ObterAsync(model.Id);
+                var p = await _produtoRepositorio.ObterSemInclusaoAsync(model.Id);
                 if (p is null) return View(model);
 
                 _ = Guid.TryParse(GetUserId(), out Guid userId);
                 p.Atualizar(model.Nome, model.PrecoUnitario, model.PrecoVenda, model.FornecedorId, model.LogistaAssociadoId, userId);
-
+                
                 await _produtoRepositorio.AtualizarAsync(p);
                 return RedirectToAction(nameof(Detalhar), new { guid = p.Id });
             }

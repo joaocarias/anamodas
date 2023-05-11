@@ -13,6 +13,8 @@
 
         public int Quantidade { get; private set; }
 
+        public int? Check { get; private set; } = 0;
+
         public ProdutoEstoque(Guid produtoId, Guid? corId, Guid? tamanhoId, int quantidade)
         {
             ProdutoId = produtoId;
@@ -27,6 +29,12 @@
         {
             Quantidade += quantidade;
             Atualizar();
+        }
+
+        public void AtualizarChecking(int check, Guid? usuarioAlteracao = null)
+        {
+            Check = check;
+            Atualizar(usuarioAlteracao);
         }
     }
 }

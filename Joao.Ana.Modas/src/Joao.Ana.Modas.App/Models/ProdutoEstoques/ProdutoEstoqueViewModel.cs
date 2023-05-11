@@ -17,6 +17,8 @@ namespace Joao.Ana.Modas.App.Models.ProdutoEstoques
 
         public int Quantidade { get; set; }
 
+        public int? Check { get; set; } = 0;
+
         public ProdutoEstoqueViewModel(Guid produtoId, Guid? corId, Guid? tamanhoId, int quantidade)
         {
             ProdutoId = produtoId;

@@ -81,7 +81,12 @@ namespace Joao.Ana.Modas.Infra.Repositorios
         {
             try
             {
-                var c = await _appDbContext.ProdutoEstoque.Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();
+                var c = await _appDbContext.ProdutoEstoque
+                        .Include(c => c.Produto.Fornecedor)
+                                .Include(c => c.Produto.LogistaAssociado).AsNoTracking()
+                                .Include(c => c.Cor).AsNoTracking()
+                                .Include(c => c.Tamanho).AsNoTracking()
+                    .Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();
                 return c;
             }
             catch (Exception)
@@ -90,13 +95,40 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
+        public async Task<IEnumerable<ProdutoEstoque>> ObterPorFiltro(string filtro)
+        {
+            var l = _appDbContext.ProdutoEstoque
+                                .Include(c => c.Produto.Fornecedor)
+                                .Include(c => c.Produto.LogistaAssociado)
+                                .Include(c => c.Cor)
+                                .Include(c => c.Tamanho)
+                               .Where(c => c.Ativo)
+                               .AsNoTracking();                               
+
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                l = l.Where(c =>
+                            (c.Produto != null && c.Produto.Nome.Contains(filtro))
+                            || (c.Cor != null && c.Cor.Nome.Contains(filtro))
+                            || (c.Tamanho != null && c.Tamanho.Nome.Contains(filtro))
+                    ).OrderBy(c => c.Produto.Nome); ;
+            }
+
+            return await l.ToListAsync();
+        }
+
         public async Task<IList<ProdutoEstoque>> ObterTodosAsync()
         {
             try
             {
-                var l = await _appDbContext.ProdutoEstoque.Where(c => c.Ativo)
+                var l = await _appDbContext.ProdutoEstoque
+                                .Include(c => c.Produto.Fornecedor)
+                                .Include(c => c.Produto.LogistaAssociado)
+                                .Include(c => c.Cor)
+                                .Include(c => c.Tamanho)
+                                .Where(c => c.Ativo)
                                 .AsNoTracking()
-                                .OrderBy(c => c.ProdutoId)
+                                .OrderBy(c => c.Produto.Nome)
                                 .ToListAsync();
                 return l;
             }

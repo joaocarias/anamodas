@@ -5,8 +5,8 @@
 
     @{
 
-        var appName = "Ana's Store App";
-    }
+    var appName = "Ana's Store App";
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,14 +42,16 @@
                                     <li>
                                         <a class="dropdown-item" asp-controller="Clientes"
                                        asp-action="Index">
-                                        <i class="fas fa-user"></i> &nbsp;
-                                       Clientes</a>
+                                            <i class="fas fa-user"></i> &nbsp;
+                                            Clientes
+                                        </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" asp-controller="Produtos"
                                        asp-action="Index">
-                                       <i class="fas fa-shirt"></i>
-                                       Produtos</a>
+                                            <i class="fas fa-shirt"></i>
+                                            Produtos
+                                        </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" asp-controller="Fornecedores"
@@ -59,66 +61,96 @@
                                         </a>
                                     </li>
 
-                                    
+
                                     <li class="dropdown-divider"></li>
 
-                                     <li>
+                                    <li>
                                         <a class="dropdown-item" asp-controller="Cores"
-                                             asp-action="Index">
+                                       asp-action="Index">
                                             <i class="fa-solid fa-paint-roller"></i> &nbsp;
-                                                Cores
+                                            Cores
                                         </a>
                                     </li>
 
                                     <li>
                                         <a class="dropdown-item" asp-controller="Tamanhos"
-                                            asp-action="Index">
+                                       asp-action="Index">
                                             <i class="fa-solid fa-compass-drafting"></i> &nbsp;
-                                                Tamanhos
+                                            Tamanhos
                                         </a>
                                     </li>
 
                                     <li>
                                         <a class="dropdown-item" asp-controller="TipoPagamento"
-                                            asp-action="Index">
+                                       asp-action="Index">
                                             <i class="fa-solid fa-wallet"></i> &nbsp;
-                                                Formas de Pagamento
+                                            Formas de Pagamento
                                         </a>
                                     </li>
 
                                     <li class="dropdown-divider"></li>
 
-                                     <li>
+                                    <li>
                                         <a class="dropdown-item" asp-controller="LogistasAssociados"
-                                            asp-action="Index">
-                                           <i class="fa-solid fa-city"></i> &nbsp;
-                                                Logistas</a>
+                                       asp-action="Index">
+                                            <i class="fa-solid fa-city"></i> &nbsp;
+                                            Logistas
+                                        </a>
                                     </li>
 
                                     <li>
                                         <a class="dropdown-item" asp-controller="Usuarios"
                                        asp-action="Index">
-                                       <i class="fas fa-users"></i> &nbsp;
-                                       Usuários</a>
+                                            <i class="fas fa-users"></i> &nbsp;
+                                            Usuários
+                                        </a>
                                     </li>
 
                                 </ul>
                             </li>
 
-                          @*  <li class="nav-item dropdown">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                               role="button" aria-expanded="false">Movimentação</a>
+                               role="button" aria-expanded="false">Estoque</a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" asp-controller="Caixa"
-                                          asp-action="Pedido">
-                                        <i class="fas fa-user"></i> &nbsp;
-                                       Registrar Pedido</a>
+                                        <a class="dropdown-item" asp-controller="ProdutoEstoque"
+                                       asp-action="Index">
+                                            <i class="fas fa-user"></i> &nbsp;
+                                            Buscar
+                                        </a>
                                     </li>
-                                    
+
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="ProdutoEstoque"
+                                       asp-action="CheckEstoque">
+                                            <i class="fas fa-user"></i> &nbsp;
+                                            Checking
+                                        </a>
+                                    </li>
+
+
+
                                 </ul>
-                            </li>*@
+                            </li>
+
+                            @*  <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                role="button" aria-expanded="false">Movimentação</a>
+                                <ul class="dropdown-menu">
+                                <li>
+                                <a class="dropdown-item" asp-controller="Caixa"
+                                asp-action="Pedido">
+                                <i class="fas fa-user"></i> &nbsp;
+                                Registrar Pedido</a>
+                                </li>
+
+                                </ul>
+                                </li>*@
                         }
+
+
+
 
                     </ul>
                     <ul class="navbar-nav ml-auto">
@@ -131,7 +163,7 @@
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                                        role="button" aria-expanded="false">Gerenciar</a>
+                               role="button" aria-expanded="false">Gerenciar</a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item" asp-controller="Usuarios"
@@ -158,15 +190,15 @@
                                     </button>
                                 </form>
                             </li>
-                                                        
+
                         }
                         else
                         {
-                           @* <li class="nav-item">
+                            @* <li class="nav-item">
                                 <a class="nav-link" asp-controller="usuarios" asp-action="registrar">
-                                    Registrar
+                                Registrar
                                 </a>
-                            </li>*@
+                                </li>*@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="usuarios" asp-action="login">
                                     Login
@@ -186,7 +218,7 @@
 
     <footer class="border-top footer text-muted main-footer">
         <div class="container">
-              &copy; 2023 - @appName - Desenvolvido por João Carias de França - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
+            &copy; 2023 - @appName - Desenvolvido por João Carias de França - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
