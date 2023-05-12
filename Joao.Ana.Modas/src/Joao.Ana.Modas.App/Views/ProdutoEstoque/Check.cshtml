@@ -1,0 +1,200 @@
+﻿@model Joao.Ana.Modas.App.Models.ProdutoEstoques.ItemCheckViewModel
+
+@{
+    ViewData["Title"] = "Produto Check";
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>@ViewData["Title"]</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"><i class="fas fa-home"></i>Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="@ViewData["Title"]">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+@if (Model is not null && !string.IsNullOrEmpty(Model.Informacao))
+{
+    <div class="col-md-12">
+        <div class="row">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @Model.Informacao
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model is not null && !string.IsNullOrEmpty(Model.Informacao))
+{
+    <div class="col-md-12">
+        <div class="row">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                @Model.Informacao
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model is not null && Model.Produto is not null && !string.IsNullOrEmpty(Model.ProdutoId.ToString()))
+{
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-header">@Model?.ProdutoId</div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            Nome: <strong>@Model?.Produto?.Nome</strong>
+                        </div>
+
+                        <div class="col-md-4">
+                            Preço Unitário: <strong>@Model?.Produto?.PrecoUnitarioFormatodo</strong>
+                        </div>
+
+                        <div class="col-md-3">
+                            Preço de Venda: <strong>@Model?.Produto?.PrecoVendaFormatodo</strong>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            Fornecedor: <strong>@Model?.Produto?.Fornecedor?.Nome</strong>
+                        </div>
+
+                        <div class="col-md-5">
+                            Logista: <strong>@Model?.Produto?.LogistaAssociado?.Nome</strong>
+                        </div>
+
+                        <div class="col-md-2">
+                            <a asp-action="Editar" asp-controller="Produtos" asp-route-guid="@Model.ProdutoId">Editar</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+
+                    <form asp-action="Check" method="post">
+                        <div class="row">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                            @Html.HiddenFor(m => m.Id)
+
+                            <div class="col-md-3">
+                                <label asp-for="Quantidade" class="col-form-label"></label>
+                                <input asp-for="Quantidade" class="form-control" disabled="disabled">
+                                <span asp-validation-for="Quantidade" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="CorId" class="col-form-label"></label>
+                                <select asp-for="CorId" asp-items="ViewBag.Cores" class="form-control" disabled="disabled"></select>
+                                <span asp-validation-for="CorId" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="TamanhoId" class="col-form-label"></label>
+                                <select asp-for="TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control" disabled="disabled"></select>
+                                <span asp-validation-for="TamanhoId" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label asp-for="Check" class="col-form-label"></label>
+                                <input asp-for="Check" class="form-control">
+                                <span asp-validation-for="Check" class="text-danger"></span>
+                            </div>
+
+
+                        </div>
+
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="far fa-save"></i>
+                                    Confirmar
+                                </button>
+
+                                <a asp-action="Detalhar" asp-route-guid="@Model?.ProdutoId" asp-controller="Produtos" class="btn btn-warning">
+                                    <i class="far fa-times-circle"></i>
+                                    Cancelar
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <hr />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong>Disponibilidade</strong>
+                            <br />
+
+                            @if (Model is not null && Model.Produto.ProdutosEstoques.Any())
+                            {
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Cor</th>
+                                            <th scope="col">Tamanho</th>
+                                            <th scope="col">Quantidade</th>
+                                            <th scope="col"></th>
+                                        <tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var i in Model.Produto.ProdutosEstoques.ToList())
+                                        {
+                                            <tr>
+                                                <td scope="row">@i.Id</td>
+                                                <td>@i.Cor.Nome</td>
+                                                <td>@i.Tamanho.Nome</td>
+                                                <td>@i.Quantidade</td>
+                                                <td>
+                                                    <a asp-action="Detalhar" asp-controller="Produtos" asp-route-guid="@i.Id">Detalhes</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <p>
+                                    Nenhuma disponibilidade encontrada para esse produto!
+                                </p>
+                            }
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
