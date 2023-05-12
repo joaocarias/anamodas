@@ -37,6 +37,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.LOGISTAASSOCIADO)]
         public async Task<IActionResult> CheckEstoque(CheckEstoqueViewModel model)
         {
             model = model is null ? new CheckEstoqueViewModel() : model;
@@ -48,6 +49,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.LOGISTAASSOCIADO)]
         public async Task<IActionResult> Check(Guid guid)
         {
             try
@@ -65,6 +67,7 @@ namespace Joao.Ana.Modas.App.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.LOGISTAASSOCIADO)]
         public async Task<IActionResult> Check(ItemCheckViewModel model)
         {
             try
@@ -83,7 +86,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 _ = Guid.TryParse(GetUserId(), out Guid userId);
                 pe.AtualizarChecking(model.Check, userId);
 
-                return RedirectToAction(nameof(Index));
+                await _produtoEstoqueRepositorio.AtualizarAsync(pe);
+
+                return RedirectToAction(nameof(CheckEstoque));
             }
             catch (Exception)
             {
