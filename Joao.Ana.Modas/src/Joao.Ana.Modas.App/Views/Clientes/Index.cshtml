@@ -94,8 +94,9 @@
 
                 @if (Model is not null && Model.Clientes.Any())
                 {
+                    int _numeroRegistros = Model.Clientes.Count();
                     <table class="table table-hover">
-                        <thead>
+                        <thead class="table-dark"> 
                             <tr>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Email</th>
@@ -124,6 +125,7 @@
                             }
                         </tbody>
                     </table>
+                    <p><strong>Registro(s): @_numeroRegistros</strong></p>
                 }
                 else
                 {

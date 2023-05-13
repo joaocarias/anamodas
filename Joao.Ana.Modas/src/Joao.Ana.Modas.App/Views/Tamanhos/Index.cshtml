@@ -68,10 +68,11 @@
 
                 @if (Model is not null && Model.Tamanhos.Any())
                 {
+                    int _numeroRegistros = Model.Tamanhos.Count();
                     <table class="table table-hover">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
-                                <th scope="col">Id</th>                             
+                                <th scope="col">Id</th>
                                 <th scope="col">Tamanho</th>
                                 <th scope="col">Ordem</th>
                                 <th scope="col"></th>
@@ -79,18 +80,19 @@
                         </thead>
                         <tbody>
                             @foreach (var i in Model.Tamanhos.ToList())
-                            {   
+                            {
                                 <tr>
-                                    <td scope="row">@i.Id</td>                                  
+                                    <td scope="row">@i.Id</td>
                                     <td>@i.Nome</td>
                                     <td>@i.Ordem</td>
-                                    <td> 
-                                       <a asp-action="Detalhar" asp-controller="Tamanhos" asp-route-guid="@i.Id">Detalhes</a>
+                                    <td>
+                                        <a asp-action="Detalhar" asp-controller="Tamanhos" asp-route-guid="@i.Id">Detalhes</a>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
+                     <p><strong>Registro(s): @_numeroRegistros</strong></p>
                 }
                 else
                 {

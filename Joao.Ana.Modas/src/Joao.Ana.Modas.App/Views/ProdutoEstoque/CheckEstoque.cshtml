@@ -84,8 +84,9 @@
 
                 @if (Model is not null && Model.ProdutoEstoques.Any())
                 {
+                    int _numeroRegistros = Model.ProdutoEstoques.Count();
                     <table class="table table-hover">
-                        <thead>
+                        <thead class="table-dark">                      
                             <tr>
                                 <th scope="col">Descrição</th>  
                                 <th scope="col">Logista</th>
@@ -127,6 +128,7 @@
                             }
                         </tbody>
                     </table>
+                    <p><strong>Registro(s): @_numeroRegistros</strong></p>
                 }
                 else
                 {

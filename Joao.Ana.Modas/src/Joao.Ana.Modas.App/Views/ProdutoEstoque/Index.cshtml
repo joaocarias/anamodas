@@ -85,8 +85,12 @@
 
                 @if (Model is not null && Model.ProdutoEstoques.Any())
                 {
+                    int _quantidade = 0;
+                    decimal _valorTotal = 0;
+                    int _numeroRegistros = Model.ProdutoEstoques.Count();
+
                     <table class="table table-hover">
-                        <thead>
+                        <thead class="table-dark">
                             <tr>
                                 @*<th scope="col">Id</th>*@
                                 <th scope="col">Descrição</th>
@@ -99,11 +103,6 @@
                             <tr>
                         </thead>
                         <tbody>
-                            @{
-                                int _quantidade = 0;
-                                decimal _valorTotal = 0;
-                            }
-
                             @foreach (var i in Model.ProdutoEstoques.ToList())
                             {
                                 _quantidade += i.Quantidade;
@@ -116,7 +115,7 @@
                                 }
 
                                 <tr @_class>
-                                   @* <td scope="row">@i.ProdutoId</td>*@
+                                    @* <td scope="row">@i.ProdutoId</td>*@
                                     <td>@i.Produto.Nome</td>
                                     <td>@i?.Produto.LogistaAssociado?.Nome</td>
                                     <td>@i?.Produto.Fornecedor?.Nome</td>
@@ -129,7 +128,7 @@
                         </tbody>
                         <tfoot>
                             <tr class="table-success">
-                                <td><strong>Totais</strong></td>                                
+                                <td><strong>Totais</strong></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -137,8 +136,10 @@
                                 <td><strong>@_valorTotal.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"))</strong></td>
                                 <td><strong>@_quantidade</strong></td>
                             </tr>
+
                         </tfoot>
                     </table>
+                    <p><strong>Registro(s): @_numeroRegistros</strong></p>
                 }
                 else
                 {
