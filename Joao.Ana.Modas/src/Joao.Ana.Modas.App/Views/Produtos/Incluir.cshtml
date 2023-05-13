@@ -156,7 +156,13 @@
                                     <tbody>
                                         @foreach (var i in Model.Produto.ProdutosEstoques.ToList())
                                         {
-                                            <tr>
+                                            var _class = string.Empty;
+                                            if (i.Quantidade < 0)
+                                            {
+                                                _class = "class=table-warning";
+                                            }
+
+                                            <tr @_class>
                                                 <td scope="row">@i.Id</td>
                                                 <td>@i.Cor.Nome</td>
                                                 <td>@i.Tamanho.Nome</td>

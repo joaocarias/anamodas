@@ -100,8 +100,18 @@
                         </thead>
                         <tbody>
                             @foreach (var i in Model.ProdutoEstoques.ToList())
-                            {   
-                                <tr>
+                            {
+                                var _class = string.Empty;
+                                if (i.Quantidade < 0)
+                                {
+                                     _class = "class=table-warning";
+                                }
+                                else if (i.Quantidade.Equals(i.Check))
+                                {
+                                    _class = "class=table-info";
+                                }
+
+                                <tr @_class>
                                     <td>@i.Produto.Nome</td>      
                                     <td>@i?.Produto.LogistaAssociado?.Nome</td>
                                     <td>@i?.Produto.Fornecedor?.Nome</td>

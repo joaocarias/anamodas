@@ -1,4 +1,5 @@
-﻿@model Joao.Ana.Modas.App.Models.ProdutoEstoques.IndexViewModel
+﻿@using System.Globalization
+@model Joao.Ana.Modas.App.Models.ProdutoEstoques.IndexViewModel
 
 @{
     ViewData["Title"] = Model?.Titulo;
@@ -19,7 +20,7 @@
     </div>
 </div>
 
-<div class="row mb-3">    
+<div class="row mb-3">
 
     @if (Model is not null && !string.IsNullOrEmpty(Model.Informacao))
     {
@@ -87,32 +88,56 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Descrição</th>  
+                                @*<th scope="col">Id</th>*@
+                                <th scope="col">Descrição</th>
                                 <th scope="col">Logista</th>
                                 <th scope="col">Fornecedor</th>
                                 <th scope="col">Cor</th>
                                 <th scope="col">Tamanho</th>
-                                <th scope="col">Preço</th>                                
+                                <th scope="col">Preço</th>
                                 <th scope="col">Quantidade</th>
                             <tr>
                         </thead>
                         <tbody>
+                            @{
+                                int _quantidade = 0;
+                                decimal _valorTotal = 0;
+                            }
+
                             @foreach (var i in Model.ProdutoEstoques.ToList())
-                            {   
-                                <tr>
-                                    <td scope="row">@i.ProdutoId</td>
-                                    <td>@i.Produto.Nome</td>      
+                            {
+                                _quantidade += i.Quantidade;
+                                _valorTotal += (i.Quantidade * i.Produto.PrecoVenda.GetValueOrDefault());
+
+                                var _class = string.Empty;
+                                if (i.Quantidade < 0)
+                                {
+                                    _class = "class=table-warning";
+                                }
+
+                                <tr @_class>
+                                   @* <td scope="row">@i.ProdutoId</td>*@
+                                    <td>@i.Produto.Nome</td>
                                     <td>@i?.Produto.LogistaAssociado?.Nome</td>
                                     <td>@i?.Produto.Fornecedor?.Nome</td>
                                     <td>@i?.Cor?.Nome</td>
                                     <td>@i?.Tamanho?.Nome</td>
                                     <td>@i?.Produto.PrecoVendaFormatodo</td>
-                                    <td>@i?.Quantidade</td>                                  
-                                    
+                                    <td>@i?.Quantidade</td>
                                 </tr>
                             }
                         </tbody>
+                        <tfoot>
+                            <tr class="table-success">
+                                <td><strong>Totais</strong></td>                                
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>@_valorTotal.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"))</strong></td>
+                                <td><strong>@_quantidade</strong></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 }
                 else
