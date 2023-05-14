@@ -113,7 +113,7 @@
                                 }
 
                                 <tr @_class>
-                                    <td>@i.Produto.Nome</td>      
+                                    <td><a asp-controller="Produtos" asp-action="Detalhar" asp-route-guid="@i.ProdutoId">@i.Produto.Nome</a></td>      
                                     <td>@i?.Produto.LogistaAssociado?.Nome</td>
                                     <td>@i?.Produto.Fornecedor?.Nome</td>
                                     <td>@i?.Cor?.Nome</td>

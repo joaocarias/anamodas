@@ -111,10 +111,10 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                             (c.Produto != null && c.Produto.Nome.Contains(filtro))
                             || (c.Cor != null && c.Cor.Nome.Contains(filtro))
                             || (c.Tamanho != null && c.Tamanho.Nome.Contains(filtro))
-                    ).OrderBy(c => c.Produto.Nome); ;
+                    );
             }
 
-            return await l.ToListAsync();
+            return await l.OrderBy(c => c.Produto.Nome).ThenBy(c => c.Cor.Nome).ToListAsync();
         }
 
         public async Task<IList<ProdutoEstoque>> ObterTodosAsync()
@@ -129,6 +129,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .Where(c => c.Ativo)
                                 .AsNoTracking()
                                 .OrderBy(c => c.Produto.Nome)
+                                .ThenBy(c => c.Cor.Nome)
                                 .ToListAsync();
                 return l;
             }
