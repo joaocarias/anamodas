@@ -88,7 +88,7 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 await _produtoEstoqueRepositorio.AtualizarAsync(pe);
 
-                return RedirectToAction(nameof(CheckEstoque));
+                return RedirectToAction(nameof(CheckEstoque), new CheckEstoqueViewModel() { Filtro = pe.Produto.Nome });
             }
             catch (Exception)
             {
