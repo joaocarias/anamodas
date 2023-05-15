@@ -102,7 +102,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .Include(c => c.Produto.LogistaAssociado)
                                 .Include(c => c.Cor)
                                 .Include(c => c.Tamanho)
-                               .Where(c => c.Ativo)
+                               .Where(c => c.Ativo && c.Produto.Ativo)
                                .AsNoTracking();                               
 
             if (!string.IsNullOrEmpty(filtro))
@@ -126,7 +126,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .Include(c => c.Produto.LogistaAssociado)
                                 .Include(c => c.Cor)
                                 .Include(c => c.Tamanho)
-                                .Where(c => c.Ativo)
+                                .Where(c => c.Ativo && c.Produto.Ativo)
                                 .AsNoTracking()
                                 .OrderBy(c => c.Produto.Nome)
                                 .ThenBy(c => c.Cor.Nome)
