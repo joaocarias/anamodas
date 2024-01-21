@@ -8,24 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\joao_franca\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\jfran\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joao_franca\\source\\repos\\jcf-ana-modas\\Joao.Ana.Modas\\src\\Joao.Ana.Modas.Dominio\\Joao.Ana.Modas.Dominio.csproj",
+      "projectUniqueName": "C:\\Users\\jfran\\source\\repos\\anamodas\\Joao.Ana.Modas\\src\\Joao.Ana.Modas.Dominio\\Joao.Ana.Modas.Dominio.csproj",
       "projectName": "Joao.Ana.Modas.Dominio",
-      "projectPath": "C:\\Users\\joao_franca\\source\\repos\\jcf-ana-modas\\Joao.Ana.Modas\\src\\Joao.Ana.Modas.Dominio\\Joao.Ana.Modas.Dominio.csproj",
-      "packagesPath": "C:\\Users\\joao_franca\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joao_franca\\source\\repos\\jcf-ana-modas\\Joao.Ana.Modas\\src\\Joao.Ana.Modas.Dominio\\obj\\",
+      "projectPath": "C:\\Users\\jfran\\source\\repos\\anamodas\\Joao.Ana.Modas\\src\\Joao.Ana.Modas.Dominio\\Joao.Ana.Modas.Dominio.csproj",
+      "packagesPath": "C:\\Users\\jfran\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jfran\\source\\repos\\anamodas\\Joao.Ana.Modas\\src\\Joao.Ana.Modas.Dominio\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\joao_franca\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\jfran\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -56,7 +51,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -65,7 +61,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
