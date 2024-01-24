@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  angular-app:
+    build:
+      context: .
+      dockerfile: joao.lp/Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./joao.lp:/usr/src/app
+    environment:
+      - NODE_ENV=production
