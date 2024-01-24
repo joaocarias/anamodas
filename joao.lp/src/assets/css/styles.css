@@ -43,6 +43,7 @@
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
   --bs-primary-rgb: 244, 98, 58;
+  --bs-ana-store-rgb: 213, 171, 175;
   --bs-secondary-rgb: 108, 117, 125;
   --bs-success-rgb: 25, 135, 84;
   --bs-info-rgb: 13, 202, 240;
@@ -77,6 +78,7 @@
   --bs-link-hover-color: #c34e2e;
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
+ 
 }
 
 *,
