@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: joao.lp/Dockerfile
     ports:
-      - "4200:4200"
+      - "7000:80"
     volumes:
       - ./joao.lp:/usr/src/app
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=production    

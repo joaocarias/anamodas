@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Joao.Ana.Modas.Infra\Joao.Ana.Modas.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Mensagens\" />
+  </ItemGroup>
+
 </Project>

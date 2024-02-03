@@ -76,6 +76,7 @@ builder.Services.AddScoped<ICorRepositorio, CorRepositorio>();
 builder.Services.AddScoped<IProdutoEstoqueRepositorio, ProdutoEstoqueRepositorio>();
 builder.Services.AddScoped<ITipoPagamentoRepositorio, TipoPagamentoRepositorio>();
 builder.Services.AddScoped<ILogistaAssociadoRepositorio, LogistaAssociadoRepositorio>();
+builder.Services.AddScoped<IMensagemWebSiteRepositorio, MensagemWebSiteRepositorio>();
 
 var app = builder.Build();
 

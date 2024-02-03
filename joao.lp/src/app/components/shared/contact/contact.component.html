@@ -9,39 +9,59 @@
         </div>
         <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
             <div class="col-lg-6">
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- * * SB Forms Contact Form * *-->
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- This form is pre-integrated with SB Forms.-->
-                <!-- To make this form functional, sign up at-->
-                <!-- https://startbootstrap.com/solution/contact-forms-->
-                <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+              
+                <form [formGroup]="form">
                     <!-- Name input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Nome..." data-sb-validations="required" />
+
+                        <input class="form-control" type="text" placeholder="Nome..." 
+                        formControlName="nome" 
+                        [ngClass]="{ 'is-invalid': (!form.controls.nome.valid && !form.controls.nome.pristine) }"
+                        data-sb-validations="required" />
+                      
                         <label for="name">Nome</label>
                         <div class="invalid-feedback" data-sb-feedback="name:required">O nome é obrigatório.</div>
+                   
                     </div>
+                  
                     <!-- Email address input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="email@exemplo.com" data-sb-validations="required,email" />
+
+                        <input class="form-control" type="text" placeholder="email@exemplo.com" 
+                        formControlName="email" 
+                        [ngClass]="{ 'is-invalid': (!form.controls.email.valid && !form.controls.email.pristine) }"
+                        data-sb-validations="required" />                        
+                        
                         <label for="email">E-mail</label>
                         <div class="invalid-feedback" data-sb-feedback="email:required">Informe um e-mail.</div>
                         <div class="invalid-feedback" data-sb-feedback="email:email">Este E-mail não é válido.</div>
+                  
                     </div>
+                  
                     <!-- Phone number input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="phone" type="tel" placeholder="(84) 99999-9999" data-sb-validations="required" />
+                      
+                        <input class="form-control" type="text" type="tel" placeholder="(84) 99999-9999"  
+                        formControlName="telefone" 
+                        mask="(##) #####-####"
+                        [ngClass]="{ 'is-invalid': (!form.controls.email.valid && !form.controls.email.pristine) }"
+                        data-sb-validations="required" 
+                        />                        
+
                         <label for="phone">Telefone</label>
                         <div class="invalid-feedback" data-sb-feedback="phone:required">Informe um número de telefone.</div>
                     </div>
+                  
                     <!-- Message input-->
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" id="message" type="text" placeholder="Sua mensagem..." style="height: 10rem" data-sb-validations="required"></textarea>
+                        <textarea class="form-control" type="text" placeholder="Sua mensagem..." style="height: 10rem" data-sb-validations="required"
+                        formControlName="mensagem" 
+                        [ngClass]="{ 'is-invalid': (!form.controls.email.valid && !form.controls.email.pristine) }"
+                        ></textarea>
                         <label for="message">Mensagem</label>
                         <div class="invalid-feedback" data-sb-feedback="message:required">Informe sua mensagem.</div>
                     </div>
+               
                     <!-- Submit success message-->
                     <!---->
                     <!-- This is what your users will see when the form-->
