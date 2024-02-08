@@ -76,7 +76,7 @@ namespace Joao.Ana.Modas.App.Controllers
                 {
                     await SelectListTamanhosViewBag();
                     await SelectListCoresViewBag();
-                    
+
                     return View(model);
                 }
 
@@ -96,10 +96,9 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
-            #region viewBags
+        #region viewBags
 
-
-            private async Task SelectListTamanhosViewBag(Guid? selected = null)
+        private async Task SelectListTamanhosViewBag(Guid? selected = null)
         {
             ViewBag.Tamanhos = new SelectList(await _tamanhoRepositorio.ObterTodosPorOrdemAsync(), "Id", "Nome", selected);
         }
@@ -108,7 +107,6 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             ViewBag.Cores = new SelectList(await _corRepositorio.ObterTodosAsync(), "Id", "Nome", selected);
         }
-
 
         #endregion
     }

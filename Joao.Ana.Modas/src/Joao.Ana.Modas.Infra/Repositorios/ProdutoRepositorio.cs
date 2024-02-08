@@ -93,25 +93,36 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<IList<Produto>> ObterPorNomeAsync(string filtro)
+        public async Task<IEnumerable<Produto>> ObterPorNomeAsync(string? filtro = null, int? limite = null)
         {
             try
             {
-                var l = await _appDbContext.Produtos.Where(c => c.Ativo && c.Nome.Contains(filtro))
+                var query = _appDbContext.Produtos
                                 .Include(_ => _.Fornecedor).AsNoTracking()
                                 .Include(_ => _.LogistaAssociado).AsNoTracking()
                                 .Include(_ => _.ProdutosEstoques)
                                     .ThenInclude(_ => _.Cor).AsNoTracking()
                                 .Include(_ => _.ProdutosEstoques)
                                     .ThenInclude(_ => _.Tamanho).AsNoTracking()
-                                .AsNoTracking()
-                                .OrderBy(c => c.Nome)
-                                .ToListAsync();
+                                .AsNoTracking();
+                                                
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    query = query.Where(c => c.Nome.Contains(filtro));
+                }
+
+                query = query.Where(c => c.Ativo);
+
+                if (limite is not null && limite > 0)
+                    query = query.Take(limite.Value);
+
+                var l = await query.OrderBy(c => c.Nome).ToListAsync();
                 return l;
             }
             catch (Exception)
             {
-                return new List<Produto>();
+                return Enumerable.Empty<Produto>();
             }
         }
 

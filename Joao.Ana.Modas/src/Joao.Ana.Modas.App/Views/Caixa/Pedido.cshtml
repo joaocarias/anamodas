@@ -1,17 +1,8 @@
-﻿@model Joao.Ana.Modas.App.Models.Caixa.PedidoViewModel
+﻿@model Joao.Ana.Modas.App.Models.Caixa.VendaViewModel
 
 @{
     ViewData["Title"] = "Caixa";
-
-    int _contItem = 0;
-    decimal _valorTotal = 0;
-
-    if(Model?.Produtos is not null && Model.Produtos.Any())
-    {
-        _contItem = Model.Produtos.Count();
-        _valorTotal = Model.Produtos.Select(c => c.Produto.PrecoVenda.GetValueOrDefault()).Sum();
-    }
-}
+ }
 
 <div class="row text-center">
     <div class="col-md-12">
@@ -33,17 +24,17 @@
 
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card mb-3">                    
-                    <div class="card-body">                        
-                         <h4 class="card-title">Total de Itens: <strong>@_contItem</strong></h4>                               
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Total de Itens: <strong>@Model.QuantiadeItens</strong></h4>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="card mb-3">                    
+                <div class="card mb-3">
                     <div class="card-body">
-                              <h4 class="card-title">Valor Total: <strong>R$ @_valorTotal.ToString("N2")</strong></h4>                               
+                        <h4 class="card-title">Valor Total: <strong>R$ @Model.TotalValor.ToString("N2")</strong></h4>
                     </div>
                 </div>
             </div>
@@ -51,8 +42,6 @@
         </div>
     </div>
 </div>
-
-
 
 <div class="row">
     <div class="col-md-12">
@@ -63,19 +52,68 @@
                     <div class="card-header">Incluir Produto no Pedido</div>
                     <div class="card-body">
 
-                        <form asp-action="Novo" method="post">
+                        <form asp-action="Pedido" method="post">
 
                             <div asp-validation-summary="All" class="text-danger">
                             </div>
+
+                            @Html.HiddenFor(m => m.Produto.Id)
+
+                            <div class="mb-3 row">
+
+                                <div class="col-md-4">
+                                    <label asp-for="Produto.Nome" class="col-form-label"></label>
+                                    <input asp-for="Produto.Nome" class="form-control" />
+
+                                    <span asp-validation-for="Produto.Nome" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label asp-for="Produto.PrecoVenda" class="col-form-label"></label>
+                                    <input asp-for="Produto.PrecoVenda" class="form-control money">
+                                    <span asp-validation-for="Produto.PrecoVenda" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="mb-3 row">
+
+
+                                <div class="col-md-4">
+                                    <label asp-for="Produto.CorId" class="col-form-label"></label>
+                                    <select asp-for="Produto.CorId" asp-items="ViewBag.Cores" class="form-control"></select>
+                                    <span asp-validation-for="Produto.CorId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label asp-for="Produto.TamanhoId" class="col-form-label"></label>
+                                    <select asp-for="Produto.TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control"></select>
+                                    <span asp-validation-for="Produto.TamanhoId" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label asp-for="Produto.Quantidade" class="col-form-label"></label>
+                                    <input asp-for="Produto.Quantidade" class="form-control">
+                                    <span asp-validation-for="Produto.Quantidade" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-3 d-flex align-items-end">
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-dark btn-adicionar-item"><i class="fa-solid fa-spell-check"></i> Adicionar </button>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <hr />
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary">
+                                   @*  <button type="submit" class="btn btn-primary">
                                         <i class="far fa-save"></i>
                                         Salvar
-                                    </button>
+                                    </button> *@
 
                                     <a asp-action="Index" asp-controller="Clientes" class="btn btn-warning">
                                         <i class="far fa-times-circle"></i>
@@ -93,3 +131,93 @@
 
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-header">Itens Inclusos</div>
+            <div class="card-body">
+
+                @if (Model is not null && Model.ProdutosVenda is not null && Model.ProdutosVenda.Any())
+                {
+                    int _numeroRegistros = Model.ProdutosVenda.Count();
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Cor</th>
+                                <th scope="col">Tamanho</th>
+                                <th scope="col">Valor Unit.</th>
+                                <th scope="col">Quantidade</th>
+                                <th scope="col">Total</th>
+                                <th scope="col"></th>
+                            <tr>
+                        </thead>
+                        <tbody>
+                            @{ var _cont = 0; }
+                            @foreach (var i in Model.ProdutosVenda.ToList())
+                            {
+                                <tr>
+                                    <td scope="row">@_cont++</td>
+                                    <td>@i.Nome</td>
+                                    <td>Cor</td>
+                                    <td>Tamanho</td>
+                                    <td>@i.PrecoVenda?.ToString("N2")</td>
+                                    <td>@i.Quantidade</td>
+                                    <td>@i.ValorPedido</td>
+                                    <td>
+                                        Remover
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <p><strong>Registro(s): @_numeroRegistros</strong></p>
+                }
+                else
+                {
+                    <p>Nenhum cliente encontrado!</p>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+
+
+        $(document).ready(function () {
+
+            $(function () {
+                let _maxResults = 20;
+
+                $("#Produto_Nome").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("ObterProdutos", "Caixa")',
+                            data: { filtro: request.term, limite: _maxResults },
+                            success: function (data) {
+                                console.log("deu certo");
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 3,
+                    maxResults: _maxResults,
+                    select: function (event, ui) {
+                        $("#Produto_Nome").val(ui.item.label);
+                        $("#Produto_Id").val(ui.item.value);
+                        return false;
+                    }
+                });
+            });
+
+
+        });
+    </script>
+}

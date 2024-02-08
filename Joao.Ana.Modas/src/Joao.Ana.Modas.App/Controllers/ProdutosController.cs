@@ -211,7 +211,7 @@ namespace Joao.Ana.Modas.App.Controllers
                 return View(model);
             }
         }
-
+        
         #region viewBags
 
         private async Task ViewBagsDefault(Guid? fornecedorId = null, Guid? logistaAssociadoId = null)

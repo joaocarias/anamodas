@@ -38,3 +38,7 @@ body {
 .main-footer-login {
     color: white;
 }
+
+.select2-no-results {
+    display: none !important;
+}
