@@ -1,6 +1,6 @@
 ﻿namespace Joao.Ana.Modas.Dominio.Enums
 {
-    public enum EVendaStatus
+    public enum EPeditoStatus
     {
         Desconhecido = 0,
         Aberto = 1,                

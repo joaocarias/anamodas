@@ -29,6 +29,10 @@ namespace Joao.Ana.Modas.App.Models.Caixa
         [Display(Name = "Tamanho")]
         public Guid TamanhoId { get; set; }
 
+        public Guid VendaId { get; set; }
+
+        public VendaViewModel? Venda { get; set; }
+
         public decimal? ValorPedido { 
             get 
             {

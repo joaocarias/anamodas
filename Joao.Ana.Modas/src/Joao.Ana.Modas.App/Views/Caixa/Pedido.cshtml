@@ -1,4 +1,4 @@
-﻿@model Joao.Ana.Modas.App.Models.Caixa.VendaViewModel
+﻿@model Joao.Ana.Modas.App.Models.Caixa.PedidoViewModel
 
 @{
     ViewData["Title"] = "Caixa";
@@ -138,9 +138,9 @@
             <div class="card-header">Itens Inclusos</div>
             <div class="card-body">
 
-                @if (Model is not null && Model.ProdutosVenda is not null && Model.ProdutosVenda.Any())
+                @if (Model is not null && Model.ProdutosPedido is not null && Model.ProdutosPedido.Any())
                 {
-                    int _numeroRegistros = Model.ProdutosVenda.Count();
+                    int _numeroRegistros = Model.ProdutosPedido.Count();
                     <table class="table table-hover">
                         <thead class="table-dark">
                             <tr>
@@ -156,7 +156,7 @@
                         </thead>
                         <tbody>
                             @{ var _cont = 0; }
-                            @foreach (var i in Model.ProdutosVenda.ToList())
+                            @foreach (var i in Model.ProdutosPedido.ToList())
                             {
                                 <tr>
                                     <td scope="row">@_cont++</td>

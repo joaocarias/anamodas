@@ -2,10 +2,13 @@
 
 namespace Joao.Ana.Modas.Dominio.Entidades
 {
-    public class Venda : EntidadeBase
+    public class Pedido : EntidadeBase
     {
         public EPeditoStatus Status { get; private set; }
 
-
+        public Pedido()
+        {
+            Status = EPeditoStatus.Aberto;
+        }
     }
 }

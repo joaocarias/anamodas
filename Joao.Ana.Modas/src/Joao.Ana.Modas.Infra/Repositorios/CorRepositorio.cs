@@ -3,6 +3,7 @@ using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Joao.Ana.Modas.Infra.Repositorios
 {
@@ -83,7 +84,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
             catch (Exception)
             {
-                return new List<Cor>();
+                return new Enumerable().Empty<Cores>();
             }
         }
 

@@ -4,6 +4,6 @@ namespace Joao.Ana.Modas.Dominio.IRepositorios
 {
     public interface ILogistaAssociadoRepositorio : IRepositorioBase<LogistaAssociado>
     {
-        Task<IList<LogistaAssociado>> ObterPorNomeAsync(string filtro);
+        Task<IEnumerable<LogistaAssociado>> ObterPorNomeAsync(string filtro);
     }
 }

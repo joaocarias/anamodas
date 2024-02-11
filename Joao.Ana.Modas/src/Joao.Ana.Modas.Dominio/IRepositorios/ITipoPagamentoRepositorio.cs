@@ -4,7 +4,7 @@ namespace Joao.Ana.Modas.Dominio.IRepositorios
 {
     public interface ITipoPagamentoRepositorio : IRepositorioBase<TipoPagamento>
     {
-        Task<IList<TipoPagamento>> ObterTodosPorOrdemAsync();
-        Task<IList<TipoPagamento>> ObterPorNomeAsync(string filtro);
+        Task<IEnumerable<TipoPagamento>> ObterTodosPorOrdemAsync();
+        Task<IEnumerable<TipoPagamento>> ObterPorNomeAsync(string filtro);
     }
 }

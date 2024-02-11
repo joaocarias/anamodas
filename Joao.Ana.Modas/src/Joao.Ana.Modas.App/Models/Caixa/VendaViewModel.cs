@@ -8,7 +8,7 @@ namespace Joao.Ana.Modas.App.Models.Caixa
 
         public IEnumerable<ProdutoVendaViewModel>? ProdutosVenda { get; set; }
 
-        public EVendaStatus Status { get; set; }
+        public EPeditoStatus Status { get; set; }
 
         public int QuantiadeItens
         {

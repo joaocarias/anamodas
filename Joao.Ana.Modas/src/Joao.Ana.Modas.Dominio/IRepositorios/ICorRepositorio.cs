@@ -4,6 +4,6 @@ namespace Joao.Ana.Modas.Dominio.IRepositorios
 {
     public interface ICorRepositorio : IRepositorioBase<Cor>
     {
-        Task<IList<Cor>> ObterPorNomeAsync(string filtro);
+        Task<IEnumerable<Cor>> ObterPorNomeAsync(string filtro);
     }
 }

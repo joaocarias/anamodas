@@ -1,19 +1,20 @@
-﻿using Joao.Ana.Modas.App.Models.Clientes;
-using Joao.Ana.Modas.App.Models.Cores;
-using Joao.Ana.Modas.App.Models.Produtos;
+﻿using Joao.Ana.Modas.App.Models.Cores;
 using Joao.Ana.Modas.App.Models.Tamanhos;
 using System.ComponentModel.DataAnnotations;
 
 namespace Joao.Ana.Modas.App.Models.Caixa
 {
-    public class ProdutoPedidoViewModel
+    public class ProdutoPedidoViewModel : EntidadeBaseViewModel
     {
         [Required]
-        public Guid ProdutoId { get; set; }
-        public ProdutoViewModel? Produto { get; set; }
+        [StringLength(200)]
+        [Display(Name = "Nome do Produto")]
+        public string Nome { get; set; } = string.Empty;
 
-        public Guid? ClienteId { get; set; }
-        public ClienteViewModel? Cliente { get; set; }
+        [Required(ErrorMessage = "Campo Obrigatório")]
+        [Display(Name = "Preço Unitário R$")]
+        [Range(0.01, double.MaxValue)]
+        public decimal? PrecoVenda { get; set; }
 
         [Required(ErrorMessage = "Campo Obrigatório")]
         public int Quantidade { get; set; }
@@ -27,5 +28,17 @@ namespace Joao.Ana.Modas.App.Models.Caixa
 
         [Display(Name = "Tamanho")]
         public Guid TamanhoId { get; set; }
+
+        public Guid PedidoId { get; set; }
+
+        public PedidoViewModel? Pedido { get; set; }
+
+        public decimal? ValorPedido
+        {
+            get
+            {
+                return Quantidade * PrecoVenda.GetValueOrDefault();
+            }
+        }
     }
 }

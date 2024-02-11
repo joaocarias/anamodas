@@ -1,20 +1,31 @@
-﻿namespace Joao.Ana.Modas.App.Models.Caixa
-{
-    public class PedidoViewModel
-    {
-        public IEnumerable<ProdutoPedidoViewModel> Produtos { get; set; }
-        public ProdutoPedidoViewModel ProdutoPedido { get; set; }
+﻿using Joao.Ana.Modas.Dominio.Enums;
 
-        public PedidoViewModel(IEnumerable<ProdutoPedidoViewModel> produtos, ProdutoPedidoViewModel produtoPedido)
+namespace Joao.Ana.Modas.App.Models.Caixa
+{
+    public class PedidoViewModel : EntidadeBaseViewModel
+    {
+        public ProdutoPedidoViewModel Produto { get; set; }
+
+        public IEnumerable<ProdutoPedidoViewModel>? ProdutosPedido { get; set; }
+        
+        public EPeditoStatus Status { get; set; }
+
+        public int QuantiadeItens
         {
-            Produtos = produtos;
-            ProdutoPedido = produtoPedido;
+            get
+            {
+                if (ProdutosPedido is null || !ProdutosPedido.Any()) { return 0; }
+                return ProdutosPedido.Count();
+            }
         }
 
-        public PedidoViewModel()
+        public decimal TotalValor
         {
-            Produtos = new List<ProdutoPedidoViewModel>();
-            
+            get
+            {
+                if (ProdutosPedido is null || !ProdutosPedido.Any()) { return 0; }
+                return ProdutosPedido.Sum(x => x.PrecoVenda.GetValueOrDefault() * x.Quantidade);
+            }
         }
     }
 }

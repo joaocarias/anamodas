@@ -4,7 +4,7 @@ namespace Joao.Ana.Modas.Dominio.IRepositorios
 {
     public interface ITamanhoRepositorio : IRepositorioBase<Tamanho>
     {
-        Task<IList<Tamanho>> ObterPorNomeAsync(string filtro);
-        Task<IList<Tamanho>> ObterTodosPorOrdemAsync();
+        Task<IEnumerable<Tamanho>> ObterPorNomeAsync(string filtro);
+        Task<IEnumerable<Tamanho>> ObterTodosPorOrdemAsync();
     }
 }

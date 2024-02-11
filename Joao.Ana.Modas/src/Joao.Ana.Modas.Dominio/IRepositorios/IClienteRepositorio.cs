@@ -5,8 +5,8 @@ namespace Joao.Ana.Modas.Dominio.IRepositorios
     public interface IClienteRepositorio : IRepositorioBase<Cliente>
     {
 
-        Task<IList<Cliente>> ObterPorNomeAsync(string filtro);
+        Task<IEnumerable<Cliente>> ObterPorNomeAsync(string filtro);
 
-        Task<IList<Cliente>> ObterPorNomePaginadoAsync(string filtro, int? paginaAtual);
+        Task<IEnumerable<Cliente>> ObterPorNomePaginadoAsync(string filtro, int? paginaAtual);
     }
 }
