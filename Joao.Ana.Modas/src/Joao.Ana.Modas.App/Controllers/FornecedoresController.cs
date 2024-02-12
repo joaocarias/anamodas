@@ -14,19 +14,21 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IFornecedorRepositorio _fornecedorRepositorio;
+        private readonly ILogger<FornecedoresController> _logger;
 
-        public FornecedoresController(IMapper mapper, IFornecedorRepositorio fornecedorRepositorio)
+        public FornecedoresController(IMapper mapper, IFornecedorRepositorio fornecedorRepositorio, ILogger<FornecedoresController> logger)
         {
             _mapper = mapper;
             _fornecedorRepositorio = fornecedorRepositorio;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index(IndexViewModel model)
         {
             model = model is null ? new IndexViewModel() : model;
             model.Fornecedores = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<FornecedorViewModel>>(await _fornecedorRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<FornecedorViewModel>>(await _fornecedorRepositorio.ObterTodosAsync());
+                ? _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IEnumerable<FornecedorViewModel>>(await _fornecedorRepositorio.ObterTodosAsync());
 
             return View(model);
         }
@@ -58,8 +60,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _fornecedorRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }
@@ -72,8 +75,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 var model = new DetalharViewModel() { Fornecedor = _mapper.Map<FornecedorViewModel>(await _fornecedorRepositorio.ObterAsync(guid)) };
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -93,8 +97,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid = guid });
             }
         }
@@ -107,8 +112,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 var model = _mapper.Map<FornecedorViewModel>(await _fornecedorRepositorio.ObterAsync(guid));
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid = guid });
             }
         }
@@ -144,8 +150,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _fornecedorRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }

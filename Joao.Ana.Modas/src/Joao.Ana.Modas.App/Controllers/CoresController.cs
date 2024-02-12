@@ -13,11 +13,13 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ICorRepositorio _corRepositorio;
+        private readonly ILogger<CoresController> _logger;
 
-        public CoresController(IMapper mapper, ICorRepositorio corRepositorio)
+        public CoresController(IMapper mapper, ICorRepositorio corRepositorio, ILogger<CoresController> logger)
         {
             _mapper = mapper;
             _corRepositorio = corRepositorio;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -25,8 +27,8 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             model = model is null ? new IndexViewModel() : model;
             model.Cores = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<CorViewModel>>(await _corRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<CorViewModel>>(await _corRepositorio.ObterTodosAsync());
+                ? _mapper.Map<IEnumerable<CorViewModel>>(await _corRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IEnumerable<CorViewModel>>(await _corRepositorio.ObterTodosAsync());
 
             return View(model);
         }
@@ -54,8 +56,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _corRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }
@@ -67,8 +70,9 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 return View(new DetalharViewModel() { Cor = _mapper.Map<CorViewModel>(await _corRepositorio.ObterAsync(guid)) });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -88,8 +92,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -100,8 +105,9 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 return View(_mapper.Map<CorViewModel>(await _corRepositorio.ObterAsync(guid)));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -125,8 +131,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _corRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }

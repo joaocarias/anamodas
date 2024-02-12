@@ -17,12 +17,15 @@ namespace Joao.Ana.Modas.App.Controllers
         private readonly ICorRepositorio _corRepositorio;
         private readonly ITamanhoRepositorio _tamanhoRepositorio;
 
-        public ProdutoEstoqueController(IMapper mapper, IProdutoEstoqueRepositorio produtoEstoqueRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio)
+        private readonly ILogger<ProdutoEstoqueController> _logger;
+
+        public ProdutoEstoqueController(IMapper mapper, IProdutoEstoqueRepositorio produtoEstoqueRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, ILogger<ProdutoEstoqueController> logger)
         {
             _mapper = mapper;
             _produtoEstoqueRepositorio = produtoEstoqueRepositorio;
             _corRepositorio = corRepositorio;
             _tamanhoRepositorio = tamanhoRepositorio;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -42,8 +45,8 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             model = model is null ? new CheckEstoqueViewModel() : model;
             model.ProdutoEstoques = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<ProdutoEstoqueViewModel>>(await _produtoEstoqueRepositorio.ObterPorFiltro(model.Filtro))
-                : _mapper.Map<IList<ProdutoEstoqueViewModel>>(await _produtoEstoqueRepositorio.ObterTodosAsync());
+                ? _mapper.Map<IEnumerable<ProdutoEstoqueViewModel>>(await _produtoEstoqueRepositorio.ObterPorFiltro(model.Filtro))
+                : _mapper.Map<IEnumerable<ProdutoEstoqueViewModel>>(await _produtoEstoqueRepositorio.ObterTodosAsync());
 
             return View(model);
         }
@@ -60,8 +63,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 var model = _mapper.Map<ItemCheckViewModel>(await _produtoEstoqueRepositorio.ObterAsync(guid));
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -90,8 +94,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return RedirectToAction(nameof(CheckEstoque), new CheckEstoqueViewModel() { Filtro = pe.Produto.Nome });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }

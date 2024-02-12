@@ -2,7 +2,7 @@
 {
     public class CheckEstoqueViewModel
     {
-        public IList<ProdutoEstoqueViewModel> ProdutoEstoques { get; set; }
+        public IEnumerable<ProdutoEstoqueViewModel> ProdutoEstoques { get; set; }
 
         public string Informacao { get; set; } = string.Empty;
         public string Error { get; set; } = string.Empty;

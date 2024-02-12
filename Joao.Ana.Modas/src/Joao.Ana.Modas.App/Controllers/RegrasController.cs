@@ -13,10 +13,13 @@ namespace Joao.Ana.Modas.App.Controllers
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public RegrasController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        private readonly ILogger<RegrasController> logger;
+
+        public RegrasController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ILogger<RegrasController> logger)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         [HttpGet]

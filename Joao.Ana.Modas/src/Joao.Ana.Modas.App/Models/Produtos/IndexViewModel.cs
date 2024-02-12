@@ -2,7 +2,7 @@
 {
     public class IndexViewModel
     {
-        public IList<ProdutoViewModel> Produtos { get; set; }
+        public IEnumerable<ProdutoViewModel> Produtos { get; set; }
 
         public string Informacao { get; set; } = string.Empty;
         public string Error { get; set; } = string.Empty;

@@ -14,13 +14,15 @@ namespace Joao.Ana.Modas.App.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly ILogger<UsuariosController> logger;
 
         public UsuariosController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+            SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, ILogger<UsuariosController> logger)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
+            this.logger = logger;
         }
 
         [HttpGet]

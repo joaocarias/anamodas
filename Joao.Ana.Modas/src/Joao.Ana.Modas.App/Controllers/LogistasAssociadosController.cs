@@ -13,11 +13,13 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILogistaAssociadoRepositorio _logistaAssociadoRepositorio;
+        private readonly ILogger<LogistasAssociadosController> _logger;
 
-        public LogistasAssociadosController(IMapper mapper, ILogistaAssociadoRepositorio logistaAssociadoRepositorio)
+        public LogistasAssociadosController(IMapper mapper, ILogistaAssociadoRepositorio logistaAssociadoRepositorio, ILogger<LogistasAssociadosController> logger)
         {
             _mapper = mapper;
             _logistaAssociadoRepositorio = logistaAssociadoRepositorio;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -25,8 +27,8 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             model = model is null ? new IndexViewModel() : model;
             model.LogistasAssociados = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<LogistaAssociadoViewModel>>(await _logistaAssociadoRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<LogistaAssociadoViewModel>>(await _logistaAssociadoRepositorio.ObterTodosAsync());
+                ? _mapper.Map<IEnumerable<LogistaAssociadoViewModel>>(await _logistaAssociadoRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IEnumerable<LogistaAssociadoViewModel>>(await _logistaAssociadoRepositorio.ObterTodosAsync());
 
             return View(model);
         }
@@ -54,8 +56,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _logistaAssociadoRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }
@@ -67,8 +70,9 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 return View(new DetalharViewModel() { LogistaAssociado = _mapper.Map<LogistaAssociadoViewModel>(await _logistaAssociadoRepositorio.ObterAsync(guid)) });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -88,8 +92,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex) 
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -101,8 +106,9 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 return View(_mapper.Map<LogistaAssociadoViewModel>(await _logistaAssociadoRepositorio.ObterAsync(guid)));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -125,8 +131,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _logistaAssociadoRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }

@@ -13,11 +13,13 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ITipoPagamentoRepositorio _tipoPagamentoRepositorio;
+        private readonly ILogger<TipoPagamentoController> _logger;
 
-        public TipoPagamentoController(IMapper mapper, ITipoPagamentoRepositorio tipoPagamentoRepositorio)
+        public TipoPagamentoController(IMapper mapper, ITipoPagamentoRepositorio tipoPagamentoRepositorio, ILogger<TipoPagamentoController> logger)
         {
             _mapper = mapper;
             _tipoPagamentoRepositorio = tipoPagamentoRepositorio;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -25,8 +27,8 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             model = model is null ? new IndexViewModel() : model;
             model.TipoPagamentos = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<TipoPagamentoViewModel>>(await _tipoPagamentoRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<TipoPagamentoViewModel>>(await _tipoPagamentoRepositorio.ObterTodosPorOrdemAsync());
+                ? _mapper.Map<IEnumerable<TipoPagamentoViewModel>>(await _tipoPagamentoRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IEnumerable<TipoPagamentoViewModel>>(await _tipoPagamentoRepositorio.ObterTodosPorOrdemAsync());
 
             return View(model);
         }
@@ -54,8 +56,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _tipoPagamentoRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }
@@ -67,8 +70,9 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 return View(new DetalharViewModel() { TipoPagamento = _mapper.Map<TipoPagamentoViewModel>(await _tipoPagamentoRepositorio.ObterAsync(guid)) });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -89,8 +93,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -102,8 +107,9 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 return View(_mapper.Map<TipoPagamentoViewModel>(await _tipoPagamentoRepositorio.ObterAsync(guid)));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -127,8 +133,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _tipoPagamentoRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }

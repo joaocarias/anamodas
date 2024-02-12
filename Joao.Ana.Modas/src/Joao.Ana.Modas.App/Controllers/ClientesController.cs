@@ -14,11 +14,13 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         private readonly IMapper _mapper; 
         private readonly IClienteRepositorio _clienteRepositorio;
+        private readonly ILogger<ClientesController> _logger;
 
-        public ClientesController(IClienteRepositorio clienteRepositorio, IMapper mapper)
+        public ClientesController(IClienteRepositorio clienteRepositorio, IMapper mapper, ILogger<ClientesController> logger)
         {
             _clienteRepositorio = clienteRepositorio;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -26,8 +28,8 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             model = model is null ? new IndexViewModel() : model;   
             model.Clientes = (!string.IsNullOrEmpty(model?.Filtro)) 
-                ? _mapper.Map<IList<ClienteViewModel>>(await _clienteRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<ClienteViewModel>>(await _clienteRepositorio.ObterTodosAsync());
+                ? _mapper.Map<IEnumerable<ClienteViewModel>>(await _clienteRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IEnumerable<ClienteViewModel>>(await _clienteRepositorio.ObterTodosAsync());
             
             return View(model);
         }
@@ -56,11 +58,12 @@ namespace Joao.Ana.Modas.App.Controllers
                 model.UsuarioCadastro = userId;
 
                 var c = _mapper.Map<Cliente>(model);
-                await _clienteRepositorio.AdicionarAsync(c);
-                return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
+                c = await _clienteRepositorio.AdicionarAsync(c);
+                return RedirectToAction(nameof(Detalhar), new { guid = c?.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }
@@ -74,8 +77,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 model.PermitirExcluir = User.IsInRole(Constants.LOGISTAASSOCIADO) || User.IsInRole(Constants.ADMINISTRADOR);
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -95,8 +99,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _clienteRepositorio.ApagarAsync(c);
 
                 return RedirectToAction(nameof(Index));
-            }catch (Exception)
+            }catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -110,8 +115,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 var model = _mapper.Map<ClienteViewModel>(await _clienteRepositorio.ObterAsync(guid));
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -152,8 +158,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _clienteRepositorio.AtualizarAsync(cliente);
                 return RedirectToAction(nameof(Detalhar), new { guid = cliente.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }

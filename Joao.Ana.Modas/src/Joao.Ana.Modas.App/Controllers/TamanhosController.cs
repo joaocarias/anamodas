@@ -13,11 +13,13 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ITamanhoRepositorio _tamanhoRepositorio;
+        private readonly ILogger<TamanhosController> _logger;
 
-        public TamanhosController(IMapper mapper, ITamanhoRepositorio tamanhoRepositorio)
+        public TamanhosController(IMapper mapper, ITamanhoRepositorio tamanhoRepositorio, ILogger<TamanhosController> logger)
         {
             _mapper = mapper;
             _tamanhoRepositorio = tamanhoRepositorio;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -25,8 +27,8 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             model = model is null ? new IndexViewModel() : model;
             model.Tamanhos = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<TamanhoViewModel>>(await _tamanhoRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<TamanhoViewModel>>(await _tamanhoRepositorio.ObterTodosPorOrdemAsync());
+                ? _mapper.Map<IEnumerable<TamanhoViewModel>>(await _tamanhoRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IEnumerable<TamanhoViewModel>>(await _tamanhoRepositorio.ObterTodosPorOrdemAsync());
 
             return View(model);
         }
@@ -54,8 +56,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _tamanhoRepositorio.AdicionarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }
@@ -67,8 +70,9 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 return View(new DetalharViewModel() { Tamanho = _mapper.Map<TamanhoViewModel>(await _tamanhoRepositorio.ObterAsync(guid)) });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -88,8 +92,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex) 
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -101,8 +106,9 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 return View(_mapper.Map<TamanhoViewModel>(await _tamanhoRepositorio.ObterAsync(guid)));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -126,8 +132,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _tamanhoRepositorio.AtualizarAsync(c);
                 return RedirectToAction(nameof(Detalhar), new { guid = c.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }

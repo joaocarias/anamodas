@@ -20,7 +20,9 @@ namespace Joao.Ana.Modas.App.Controllers
         private readonly IProdutoEstoqueRepositorio _produtoEstoqueRepositorio;
         private readonly ILogistaAssociadoRepositorio _logistaAssociadoRepositorio;
 
-        public ProdutosController(IMapper mapper, IProdutoRepositorio produtoRepositorio, IFornecedorRepositorio fornecedorRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IProdutoEstoqueRepositorio produtoEstoqueRepositorio, ILogistaAssociadoRepositorio logistaAssociadoRepositorio)
+        private readonly ILogger<ProdutosController> _logger;
+
+        public ProdutosController(IMapper mapper, IProdutoRepositorio produtoRepositorio, IFornecedorRepositorio fornecedorRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IProdutoEstoqueRepositorio produtoEstoqueRepositorio, ILogistaAssociadoRepositorio logistaAssociadoRepositorio, ILogger<ProdutosController> logger)
         {
             _mapper = mapper;
             _produtoRepositorio = produtoRepositorio;
@@ -29,6 +31,7 @@ namespace Joao.Ana.Modas.App.Controllers
             _tamanhoRepositorio = tamanhoRepositorio;
             _produtoEstoqueRepositorio = produtoEstoqueRepositorio;
             _logistaAssociadoRepositorio = logistaAssociadoRepositorio;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -36,8 +39,8 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             model = model is null ? new IndexViewModel() : model;
             model.Produtos = (!string.IsNullOrEmpty(model?.Filtro))
-                ? _mapper.Map<IList<ProdutoViewModel>>(await _produtoRepositorio.ObterPorNomeAsync(model.Filtro))
-                : _mapper.Map<IList<ProdutoViewModel>>(await _produtoRepositorio.ObterTodosAsync());
+                ? _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepositorio.ObterPorNomeAsync(model.Filtro))
+                : _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepositorio.ObterTodosAsync());
 
             return View(model);
         }
@@ -68,8 +71,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _produtoRepositorio.AdicionarAsync(p);
                 return RedirectToAction(nameof(Detalhar), new { guid = p.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 await ViewBagsDefault(model.FornecedorId, model.LogistaAssociadoId);
                 return View(model);
             }
@@ -85,8 +89,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Index));
             }
         }
@@ -107,8 +112,9 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -122,8 +128,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await ViewBagsDefault(model.FornecedorId, model.LogistaAssociadoId);
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -148,8 +155,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 await _produtoRepositorio.AtualizarAsync(p);
                 return RedirectToAction(nameof(Detalhar), new { guid = p.Id });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return View(model);
             }
         }
@@ -166,8 +174,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 model.ProdutoId = guid;
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return RedirectToAction(nameof(Detalhar), new { guid });
             }
         }
@@ -201,8 +210,10 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 return RedirectToAction(nameof(Detalhar), new { guid = model.ProdutoId });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
+
                 await SelectListCoresViewBag();
                 await SelectListTamanhosViewBag();
 
