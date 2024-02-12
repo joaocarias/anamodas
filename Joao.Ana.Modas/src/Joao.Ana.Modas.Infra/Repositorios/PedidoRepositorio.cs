@@ -3,29 +3,33 @@ using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Joao.Ana.Modas.Infra.Repositorios
 {
     public class PedidoRepositorio : IPedidoRepositorio
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ILogger<CorRepositorio> _logger;
 
-        public PedidoRepositorio(AppDbContext appDbContext)
+        public PedidoRepositorio(AppDbContext appDbContext, ILogger<CorRepositorio> logger)
         {
             _appDbContext = appDbContext;
+            _logger = logger;
         }
 
-        public async Task<bool> AdicionarAsync(Pedido t)
+        public async Task<Pedido?> AdicionarAsync(Pedido t)
         {
             try
             {
                 await _appDbContext.Pedidos.AddAsync(t);
                 await _appDbContext.SaveChangesAsync();
-                return true;
+                return t;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.LogError(ex.Message, ex);
+                return null;
             }
         }
 
@@ -44,17 +48,18 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<bool> AtualizarAsync(Pedido t)
+        public async Task<Pedido?> AtualizarAsync(Pedido t)
         {
             try
             {
                 _appDbContext.Pedidos.Update(t);
                 await _appDbContext.SaveChangesAsync();
-                return true;
+                return t;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.LogError(ex.Message, ex);
+                return null;
             }
         }
 
@@ -65,13 +70,14 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 var c = await _appDbContext.Pedidos.Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();
                 return c;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return null;
             }
         }
 
-        public async Task<IList<Pedido>> ObterTodosAsync()
+        public async Task<IEnumerable<Pedido>> ObterTodosAsync()
         {
             try
             {
@@ -81,13 +87,14 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .ToListAsync();
                 return l;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<Pedido>();
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<Pedido>();
             }
         }
 
-        public async Task<IList<Pedido>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
+        public async Task<IEnumerable<Pedido>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
         {
             try
             {
@@ -96,9 +103,10 @@ namespace Joao.Ana.Modas.Infra.Repositorios
 
                 return await Paginacao<Pedido>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<Pedido>();
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<Pedido>();
             }
         }
     }

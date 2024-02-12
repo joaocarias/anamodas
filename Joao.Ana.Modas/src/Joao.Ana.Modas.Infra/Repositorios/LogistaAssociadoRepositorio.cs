@@ -3,29 +3,33 @@ using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Joao.Ana.Modas.Infra.Repositorios
 {
     public class LogistaAssociadoRepositorio : ILogistaAssociadoRepositorio
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ILogger<LogistaAssociadoRepositorio> _logger;
 
-        public LogistaAssociadoRepositorio(AppDbContext appDbContext)
+        public LogistaAssociadoRepositorio(AppDbContext appDbContext, ILogger<LogistaAssociadoRepositorio> logger)
         {
             _appDbContext = appDbContext;
+            _logger = logger;
         }
 
-        public async Task<bool> AdicionarAsync(LogistaAssociado t)
+        public async Task<LogistaAssociado?> AdicionarAsync(LogistaAssociado t)
         {
             try
             {
                 await _appDbContext.LogistasAssociados.AddAsync(t);
                 await _appDbContext.SaveChangesAsync();
-                return true;
+                return t;
             }
-            catch (Exception)
+            catch (Exception ex) 
             {
-                return false;
+                _logger.LogError(ex.Message, ex);
+                return null;
             }
         }
 
@@ -38,23 +42,25 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 await _appDbContext.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return false;
             }
         }
 
-        public async Task<bool> AtualizarAsync(LogistaAssociado t)
+        public async Task<LogistaAssociado?> AtualizarAsync(LogistaAssociado t)
         {
             try
             {
                 _appDbContext.LogistasAssociados.Update(t);
                 await _appDbContext.SaveChangesAsync();
-                return true;
+                return t;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.LogError(ex.Message, ex);
+                return null;
             }
         }
 
@@ -65,13 +71,14 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 var c = await _appDbContext.LogistasAssociados.Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();
                 return c;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return null;
             }
         }
 
-        public async Task<IList<LogistaAssociado>> ObterPorNomeAsync(string filtro)
+        public async Task<IEnumerable<LogistaAssociado>> ObterPorNomeAsync(string filtro)
         {
             try
             {
@@ -81,13 +88,14 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .ToListAsync();
                 return l;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<LogistaAssociado>();
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<LogistaAssociado>();
             }
         }
 
-        public async Task<IList<LogistaAssociado>> ObterTodosAsync()
+        public async Task<IEnumerable<LogistaAssociado>> ObterTodosAsync()
         {
             try
             {
@@ -97,13 +105,14 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .ToListAsync();
                 return l;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<LogistaAssociado>();
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<LogistaAssociado>();
             }
         }
 
-        public async Task<IList<LogistaAssociado>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
+        public async Task<IEnumerable<LogistaAssociado>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
         {
             try
             {
@@ -112,9 +121,10 @@ namespace Joao.Ana.Modas.Infra.Repositorios
 
                 return await Paginacao<LogistaAssociado>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<LogistaAssociado>();
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<LogistaAssociado>();
             }
         }
     }

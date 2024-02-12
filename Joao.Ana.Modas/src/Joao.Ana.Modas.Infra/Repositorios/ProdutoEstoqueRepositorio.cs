@@ -3,29 +3,33 @@ using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Joao.Ana.Modas.Infra.Repositorios
 {
     public class ProdutoEstoqueRepositorio : IProdutoEstoqueRepositorio
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ILogger<CorRepositorio> _logger;
 
-        public ProdutoEstoqueRepositorio(AppDbContext appDbContext)
+        public ProdutoEstoqueRepositorio(AppDbContext appDbContext, ILogger<CorRepositorio> logger)
         {
             _appDbContext = appDbContext;
+            _logger = logger;
         }
 
-        public async Task<bool> AdicionarAsync(ProdutoEstoque t)
+        public async Task<ProdutoEstoque?> AdicionarAsync(ProdutoEstoque t)
         {
             try
             {
                 await _appDbContext.ProdutoEstoque.AddAsync(t);
                 await _appDbContext.SaveChangesAsync();
-                return true;
+                return t;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.LogError(ex.Message, ex);
+                return null;
             }
         }
 
@@ -38,23 +42,25 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 await _appDbContext.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return false;
             }
         }
 
-        public async Task<bool> AtualizarAsync(ProdutoEstoque t)
+        public async Task<ProdutoEstoque?> AtualizarAsync(ProdutoEstoque t)
         {
             try
             {
                 _appDbContext.ProdutoEstoque.Update(t);
                 await _appDbContext.SaveChangesAsync();
-                return true;
+                return t;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.LogError(ex.Message, ex);
+                return null;
             }
         }
 
@@ -71,8 +77,9 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                                 .AsNoTracking().FirstOrDefaultAsync();
                 return c;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return null;
             }
         }
@@ -89,8 +96,9 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                     .Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();
                 return c;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
                 return null;
             }
         }
@@ -117,7 +125,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             return await l.OrderBy(c => c.Produto.Nome).ThenBy(c => c.Cor.Nome).ToListAsync();
         }
 
-        public async Task<IList<ProdutoEstoque>> ObterTodosAsync()
+        public async Task<IEnumerable<ProdutoEstoque>> ObterTodosAsync()
         {
             try
             {
@@ -133,22 +141,24 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .ToListAsync();
                 return l;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<ProdutoEstoque>();
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<ProdutoEstoque>();
             }
         }
 
-        public async Task<IList<ProdutoEstoque>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
+        public async Task<IEnumerable<ProdutoEstoque>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
         {
             try
             {
                 var l = _appDbContext.ProdutoEstoque.Where(c => c.Ativo).OrderBy(x => x.ProdutoId);
                 return await Paginacao<ProdutoEstoque>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<ProdutoEstoque>();
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<ProdutoEstoque>();
             }
         }
     }

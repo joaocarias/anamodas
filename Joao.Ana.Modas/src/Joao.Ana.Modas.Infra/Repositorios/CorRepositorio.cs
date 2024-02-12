@@ -3,30 +3,33 @@ using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace Joao.Ana.Modas.Infra.Repositorios
 {
     public class CorRepositorio : ICorRepositorio
     {
         private readonly AppDbContext _appDbContext;
+        private readonly ILogger<CorRepositorio> _logger;
 
-        public CorRepositorio(AppDbContext appDbContext)
+        public CorRepositorio(AppDbContext appDbContext, ILogger<CorRepositorio> logger)
         {
             _appDbContext = appDbContext;
+            _logger = logger;
         }
 
-        public async Task<bool> AdicionarAsync(Cor t)
+        public async Task<Cor?> AdicionarAsync(Cor t)
         {
             try
             {
                 await _appDbContext.Cores.AddAsync(t);
                 await _appDbContext.SaveChangesAsync();
-                return true;
+                return t;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.LogError(ex.Message, ex);
+                return null;
             }
         }
 
@@ -39,23 +42,25 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 await _appDbContext.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError($"{ex.Message}", ex);  
                 return false;
             }
         }
 
-        public async Task<bool> AtualizarAsync(Cor t)
+        public async Task<Cor?> AtualizarAsync(Cor t)
         {
             try
             {
                 _appDbContext.Cores.Update(t);
                 await _appDbContext.SaveChangesAsync();
-                return true;
+                return t;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.LogError(ex.Message , ex);  
+                return null;
             }
         }
 
@@ -66,13 +71,14 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 var c = await _appDbContext.Cores.Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();
                 return c;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);  
                 return null;
             }
         }
 
-        public async Task<IList<Cor>> ObterPorNomeAsync(string filtro)
+        public async Task<IEnumerable<Cor>> ObterPorNomeAsync(string filtro)
         {
             try
             {
@@ -82,13 +88,14 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .ToListAsync();
                 return l;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new Enumerable().Empty<Cores>();
+                _logger.LogError(ex.Message);
+                return Enumerable.Empty<Cor>();
             }
         }
 
-        public async Task<IList<Cor>> ObterTodosAsync()
+        public async Task<IEnumerable<Cor>> ObterTodosAsync()
         {
             try
             {
@@ -98,13 +105,14 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .ToListAsync();
                 return l;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<Cor>();
+                _logger.LogError(ex.Message);
+                return Enumerable.Empty<Cor>();
             }
         }
 
-        public async Task<IList<Cor>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
+        public async Task<IEnumerable<Cor>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
         {
             try
             {
@@ -113,9 +121,10 @@ namespace Joao.Ana.Modas.Infra.Repositorios
 
                 return await Paginacao<Cor>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<Cor>();
+                _logger.LogError(ex.Message);
+                return Enumerable.Empty<Cor>();
             }
         }
     }
