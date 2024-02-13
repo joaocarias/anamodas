@@ -123,9 +123,8 @@ namespace Joao.Ana.Modas.Infra.Repositorios
 
                 if (limite is not null && limite > 0)
                     query = query.Take(limite.Value);
-
-                var l = await query.OrderBy(c => c.Nome).ToListAsync();
-                return l;
+                              
+                return await query.OrderBy(c => c.Nome).ToListAsync();
             }
             catch (Exception ex)
             {

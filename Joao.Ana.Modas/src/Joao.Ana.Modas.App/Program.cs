@@ -65,6 +65,7 @@ var config = new MapperConfiguration(cfg =>
     cfg.CreateMap<TipoPagamentoViewModel, TipoPagamento>().ReverseMap();
     cfg.CreateMap<LogistaAssociadoViewModel, LogistaAssociado>().ReverseMap();
     cfg.CreateMap<PedidoViewModel, Pedido>().ReverseMap();  
+    cfg.CreateMap<ProdutoPedidoViewModel, ProdutoPedido>().ReverseMap();  
 });
 
 IMapper mapper = config.CreateMapper();
@@ -79,6 +80,7 @@ builder.Services.AddScoped<IProdutoEstoqueRepositorio, ProdutoEstoqueRepositorio
 builder.Services.AddScoped<ITipoPagamentoRepositorio, TipoPagamentoRepositorio>();
 builder.Services.AddScoped<ILogistaAssociadoRepositorio, LogistaAssociadoRepositorio>();
 builder.Services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
+builder.Services.AddScoped<IProdutoPedidoRepositorio, ProdutoPedidoRepositorio>();
 
 var app = builder.Build();
 

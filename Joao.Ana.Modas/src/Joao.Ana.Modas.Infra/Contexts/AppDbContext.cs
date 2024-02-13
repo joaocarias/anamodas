@@ -20,9 +20,10 @@ namespace Joao.Ana.Modas.Infra.Contexts
         public DbSet<TipoPagamento> TipoPagamentos { get; set; }
         public DbSet<LogistaAssociado> LogistasAssociados { get; set; }
 
-        public DbSet<Pedido> Pedidos { get; set; }  
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<ProdutoPedido> ProdutosPedido { get; set; }
 
-        
+
 
         public AppDbContext(DbContextOptions options) : base(options) { }
     }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Joao.Ana.Modas.Dominio.Entidades
 {
-    public class ProdutoVenda : EntidadeBase
+    public class ProdutoPedido : EntidadeBase
     {
         [Required]
         [StringLength(200)]
@@ -26,13 +26,25 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         
         public Guid? TamanhoId { get; private set; }
 
-        public ProdutoVenda(string nome, decimal? precoVenda, int quantidade, Guid? corId, Guid? tamanhoId, Guid? usuarioCadastro = null) : base(usuarioCadastro)
+        [ForeignKey(nameof(ProdutoId))]
+        public Produto? Produto { get; private set; }
+
+        public Guid? ProdutoId { get; private set; }
+
+        [ForeignKey(nameof(PedidoId))]
+        public Pedido Pedido { get; private set; }
+
+        public Guid PedidoId { get; private set; }
+
+        public ProdutoPedido(string nome, decimal? precoVenda, int quantidade, Guid? corId, Guid? tamanhoId, Guid? produtoId, Guid pedidoId, Guid? usuarioCadastro = null) : base(usuarioCadastro)
         {
             Nome = nome;
             PrecoVenda = precoVenda;
             Quantidade = quantidade;
             CorId = corId;
             TamanhoId = tamanhoId;
+            ProdutoId = produtoId;
+            PedidoId = pedidoId;
         }
     }
 }

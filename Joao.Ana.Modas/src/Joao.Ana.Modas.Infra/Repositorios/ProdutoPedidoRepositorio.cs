@@ -7,88 +7,81 @@ using Microsoft.Extensions.Logging;
 
 namespace Joao.Ana.Modas.Infra.Repositorios
 {
-    public class PedidoRepositorio : IPedidoRepositorio
+    public class ProdutoPedidoRepositorio : IProdutoPedidoRepositorio
     {
         private readonly AppDbContext _appDbContext;
-        private readonly ILogger<CorRepositorio> _logger;
+        private readonly ILogger<ProdutoPedidoRepositorio> _logger;
 
-        public PedidoRepositorio(AppDbContext appDbContext, ILogger<CorRepositorio> logger)
+        public ProdutoPedidoRepositorio(AppDbContext appDbContext, ILogger<ProdutoPedidoRepositorio> logger)
         {
             _appDbContext = appDbContext;
             _logger = logger;
         }
 
-        public async Task<Pedido?> AdicionarAsync(Pedido t)
+        public async Task<ProdutoPedido?> AdicionarAsync(ProdutoPedido t)
         {
             try
             {
-                await _appDbContext.Pedidos.AddAsync(t);
+                await _appDbContext.ProdutosPedido.AddAsync(t);
                 await _appDbContext.SaveChangesAsync();
                 return t;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex.Message);
                 return null;
             }
         }
 
-        public async Task<bool> ApagarAsync(Pedido t)
+        public async Task<bool> ApagarAsync(ProdutoPedido t)
         {
             try
             {
                 t.ApagarRegistro();
-                _appDbContext.Pedidos.Update(t);
+                _appDbContext.ProdutosPedido.Update(t);
                 await _appDbContext.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return false;
             }
         }
 
-        public async Task<Pedido?> AtualizarAsync(Pedido t)
+        public async Task<ProdutoPedido?> AtualizarAsync(ProdutoPedido t)
         {
             try
             {
-                _appDbContext.Pedidos.Update(t);
+                _appDbContext.ProdutosPedido.Update(t);
                 await _appDbContext.SaveChangesAsync();
                 return t;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex.Message);
                 return null;
             }
         }
 
-        public async Task<Pedido?> ObterAsync(Guid id)
+        public async Task<ProdutoPedido?> ObterAsync(Guid id)
         {
             try
             {
-                var c = await _appDbContext.Pedidos
-                                                .Include(p => p.ProdutosPedido)
-                                                .Include(c => c.Cliente)
-                                                .Where(_ => _.Ativo && _.Id.Equals(id))
-                                                .AsNoTracking()
-                                                .FirstOrDefaultAsync();
-                return c;
+                return await _appDbContext.ProdutosPedido.Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();                
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex.Message);
                 return null;
             }
         }
 
-        public async Task<IEnumerable<Pedido>> ObterTodosAsync()
+        public async Task<IEnumerable<ProdutoPedido>> ObterTodosAsync()
         {
             try
             {
-                return await _appDbContext.Pedidos
-                                .Include(p => p.ProdutosPedido)
-                                .Include(c => c.Cliente)
+                return await _appDbContext.ProdutosPedido                                
                                 .Where(c => c.Ativo)
                                 .AsNoTracking()
                                 .OrderBy(c => c.DataCadastro)
@@ -97,23 +90,23 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                return Enumerable.Empty<Pedido>();
+                return Enumerable.Empty<ProdutoPedido>();
             }
         }
 
-        public async Task<IEnumerable<Pedido>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
+        public async Task<IEnumerable<ProdutoPedido>> ObterTodosPaginadoAsync(int? paginaAtual, int totalPaginas = 10)
         {
             try
             {
-                var l = _appDbContext.Pedidos.Where(c => c.Ativo)
+                var l = _appDbContext.ProdutosPedido.Where(c => c.Ativo)
                                 .OrderBy(c => c.DataCadastro);
 
-                return await Paginacao<Pedido>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);
+                return await Paginacao<ProdutoPedido>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
-                return Enumerable.Empty<Pedido>();
+                return Enumerable.Empty<ProdutoPedido>();
             }
         }
     }

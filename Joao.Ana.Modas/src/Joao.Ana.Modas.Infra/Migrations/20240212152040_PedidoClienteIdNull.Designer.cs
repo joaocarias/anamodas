@@ -3,6 +3,7 @@ using System;
 using Joao.Ana.Modas.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Joao.Ana.Modas.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240212152040_PedidoClienteIdNull")]
+    partial class PedidoClienteIdNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -364,64 +366,6 @@ namespace Joao.Ana.Modas.Infra.Migrations
                     b.ToTable("ProdutoEstoque");
                 });
 
-            modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.ProdutoPedido", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<Guid?>("CorId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime?>("DataAlteracao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("DataCadastro")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<Guid>("PedidoId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<decimal?>("PrecoVenda")
-                        .IsRequired()
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<Guid?>("ProdutoId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<int>("Quantidade")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("TamanhoId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("UsuarioAlteracao")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("UsuarioCadastro")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CorId");
-
-                    b.HasIndex("PedidoId");
-
-                    b.HasIndex("ProdutoId");
-
-                    b.HasIndex("TamanhoId");
-
-                    b.ToTable("ProdutosPedido");
-                });
-
             modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Tamanho", b =>
                 {
                     b.Property<Guid>("Id")
@@ -751,35 +695,6 @@ namespace Joao.Ana.Modas.Infra.Migrations
                     b.Navigation("Tamanho");
                 });
 
-            modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.ProdutoPedido", b =>
-                {
-                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Cor", "Cor")
-                        .WithMany()
-                        .HasForeignKey("CorId");
-
-                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Pedido", "Pedido")
-                        .WithMany("Produtos")
-                        .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Produto", "Produto")
-                        .WithMany()
-                        .HasForeignKey("ProdutoId");
-
-                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Tamanho", "Tamanho")
-                        .WithMany()
-                        .HasForeignKey("TamanhoId");
-
-                    b.Navigation("Cor");
-
-                    b.Navigation("Pedido");
-
-                    b.Navigation("Produto");
-
-                    b.Navigation("Tamanho");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -829,11 +744,6 @@ namespace Joao.Ana.Modas.Infra.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Pedido", b =>
-                {
-                    b.Navigation("Produtos");
                 });
 
             modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Produto", b =>

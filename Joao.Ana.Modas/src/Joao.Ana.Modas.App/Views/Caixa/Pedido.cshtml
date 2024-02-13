@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Caixa";
- }
+}
 
 <div class="row text-center">
     <div class="col-md-12">
@@ -23,15 +23,23 @@
     <div class="col-md-12">
 
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h4 class="card-title">Total de Itens: <strong>@Model.QuantiadeItens</strong></h4>
+                        <h4 class="card-title">Num de Itens: <strong>@Model.NumeroItens</strong></h4>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h4 class="card-title">Quantidade de Itens: <strong>@Model.QuantiadeItens</strong></h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-body">
                         <h4 class="card-title">Valor Total: <strong>R$ @Model.TotalValor.ToString("N2")</strong></h4>
@@ -43,21 +51,23 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
+<form asp-action="ProdutoPedido" method="post">
 
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card mb-3">
-                    <div class="card-header">Incluir Produto no Pedido</div>
-                    <div class="card-body">
+    <div asp-validation-summary="All" class="text-danger">
+    </div>
 
-                        <form asp-action="Pedido" method="post">
+    @Html.HiddenFor(m => m.Id)
 
-                            <div asp-validation-summary="All" class="text-danger">
-                            </div>
+    <div class="row">
+        <div class="col-md-12">
 
-                            @Html.HiddenFor(m => m.Produto.Id)
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-header">Incluir Produto no Pedido</div>
+                        <div class="card-body">
+
+                            @Html.HiddenFor(m => m.Produto.ProdutoId)
 
                             <div class="mb-3 row">
 
@@ -105,32 +115,52 @@
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                            <hr />
+        </div>
+    </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                   @*  <button type="submit" class="btn btn-primary">
-                                        <i class="far fa-save"></i>
-                                        Salvar
-                                    </button> *@
+    <div class="row">
+        <div class="col-md-12">
 
-                                    <a asp-action="Index" asp-controller="Clientes" class="btn btn-warning">
-                                        <i class="far fa-times-circle"></i>
-                                        Cancelar
-                                    </a>
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-header">Indentificação do Cliente</div>
+                        <div class="card-body">
+
+                            @Html.HiddenFor(m => m.Cliente.Id)
+
+                            <div class="mb-3 row">
+
+                                <div class="col-md-4">
+                                    <label asp-for="Cliente.Nome" class="col-form-label"></label>
+                                    <input asp-for="Cliente.Nome" class="form-control" />
+
+                                    <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
+
                                 </div>
+
+                                @*
+                                <div class="col-md-6">
+                                <label asp-for="ClienteId" class="col-form-label"></label>
+                                <select asp-for="ClienteId" asp-items="ViewBag.Clientes" class="form-control"></select>
+                                <span asp-validation-for="ClienteId" class="text-danger"></span>
+                                </div> *@
+
                             </div>
 
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
-</div>
+
+</form>
 
 <div class="row">
     <div class="col-md-12">
@@ -155,17 +185,20 @@
                             <tr>
                         </thead>
                         <tbody>
-                            @{ var _cont = 0; }
+                            @{
+                                var _cont = 0;
+                            }
                             @foreach (var i in Model.ProdutosPedido.ToList())
                             {
+                                _cont++;
                                 <tr>
-                                    <td scope="row">@_cont++</td>
+                                    <td scope="row">@_cont</td>
                                     <td>@i.Nome</td>
                                     <td>Cor</td>
                                     <td>Tamanho</td>
                                     <td>@i.PrecoVenda?.ToString("N2")</td>
                                     <td>@i.Quantidade</td>
-                                    <td>@i.ValorPedido</td>
+                                    <td>@i.ValorPedido?.ToString("N2")</td>
                                     <td>
                                         Remover
                                     </td>
@@ -177,15 +210,39 @@
                 }
                 else
                 {
-                    <p>Nenhum cliente encontrado!</p>
+                    <p>Nenhum item inserido!</p>
                 }
 
+
+                <hr />
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <form method="Post" action="FinalizarPedido">
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="far fa-save"></i>
+                                Finalizar Pedido
+                            </button> 
+
+                            <a asp-action="Index" asp-controller="Clientes" class="btn btn-warning">
+                                <i class="far fa-times-circle"></i>
+                                Cancelar
+                            </a>
+
+                        </form>
+                    </div>
+                </div>
+
+
+
             </div>
+
         </div>
     </div>
 </div>
-
-
+</div>
 
 @section Scripts {
     <script>
@@ -202,7 +259,6 @@
                             url: '@Url.Action("ObterProdutos", "Caixa")',
                             data: { filtro: request.term, limite: _maxResults },
                             success: function (data) {
-                                console.log("deu certo");
                                 response(data);
                             }
                         });
@@ -211,7 +267,30 @@
                     maxResults: _maxResults,
                     select: function (event, ui) {
                         $("#Produto_Nome").val(ui.item.label);
-                        $("#Produto_Id").val(ui.item.value);
+                        $("#Produto_ProdutoId").val(ui.item.value);
+                        return false;
+                    }
+                });
+            });
+
+            $(function () {
+                let _maxResults = 20;
+
+                $("#Cliente_Nome").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("ObterClientes", "Caixa")',
+                            data: { filtro: request.term, limite: _maxResults },
+                            success: function (data) {
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 3,
+                    maxResults: _maxResults,
+                    select: function (event, ui) {
+                        $("#Cliente_Nome").val(ui.item.label);
+                        $("#Cliente_Id").val(ui.item.value);
                         return false;
                     }
                 });

@@ -3,6 +3,7 @@ using System;
 using Joao.Ana.Modas.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Joao.Ana.Modas.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240212211629_ProdutoPedidoTabela")]
+    partial class ProdutoPedidoTabela
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -387,7 +389,7 @@ namespace Joao.Ana.Modas.Infra.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("varchar(200)");
 
-                    b.Property<Guid>("PedidoId")
+                    b.Property<Guid?>("PedidoId")
                         .HasColumnType("char(36)");
 
                     b.Property<decimal?>("PrecoVenda")
@@ -419,7 +421,7 @@ namespace Joao.Ana.Modas.Infra.Migrations
 
                     b.HasIndex("TamanhoId");
 
-                    b.ToTable("ProdutosPedido");
+                    b.ToTable("ProdutoPedido");
                 });
 
             modelBuilder.Entity("Joao.Ana.Modas.Dominio.Entidades.Tamanho", b =>
@@ -757,11 +759,9 @@ namespace Joao.Ana.Modas.Infra.Migrations
                         .WithMany()
                         .HasForeignKey("CorId");
 
-                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Pedido", "Pedido")
+                    b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Pedido", null)
                         .WithMany("Produtos")
-                        .HasForeignKey("PedidoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PedidoId");
 
                     b.HasOne("Joao.Ana.Modas.Dominio.Entidades.Produto", "Produto")
                         .WithMany()
@@ -772,8 +772,6 @@ namespace Joao.Ana.Modas.Infra.Migrations
                         .HasForeignKey("TamanhoId");
 
                     b.Navigation("Cor");
-
-                    b.Navigation("Pedido");
 
                     b.Navigation("Produto");
 

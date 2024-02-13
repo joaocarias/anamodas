@@ -77,16 +77,26 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<IEnumerable<Cliente>> ObterPorNomeAsync(string filtro)
+        public async Task<IEnumerable<Cliente>> ObterPorNomeAsync(string filtro, int? limite = null)
         {
             try
             {
-                var l = await _appDbContext.Clientes.Where(c => c.Ativo && c.Nome.Contains(filtro))
+                var query = _appDbContext.Clientes
                                 .Include(x => x.Endereco)
-                                .AsNoTracking()                                
-                                .OrderBy(c => c.Nome)
-                                .ToListAsync();
-                return l;
+                                .AsNoTracking();
+
+
+                if (!string.IsNullOrEmpty(filtro))
+                {
+                    query = query.Where(c => c.Nome.Contains(filtro));
+                }
+
+                query = query.Where(c => c.Ativo);
+
+                if (limite is not null && limite > 0)
+                    query = query.Take(limite.Value);
+
+                return await query.OrderBy(c => c.Nome).ToListAsync();
             }
             catch (Exception ex)
             {
