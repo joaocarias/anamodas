@@ -1,0 +1,20 @@
+﻿@model Joao.Ana.Modas.App.Models.Caixa.PedidoViewModel
+
+@{
+    ViewData["Title"] = "Pedido";
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>Pedido</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Pedido" asp-controller="Caixa">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Pedido</li>
+            </ol>
+        </nav>
+    </div>
+</div>

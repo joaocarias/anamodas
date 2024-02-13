@@ -36,5 +36,10 @@ namespace Joao.Ana.Modas.Dominio.Entidades
             ProdutosPedido ??= new List<ProdutoPedido>();
             ((List<ProdutoPedido>) ProdutosPedido).Add(produto);
         }
+
+        public void SetStatus(EPeditoStatus cancelado)
+        {
+            Status = cancelado;
+        }
     }
 }

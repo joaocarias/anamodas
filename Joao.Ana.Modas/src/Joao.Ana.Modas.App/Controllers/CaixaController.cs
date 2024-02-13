@@ -3,12 +3,12 @@ using Joao.Ana.Modas.App.Models.Caixa;
 using Joao.Ana.Modas.App.Models.Clientes;
 using Joao.Ana.Modas.App.Models.Produtos;
 using Joao.Ana.Modas.Dominio.Entidades;
+using Joao.Ana.Modas.Dominio.Enums;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
@@ -57,6 +57,35 @@ namespace Joao.Ana.Modas.App.Controllers
             await _produtoPedidoRepositorio.AdicionarAsync(new ProdutoPedido(model.Produto.Nome, model.Produto.PrecoVenda, model.Produto.Quantidade, model.Produto.CorId, model.Produto.TamanhoId, produto?.Id, pedido.Id ));
                         
             return RedirectToAction(nameof(Pedido), new { guid = pedido?.Id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmarPedido(FinalizarPedidoViewModel confirmar)
+        {
+            var pedido = AtualizarStatusPedido(confirmar.PedidoId, EPeditoStatus.Cancelado);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelarPedido(FinalizarPedidoViewModel confirmar)
+        {
+            var pedido = AtualizarStatusPedido(confirmar.PedidoId, EPeditoStatus.Cancelado);
+            return RedirectToAction("Detalhar", "Pedido", pedido.Id);
+        }
+
+        private async Task<Pedido?> AtualizarStatusPedido(Guid pedidoId, EPeditoStatus status)
+        {
+            try
+            {
+                var pedido = await _pedidoRepositorio.ObterAsync(pedidoId);
+                pedido?.SetStatus(status);
+                return await _pedidoRepositorio.AtualizarAsync(pedido);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return null;
+            }
         }
 
         #region Endpoints

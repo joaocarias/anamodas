@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Caixa";
+
+    Model.Confirmar.PedidoId = Model.Id;
 }
 
 <div class="row text-center">
@@ -216,22 +218,30 @@
 
                 <hr />
 
-
                 <div class="row">
                     <div class="col-md-12">
-                        <form method="Post" action="FinalizarPedido">
+                        <form method="Post" action="ConfirmarPedido">
+
+                            @Html.HiddenFor(m => m.Confirmar.PedidoId)
 
                             <button type="submit" class="btn btn-primary">
                                 <i class="far fa-save"></i>
-                                Finalizar Pedido
-                            </button> 
-
-                            <a asp-action="Index" asp-controller="Clientes" class="btn btn-warning">
-                                <i class="far fa-times-circle"></i>
-                                Cancelar
-                            </a>
+                                Confirmar Pedido                       
+                            </button>
 
                         </form>
+
+                         <form method="Post" action="CancelarPedido">
+
+                            @Html.HiddenFor(m => m.Cancelar.PedidoId)
+
+                            <button type="submit" class="btn btn-warning">
+                                    <i class="far fa-times-circle"></i>
+                                    Cancelar
+                            </button>
+
+                        </form>
+
                     </div>
                 </div>
 

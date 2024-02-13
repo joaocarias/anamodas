@@ -15,6 +15,9 @@ namespace Joao.Ana.Modas.App.Models.Caixa
         
         public EPeditoStatus Status { get; set; }
 
+        public FinalizarPedidoViewModel Confirmar { get; set; } = new FinalizarPedidoViewModel();
+        public FinalizarPedidoViewModel Cancelar { get; set; } = new FinalizarPedidoViewModel();
+
         public int NumeroItens
         {
             get
