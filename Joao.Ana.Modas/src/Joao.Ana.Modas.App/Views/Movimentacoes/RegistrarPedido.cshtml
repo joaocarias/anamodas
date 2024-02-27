@@ -1,9 +1,9 @@
-﻿@model Joao.Ana.Modas.App.Models.Caixa.PedidoViewModel
+﻿@model Joao.Ana.Modas.App.Models.Movimentacoes.RegistrarPedidoViewModel
 
 @{
-    ViewData["Title"] = "Caixa";
+    ViewData["Title"] = "Registrar Pedido";
 
-    Model.Confirmar.PedidoId = Model.Id;
+    //  Model.Confirmar.PedidoId = Model.Id;
 }
 
 <div class="row text-center">
@@ -14,8 +14,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="Pedido" asp-controller="Caixa">@ViewData["Title"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Novo Pedido</li>
+                <li class="breadcrumb-item"><a asp-action="RegistrarPedido" asp-controller="Movimentacoes">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
             </ol>
         </nav>
     </div>
@@ -23,12 +23,12 @@
 
 <div class="row">
     <div class="col-md-12">
-
         <div class="row justify-content-center">
+
             <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h4 class="card-title">Num de Itens: <strong>@Model.NumeroItens</strong></h4>
+                        Num de Itens: <strong>@Model.NumeroItens</strong>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
             <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h4 class="card-title">Quantidade de Itens: <strong>@Model.QuantiadeItens</strong></h4>
+                        Quantidade de Itens: <strong>@Model.QuantiadeItens</strong>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
             <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h4 class="card-title">Valor Total: <strong>R$ @Model.TotalValor.ToString("N2")</strong></h4>
+                        Valor Total: <strong>R$ @Model.TotalValor.ToString("N2")</strong>
                     </div>
                 </div>
             </div>
@@ -53,12 +53,12 @@
     </div>
 </div>
 
-<form asp-action="ProdutoPedido" method="post">
+<form id="incluir_produto" class="incluir_produto">
 
     <div asp-validation-summary="All" class="text-danger">
     </div>
 
-    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.PedidoId)
 
     <div class="row">
         <div class="col-md-12">
@@ -78,7 +78,6 @@
                                     <input asp-for="Produto.Nome" class="form-control" />
 
                                     <span asp-validation-for="Produto.Nome" class="text-danger"></span>
-
                                 </div>
 
                                 <div class="col-md-3">
@@ -90,8 +89,6 @@
                             </div>
 
                             <div class="mb-3 row">
-
-
                                 <div class="col-md-4">
                                     <label asp-for="Produto.CorId" class="col-form-label"></label>
                                     <select asp-for="Produto.CorId" asp-items="ViewBag.Cores" class="form-control"></select>
@@ -112,7 +109,7 @@
 
                                 <div class="col-md-3 d-flex align-items-end">
                                     <div class="d-grid gap-2">
-                                        <button type="submit" class="btn btn-dark btn-adicionar-item"><i class="fa-solid fa-spell-check"></i> Adicionar </button>
+                                        <button type="button" class="btn btn-dark btn-adicionar-item btn-add-item-produto"><i class="fa-solid fa-spell-check"></i> Adicionar </button>
                                     </div>
                                 </div>
                             </div>
@@ -122,43 +119,6 @@
                 </div>
             </div>
 
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-
-            <div class="row justify-content-center">
-                <div class="col-md-12">
-                    <div class="card mb-3">
-                        <div class="card-header">Indentificação do Cliente</div>
-                        <div class="card-body">
-
-                            @Html.HiddenFor(m => m.Cliente.Id)
-
-                            <div class="mb-3 row">
-
-                                <div class="col-md-4">
-                                    <label asp-for="Cliente.Nome" class="col-form-label"></label>
-                                    <input asp-for="Cliente.Nome" class="form-control" />
-
-                                    <span asp-validation-for="Cliente.Nome" class="text-danger"></span>
-
-                                </div>
-
-                                @*
-                                <div class="col-md-6">
-                                <label asp-for="ClienteId" class="col-form-label"></label>
-                                <select asp-for="ClienteId" asp-items="ViewBag.Clientes" class="form-control"></select>
-                                <span asp-validation-for="ClienteId" class="text-danger"></span>
-                                </div> *@
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -215,7 +175,6 @@
                     <p>Nenhum item inserido!</p>
                 }
 
-
                 <hr />
 
                 <div class="row">
@@ -226,18 +185,18 @@
 
                             <button type="submit" class="btn btn-primary">
                                 <i class="far fa-save"></i>
-                                Confirmar Pedido                       
+                                Confirmar Pedido
                             </button>
 
                         </form>
 
-                         <form method="Post" action="CancelarPedido">
+                        <form method="Post" action="CancelarPedido">
 
                             @Html.HiddenFor(m => m.Cancelar.PedidoId)
 
                             <button type="submit" class="btn btn-warning">
-                                    <i class="far fa-times-circle"></i>
-                                    Cancelar
+                                <i class="far fa-times-circle"></i>
+                                Cancelar
                             </button>
 
                         </form>
@@ -245,13 +204,10 @@
                     </div>
                 </div>
 
-
-
             </div>
 
         </div>
     </div>
-</div>
 </div>
 
 @section Scripts {
@@ -306,6 +262,44 @@
                 });
             });
 
+            $(".btn-add-item-produto").click(function () {
+                $("#submit_button").addClass("disabled").prop("disabled", true);
+
+                if (validarCampoVazio("#Produto_Nome") && validarCampoNumerico("#Produto_PrecoVenda") && validarCampoNumerico("#Produto_Quantidade")) {
+                    console.log("Form válido");
+                } else {
+                    console.log("Form inválido");
+                }
+
+                $("#submit_button").removeClass("disabled").prop("disabled", false);
+            });
+
+            function validarCampoVazio(campoSelector, mensagemErro = "O campo é obrigatório.") {
+                var campo = campoSelector.replace('#', '').replace('_', '.');
+                if ($(campoSelector).val() === "") {
+                    $(`span[data-valmsg-for='${campo}']`).text(mensagemErro).addClass("text-danger");
+                    return false;
+                } else {
+                    $(`span[data-valmsg-for='${campo}']`).text("").removeClass("text-danger");
+                    return true;
+                }
+            }
+
+            function validarCampoNumerico(campoSelector, mensagemErroVazio = "O campo é obrigatório.", mensagemErroValor = "O valor deve ser maior ou igual a zero.") {
+                var valor = parseFloat($(campoSelector).val());
+                var campo = campoSelector.replace('#', '').replace('_', '.');
+
+                if ($(campoSelector).val() === "") {
+                    $(`span[data-valmsg-for='${campo}']`).text(mensagemErroVazio).addClass("text-danger");
+                    return false;
+                } else if (isNaN(valor) || valor < 0) {
+                    $(`span[data-valmsg-for='${campo}']`).text(mensagemErroValor).addClass("text-danger");
+                    return false;
+                } else {
+                    $(`span[data-valmsg-for='${campo}']`).text("").removeClass("text-danger");
+                    return true;
+                }
+            }
 
         });
     </script>

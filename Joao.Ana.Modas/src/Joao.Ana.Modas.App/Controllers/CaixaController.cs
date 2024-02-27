@@ -40,7 +40,7 @@ namespace Joao.Ana.Modas.App.Controllers
         public async Task<IActionResult> Pedido(Guid? guid = null)
         {
             var pedido = guid is null ? await _pedidoRepositorio.AdicionarAsync(new Pedido()) : await _pedidoRepositorio.ObterAsync(guid.GetValueOrDefault());
-            await ViewBagsDefault(pedido?.ClienteId);
+            await ViewBagsDefault(/*pedido?.ClienteId*/);
             return View(_mapper.Map<PedidoViewModel>(pedido));
         }
         
@@ -48,13 +48,13 @@ namespace Joao.Ana.Modas.App.Controllers
         public async Task<IActionResult> ProdutoPedido(PedidoViewModel model)
         {
             var pedido = await _pedidoRepositorio.ObterAsync(model.Id);
-            var produto = await ObterProdutoOuNovo(model.Produto);
+         //   var produto = await ObterProdutoOuNovo(model.Produto);
       //      Cliente? cliente = string.IsNullOrEmpty(model.Cliente?.Nome) ? null : await ObterClienteOuNovo(model.Cliente);
 
          //   pedido?.SetCliente(cliente?.Id);
          //   pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
 
-            await _produtoPedidoRepositorio.AdicionarAsync(new ProdutoPedido(model.Produto.Nome, model.Produto.PrecoVenda, model.Produto.Quantidade, model.Produto.CorId, model.Produto.TamanhoId, produto?.Id, pedido.Id ));
+          //  await _produtoPedidoRepositorio.AdicionarAsync(new ProdutoPedido(model.Produto.Nome, model.Produto.PrecoVenda, model.Produto.Quantidade, model.Produto.CorId, model.Produto.TamanhoId, produto?.Id, pedido.Id ));
                         
             return RedirectToAction(nameof(Pedido), new { guid = pedido?.Id });
         }
@@ -130,28 +130,28 @@ namespace Joao.Ana.Modas.App.Controllers
 
         #region privates
 
-        private async Task<Produto?> ObterProdutoOuNovo(ProdutoPedidoViewModel produtoPedido)
-        {
-            try
-            {
-                var produto = await _produtoRepositorio.ObterAsync(produtoPedido.ProdutoId.GetValueOrDefault());
-                produto ??= await _produtoRepositorio.AdicionarAsync(
-                                    new Produto(
-                                        produtoPedido.Nome,
-                                        null,
-                                        produtoPedido.PrecoVenda,
-                                        Enumerable.Empty<ProdutoEstoque>(),
-                                        null,
-                                        null));
+        //private async Task<Produto?> ObterProdutoOuNovo(ProdutoPedidoViewModel produtoPedido)
+        //{
+        //    try
+        //    {
+        //        var produto = await _produtoRepositorio.ObterAsync(produtoPedido.ProdutoId.GetValueOrDefault());
+        //        produto ??= await _produtoRepositorio.AdicionarAsync(
+        //                            new Produto(
+        //                                produtoPedido.Nome,
+        //                                null,
+        //                                produtoPedido.PrecoVenda,
+        //                                Enumerable.Empty<ProdutoEstoque>(),
+        //                                null,
+        //                                null));
 
-                return produto;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-                return null;
-            }
-        }
+        //        return produto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        return null;
+        //    }
+        //}
 
         private async Task<Cliente?> ObterClienteOuNovo(ClienteViewModel model)
         {

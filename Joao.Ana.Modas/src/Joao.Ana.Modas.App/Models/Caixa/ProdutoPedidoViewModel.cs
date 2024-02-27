@@ -32,9 +32,9 @@ namespace Joao.Ana.Modas.App.Models.Caixa
 
         public Guid? PedidoId { get; set; }
 
-        public PedidoViewModel? Pedido { get; set; }
+        public PedidoViewModel Pedido { get; set; }
 
-        public Guid? ProdutoId { get; set; }
+        public Guid ProdutoId { get; set; }
 
         public ProdutoViewModel? Produto { get; set; }
 
@@ -45,5 +45,7 @@ namespace Joao.Ana.Modas.App.Models.Caixa
                 return Quantidade * PrecoVenda.GetValueOrDefault();
             }
         }
+
+        public ProdutoPedidoViewModel() { }
     }
 }

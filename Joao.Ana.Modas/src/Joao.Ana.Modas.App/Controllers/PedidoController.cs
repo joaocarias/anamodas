@@ -12,10 +12,10 @@ namespace Joao.Ana.Modas.App.Controllers
     public class PedidoController : MeuController
     {
         private readonly IMapper _mapper;
-        private readonly ILogger<ClientesController> _logger;
+        private readonly ILogger<PedidoController> _logger;
         private readonly IPedidoRepositorio _pedidoRepositorio;
 
-        public PedidoController(IMapper mapper, ILogger<ClientesController> logger, IPedidoRepositorio pedidoRepositorio)
+        public PedidoController(IMapper mapper, ILogger<PedidoController> logger, IPedidoRepositorio pedidoRepositorio)
         {
             _mapper = mapper;
             _logger = logger;

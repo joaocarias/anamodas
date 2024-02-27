@@ -77,9 +77,9 @@ C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj
 C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.AssemblyInfo.cs
 C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.csproj.CoreCompileInputs.cache
 C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.sourcelink.json
-C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.csproj.CopyComplete
 C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.dll
 C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\refint\Joao.Ana.Modas.Infra.dll
 C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.pdb
 C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.Modas.Infra.genruntimeconfig.cache
 C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\ref\Joao.Ana.Modas.Infra.dll
+C:\Users\jfran\source\repos\anamodas\Joao.Ana.Modas\src\Joao.Ana.Modas.Infra\obj\Debug\net6.0\Joao.Ana.146998CC.Up2Date

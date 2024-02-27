@@ -46,5 +46,7 @@ namespace Joao.Ana.Modas.Dominio.Entidades
             ProdutoId = produtoId;
             PedidoId = pedidoId;
         }
+
+        private ProdutoPedido() { }
     }
 }
