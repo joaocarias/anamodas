@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Joao.Ana.Modas.App.Models.Caixa;
 using Joao.Ana.Modas.App.Models.Pedidos;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
@@ -31,6 +30,21 @@ namespace Joao.Ana.Modas.App.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> Novo(Guid? clienteId = null)
+        {
+            try
+            {
+
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.Message, ex);  
                 return View();
             }
         }

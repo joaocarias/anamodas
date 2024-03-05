@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Joao.Ana.Modas.App.Models.Caixa;
 using Joao.Ana.Modas.App.Models.Clientes;
 using Joao.Ana.Modas.App.Models.Movimentacoes;
+using Joao.Ana.Modas.App.Models.Pedidos;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.Enums;
 using Joao.Ana.Modas.Dominio.IRepositorios;
@@ -33,47 +33,215 @@ namespace Joao.Ana.Modas.App.Controllers
             _produtoPedidoRepositorio = produtoPedidoRepositorio;
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> RegistrarPedido(Guid? guid = null)
+        public async Task<IActionResult> ClientePedido(Guid? clienteId = null)
         {
             try
             {
-                var pedido = guid is null ? await _pedidoRepositorio.AdicionarAsync(new Pedido()) : await _pedidoRepositorio.ObterAsync(guid.GetValueOrDefault());
-                await ViewBagsDefault(/*pedido?.ClienteId*/);
-                var viewModel = new RegistrarPedidoViewModel(_mapper.Map<PedidoViewModel>(pedido));  
-                return View(viewModel);
+                if(clienteId is null)
+                {
+                    await SelectListClientesViewBag();
+                    return View(new ClientePedidoViewModel());
+                }
+                else
+                {
+                    var pedido = await ClienteNovoPedido(clienteId);
+                    if (pedido == null) return RedirectToAction("Index", "Home");
+
+                    return RedirectToAction(nameof(ProdutosPedido), new { pedidoId = pedido.Id });
+                }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
                 return RedirectToAction("Index", "Home");
             }
-          
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ProdutoPedido(RegistrarPedidoViewModel model)
-        {
-            var pedido = await _pedidoRepositorio.ObterAsync(model.PedidoId.GetValueOrDefault());
-            var produto = await ObterProdutoOuNovo(model.Produto);
-            
-            await _produtoPedidoRepositorio.AdicionarAsync(new ProdutoPedido(model.Produto.Nome, model.Produto.PrecoVenda, model.Produto.Quantidade, model.Produto.CorId, model.Produto.TamanhoId, produto?.Id, pedido.Id));
+        //[HttpGet]
+        //public async Task<IActionResult> ClientePedido(Guid clienteId)
+        //{
+        //    try
+        //    {
+        //        var pedido = await ClienteNovoPedido(clienteId);
+        //        return View(new ClientePedidoViewModel());
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
 
-            return RedirectToAction(nameof(RegistrarPedido), new { guid = pedido?.Id });
+        [HttpPost]
+        public async Task<IActionResult> ClientePedido(ClientePedidoViewModel model)
+        {
+            try
+            {
+                var pedido = await ClienteNovoPedido(model.ClienteId);
+                if (pedido == null) return RedirectToAction("Index", "Home");
+
+                return RedirectToAction(nameof(ProdutosPedido), new { pedidoId = pedido.Id });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> ProdutosPedido(Guid pedidoId)
+        {
+            try
+            {
+
+                var t = new ProdutosPedidoViewModel()
+                {
+                    Pedido = _mapper.Map<PedidoViewModel>(await _pedidoRepositorio.ObterAsync(pedidoId)),
+                    Produtos = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(await _produtoPedidoRepositorio.ObterAsync(pedidoId))
+                };
+               return View(t);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Index", "Home");
+            }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> ConfirmarPedido(FinalizarPedidoViewModel confirmar)
+        [HttpGet]
+        public async Task<IActionResult> NovoPedido()
         {
-            var pedido = await AtualizarStatusPedido(confirmar.PedidoId, EPeditoStatus.Finalizado);
-            return RedirectToAction();
+            try
+            {
+               // var pedido = guid is null ? await _pedidoRepositorio.AdicionarAsync(new Pedido()) : await _pedidoRepositorio.ObterAsync(guid.GetValueOrDefault());
+
+                //if (pedido is not null)
+                //{
+                //    if (clienteId is not null)
+                //    {
+                //        var cliente = await _clienteRepositorio.ObterAsync(clienteId.GetValueOrDefault());
+                //        pedido.SetCliente(cliente);
+                //        pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
+                //    }
+                //    else if (anonimo is not null && anonimo.GetValueOrDefault())
+                //    {                       
+                //        pedido.SetCliente();
+                //        pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
+                //    }
+                //}
+
+                await ViewBagsDefault(/*pedido?.ClienteId*/);
+              //  await ViewBagsDefault
+                // return View(new NovoPedidoViewModel(_mapper.Map<PedidoViewModel>(pedido)));
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Index", "Home");
+            }
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> RegistrarPedido(Guid? guid = null)
+        //{
+        //    try
+        //    {
+        //        var pedido = guid is null ? await _pedidoRepositorio.AdicionarAsync(new Pedido()) : await _pedidoRepositorio.ObterAsync(guid.GetValueOrDefault());
+        //        await ViewBagsDefault(/*pedido?.ClienteId*/);
+        //        var viewModel = new RegistrarPedidoViewModel(_mapper.Map<PedidoViewModel>(pedido));
+        //        return View(viewModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> ProdutoPedido(RegistrarPedidoViewModel model)
+        //{
+        //    var pedido = await _pedidoRepositorio.ObterAsync(model.PedidoId.GetValueOrDefault());
+        //    var produto = await ObterProdutoOuNovo(model.Produto);
+
+        //    await _produtoPedidoRepositorio.AdicionarAsync(new ProdutoPedido(model.Produto.Nome, model.Produto.PrecoVenda, model.Produto.Quantidade, model.Produto.CorId, model.Produto.TamanhoId, produto?.Id, pedido.Id));
+
+        //    return RedirectToAction(nameof(RegistrarPedido), new { guid = pedido?.Id });
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> ConfirmarPedido(FinalizarPedidoViewModel confirmar)
+        //{
+        //    var pedido = await AtualizarStatusPedido(confirmar.PedidoId, EPeditoStatus.Finalizado);
+        //    return RedirectToAction();
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> CancelarPedido(FinalizarPedidoViewModel confirmar)
+        //{
+        //    var pedido = await AtualizarStatusPedido(confirmar.PedidoId, EPeditoStatus.Cancelado);
+        //    return RedirectToAction("Detalhar", "Pedido", pedido.Id);
+        //}
+
+
+        //public async Task<IActionResult> DefinirCliente(RegistrarPedidoViewModel model)
+        //{
+        //    var pedido = await _pedidoRepositorio.ObterAsync(model.PedidoId.GetValueOrDefault());
+        //    if (model.Pedido is not null && model.Pedido.ClienteId is not null)
+        //    {
+        //        pedido.SetCliente(pedido.ClienteId);
+        //    }
+
+        //    pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
+        //    return RedirectToAction(nameof(RegistrarPedido), new { guid = pedido?.Id });
+        //}
+
         [HttpPost]
-        public async Task<IActionResult> CancelarPedido(FinalizarPedidoViewModel confirmar)
+        public async Task<IActionResult> AdicionarProdutoPedido([FromBody] AdicionarProdutoPedidoViewModel model)
         {
-            var pedido = await AtualizarStatusPedido(confirmar.PedidoId, EPeditoStatus.Cancelado);
-            return RedirectToAction("Detalhar", "Pedido", pedido.Id);
+            try
+            {
+                //var produtoPedido = new ProdutoPedidoViewModel()
+                //{
+                //    Nome = model.Nome,
+                //    PrecoVenda = model.PrecoVenda,
+                //    Quantidade = model.Quantidade,
+                //    CorId = model.CorId,
+                //    TamanhoId = model.TamanhoId,
+                //    PedidoId = model.PedidoId
+                //};
+
+                //if (model.ProdutoId is null)
+                //{
+                //    var produto = await ObterProdutoOuNovo(produtoPedido);
+                //    produtoPedido.ProdutoId = produto.Id;
+                //}
+                //else
+                //{
+                //    produtoPedido.ProdutoId = model.ProdutoId.GetValueOrDefault();
+                //}
+
+                //var newProdutoPedido = await _produtoPedidoRepositorio.AdicionarAsync(_mapper.Map<ProdutoPedido>(produtoPedido));
+                //var produtos = await _produtoPedidoRepositorio.ProdutosPedido(model.PedidoId.GetValueOrDefault());
+                //return Created(newProdutoPedido.Id.ToString(),
+                //    new
+                //    {
+                //        Pedido = new RegistrarPedidoViewModel()
+                //        {
+                //            PedidoId = model.PedidoId,
+                //            ProdutosPedido = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(produtos)
+                //        }
+                //    });
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { ex.Message });
+            }
         }
 
         #region privates
@@ -93,28 +261,28 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
-        private async Task<Produto?> ObterProdutoOuNovo(ProdutoPedidoViewModel produtoPedido)
-        {
-            try
-            {
-                var produto = await _produtoRepositorio.ObterAsync(produtoPedido.ProdutoId);
-                produto ??= await _produtoRepositorio.AdicionarAsync(
-                                    new Produto(
-                                        produtoPedido.Nome,
-                                        null,
-                                        produtoPedido.PrecoVenda,
-                                        Enumerable.Empty<ProdutoEstoque>(),
-                                        null,
-                                        null));
+        //private async Task<Produto?> ObterProdutoOuNovo(ProdutoPedidoViewModel produtoPedido)
+        //{
+        //    try
+        //    {
+        //        var produto = await _produtoRepositorio.ObterAsync(produtoPedido.ProdutoId);
+        //        produto ??= await _produtoRepositorio.AdicionarAsync(
+        //                            new Produto(
+        //                                produtoPedido.Nome,
+        //                                null,
+        //                                produtoPedido.PrecoVenda,
+        //                                Enumerable.Empty<ProdutoEstoque>(),
+        //                                null,
+        //                                null));
 
-                return produto;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-                return null;
-            }
-        }
+        //        return produto;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message, ex);
+        //        return null;
+        //    }
+        //}
 
         private async Task<Cliente?> ObterClienteOuNovo(ClienteViewModel model)
         {
@@ -124,6 +292,22 @@ namespace Joao.Ana.Modas.App.Controllers
                 cliente ??= await _clienteRepositorio.AdicionarAsync(new Cliente(model.Nome, null, null, null));
 
                 return cliente;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return null;
+            }
+        }
+
+        private async Task<Pedido?> ClienteNovoPedido(Guid? clienteId = null)
+        {
+            try
+            {
+                var pedido = new Pedido();
+                pedido.SetCliente(clienteId);
+                pedido = await _pedidoRepositorio.AdicionarAsync(pedido);
+                return pedido;
             }
             catch (Exception ex)
             {

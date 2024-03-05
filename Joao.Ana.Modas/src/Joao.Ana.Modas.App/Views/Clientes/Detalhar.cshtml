@@ -41,54 +41,9 @@
                 <div class="card-header">@Model?.Cliente?.Id</div>
 
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-5">
-                            Nome: <strong>@Model?.Cliente?.Nome</strong>
-                        </div>
 
-                        <div class="col-md-4">
-                            E-mail: <strong>@Model?.Cliente?.Email</strong>
-                        </div>
+                    @await Html.PartialAsync("_ResumoPartialView", Model?.Cliente)
 
-                        <div class="col-md-3">
-                            Telefone: <strong>@Model?.Cliente?.Telefone</strong>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <hr />
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            Rua: <strong>@Model?.Cliente?.Endereco?.Logradouro</strong>
-                        </div>
-
-                        <div class="col-md-3">
-                            Nº: <strong>@Model?.Cliente?.Endereco?.Numero</strong>
-                        </div>
-
-                        <div class="col-md-4">
-                            Complemento: <strong>@Model?.Cliente?.Endereco?.Complemento</strong>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-5">
-                            Bairro: <strong>@Model?.Cliente?.Endereco?.Bairro</strong>
-                        </div>
-
-                        <div class="col-md-7">
-                            Cep: <strong>@Model?.Cliente?.Endereco?.Cep</strong>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            Cidade/UF: <strong>@Model?.Cliente?.Endereco?.Cidade - @Model?.Cliente?.Endereco?.Estado </strong>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-md-12">
                             <hr />
@@ -108,9 +63,25 @@
             </div>
         </div>
     </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-header">Pedidos</div>
+
+                <div class="card-body">
+                    <a type="button" class="btn btn-dark btn-sm" asp-action="ClientePedido" asp-controller="Movimentacoes" asp-route-clienteId="@Model?.Cliente.Id">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Realizar Novo Pedido
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 }
 
- 
 <!-- Modal Excluir -->
 <div class="modal fade" id="ModalExcluir" tabindex="-1" aria-labelledby="TituloModalExcluir" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" ">
@@ -131,12 +102,12 @@
 </div>
 
 
-@section Scripts{
-<script type="text/javascript">
-    $('.btn-excluir').on('click', function() {
-        var id = $(this).attr('id');
-        $('#url-modal-excluir').attr('href', '/Clientes/Excluir?guid=' + id);
-        $('#ModalExcluir').modal('show');
-    });
-</script>
-}
+    @section Scripts {
+    <script type="text/javascript">
+        $('.btn-excluir').on('click', function () {
+            var id = $(this).attr('id');
+            $('#url-modal-excluir').attr('href', '/Clientes/Excluir?guid=' + id);
+            $('#ModalExcluir').modal('show');
+        });
+    </script>
+    }

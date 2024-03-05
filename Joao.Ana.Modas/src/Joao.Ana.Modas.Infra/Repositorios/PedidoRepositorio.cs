@@ -68,8 +68,8 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             try
             {
                 var c = await _appDbContext.Pedidos
-                                              //  .Include(p => p.ProdutosPedido)
-                                              //  .Include(c => c.Cliente)
+                                                //  .Include(p => p.ProdutosPedido)
+                                                .Include(c => c.Cliente.Endereco)
                                                 .Where(_ => _.Ativo && _.Id.Equals(id))
                                                 .AsNoTracking()
                                                 .FirstOrDefaultAsync();
@@ -88,7 +88,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             {
                 return await _appDbContext.Pedidos
                                // .Include(p => p.ProdutosPedido)
-                             //   .Include(c => c.Cliente)
+                                .Include(c => c.Cliente.Endereco)
                                 .Where(c => c.Ativo)
                                 .AsNoTracking()
                                 .OrderBy(c => c.DataCadastro)

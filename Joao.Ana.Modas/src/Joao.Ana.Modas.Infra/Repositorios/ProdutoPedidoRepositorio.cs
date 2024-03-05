@@ -109,5 +109,24 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 return Enumerable.Empty<ProdutoPedido>();
             }
         }
+
+        public async Task<IEnumerable<ProdutoPedido>> ProdutosPedido(Guid pedidoId)
+        {
+            try
+            {
+                return await _appDbContext.ProdutosPedido
+                                .Include(p => p.Pedido)
+                                .Include(p => p.Produto)
+                                .AsNoTracking()
+                                .Where(c => c.Ativo && c.PedidoId.Equals(pedidoId))
+                                .OrderBy(c => c.DataCadastro)
+                                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<ProdutoPedido>();
+            }
+        }
     }
 }

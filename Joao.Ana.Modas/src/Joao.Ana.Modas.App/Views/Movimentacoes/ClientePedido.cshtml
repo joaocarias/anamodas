@@ -1,0 +1,76 @@
+﻿@model Joao.Ana.Modas.App.Models.Movimentacoes.ClientePedidoViewModel
+
+@{
+    ViewData["Title"] = "Registrar Pedido";
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>Pedido</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Movimentacoes">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Selecionar Cliente para o Pedido</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<div class="card mb-3 mt-3">
+    <div class="card-header">
+        Selecionar o Cliente
+    </div>
+    <div class="card-body">
+
+        <form asp-action="ClientePedido" asp-controller="Movimentacoes" method="post">
+
+            <div class="mb-3 row">
+                <div class="col-md-12">
+                    <div class="card border-info mb-3">
+                        <div class="card-body">
+                            <p class="card-text">O Cliente não é obrigatório, basta não informar. Caso o cliente não encontrado na lista, clique no botão "Novo Cliente".</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+
+                <div class="col-md-6">
+                    <select asp-for="ClienteId" asp-items="ViewBag.Clientes" class="form-control">
+                        <option value=""></option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa-solid fa-arrow-right"></i> &nbsp;
+                        Próximo
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <hr />
+            </div>
+
+            <div class="col-md-3">
+
+                <a asp-controller="Clientes" asp-action="Novo" class="btn btn-info">
+                    <i class="far fa-file-alt"></i> &nbsp;
+                    Novo Cliente
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>

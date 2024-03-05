@@ -1,0 +1,50 @@
+﻿@model Joao.Ana.Modas.App.Models.Clientes.ClienteViewModel
+
+<div class="row">
+    <div class="col-md-5">
+        Nome: <strong>@Model?.Nome</strong>
+    </div>
+
+    <div class="col-md-4">
+        E-mail: <strong>@Model?.Email</strong>
+    </div>
+
+    <div class="col-md-3">
+        Telefone: <strong>@Model?.Telefone</strong>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        Rua: <strong>@Model?.Endereco?.Logradouro</strong>
+    </div>
+
+    <div class="col-md-3">
+        Nº: <strong>@Model?.Endereco?.Numero</strong>
+    </div>
+
+    <div class="col-md-4">
+        Complemento: <strong>@Model?.Endereco?.Complemento</strong>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        Bairro: <strong>@Model?.Endereco?.Bairro</strong>
+    </div>
+
+    <div class="col-md-7">
+        Cep: <strong>@Model?.Endereco?.Cep</strong>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        Cidade/UF: <strong>@Model?.Endereco?.Cidade - @Model?.Endereco?.Estado </strong>
+    </div>
+</div>

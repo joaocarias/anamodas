@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Joao.Ana.Modas.App.Models.Pedidos;
 using Joao.Ana.Modas.App.Models.Produtos;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
@@ -84,7 +85,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                var model = new DetalharViewModel() { Produto = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(guid)) };
+                var model = new Models.Produtos.DetalharViewModel() { Produto = _mapper.Map<ProdutoViewModel>(await _produtoRepositorio.ObterAsync(guid)) };
                 model.PermitirExcluir = User.IsInRole(Constants.LOGISTAASSOCIADO) || User.IsInRole(Constants.ADMINISTRADOR);
 
                 return View(model);
@@ -222,7 +223,29 @@ namespace Joao.Ana.Modas.App.Controllers
                 return View(model);
             }
         }
-        
+
+        #region Endpoints
+
+        [HttpGet]
+        public async Task<IActionResult> ObterProdutos(string filtro, int? limite = null)
+        {
+            List<ProdutoViewModel>? lista;
+            try
+            {
+                lista = _mapper.Map<List<ProdutoViewModel>>(await _produtoRepositorio.ObterPorNomeAsync(filtro, limite));
+            }
+            catch (Exception ex)
+            {
+                lista = Enumerable.Empty<ProdutoViewModel>().ToList();
+                Console.WriteLine(ex.Message);
+            }
+
+            var resultados = lista.Select(p => new { label = p.Nome, value = p.Id });
+            return Ok(resultados);
+        }
+
+        #endregion
+
         #region viewBags
 
         private async Task ViewBagsDefault(Guid? fornecedorId = null, Guid? logistaAssociadoId = null)

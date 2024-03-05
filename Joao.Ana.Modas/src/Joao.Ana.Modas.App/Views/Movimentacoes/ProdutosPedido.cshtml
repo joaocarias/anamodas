@@ -1,0 +1,84 @@
+﻿@model Joao.Ana.Modas.App.Models.Movimentacoes.ProdutosPedidoViewModel
+
+@{
+    ViewData["Title"] = "Produtos de Pedido";
+}
+
+<div class="row text-center">
+    <div class="col-md-12">
+        <h1>Pedido</h1>
+    </div>
+    <div class="col-md-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
+                <li class="breadcrumb-item"><a asp-action="RegistrarPedido" asp-controller="Movimentacoes">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Produtos de Pedido</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar bg-dark" role="progressbar" style="width: 25%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+@if (Model is not null)
+{
+
+    <div class="mb-3 mt-3">
+        <div class="card">
+            <div class="card-body">
+
+                @if (Model.Pedido is not null && Model.Pedido.Cliente is not null)
+                {
+                    @await Html.PartialAsync("~/Views/Clientes/_ResumoPartialView.cshtml", Model.Pedido.Cliente)
+                }
+                else if (Model.Pedido is not null && Model.Pedido.ClienteAnonimo)
+                {
+                    <p>Cliente não identificado</p>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row justify-content-center">
+
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            Num de Itens: <strong><span class="span_numero_itens">@Model.NumeroItens</span></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            Quantidade de Itens: <strong><span class="span_quantidade_itens"> @Model.QuantiadeItens</span></strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            Total Valor: <strong><span class="span_total_valor"> R$ @Model.TotalValor</span></strong>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show">
+        <strong class="mx-2">Error!</strong> Aconteceu um problema no carregamento da página
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}

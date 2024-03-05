@@ -1,9 +1,7 @@
 ﻿@model Joao.Ana.Modas.App.Models.Movimentacoes.RegistrarPedidoViewModel
 
 @{
-    ViewData["Title"] = "Registrar Pedido";
-
-    //  Model.Confirmar.PedidoId = Model.Id;
+    ViewData["Title"] = "Registrar Pedido";   
 }
 
 <div class="row text-center">
@@ -15,11 +13,75 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
                 <li class="breadcrumb-item"><a asp-action="RegistrarPedido" asp-controller="Movimentacoes">@ViewData["Title"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Pedidos</li>
+                <li class="breadcrumb-item active" aria-current="page">Pedido</li>
             </ol>
         </nav>
     </div>
 </div>
+
+<div class="progress">
+    <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+@if (Model.Pedido is not null && Model.Pedido.ClienteAnonimo)
+{
+
+    <p>This is some text within a card body.</p>
+
+}
+else if (Model.Pedido is not null && Model.Pedido.ClienteId is not null)
+{
+    <p>This is some text within a card body.</p>
+}
+else
+{
+    <div class="card mb-3 mt-3">
+        <div class="card-header">
+            Escolha o Cliente
+        </div>
+        <div class="card-body">
+
+            <form asp-action="DefinirCliente" asp-controller="Movimentacoes" method="post">
+
+                @Html.HiddenFor(m => m.PedidoId)
+
+                <div class="mb-3 row">
+
+                    <div class="col-md-6">
+                        <select asp-for="Pedido.Cliente.Id" asp-items="ViewBag.Clientes" class="form-control">
+                            <option value=""></option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">                       
+                          
+                        <a asp-controller="Clientes" asp-action="Novo" class="btn btn-info">
+                            <i class="far fa-file-alt"></i> &nbsp;
+                            Novo Cliente
+                        </a>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="far fa-file-alt"></i> &nbsp;
+                            Próximo
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+}
+
+
 
 <div class="row">
     <div class="col-md-12">
@@ -28,7 +90,7 @@
             <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-body">
-                        Num de Itens: <strong>@Model.NumeroItens</strong>
+                        Num de Itens: <strong><span class="span_numero_itens">@Model.NumeroItens</span></strong>
                     </div>
                 </div>
             </div>
@@ -36,18 +98,12 @@
             <div class="col-md-4">
                 <div class="card mb-3">
                     <div class="card-body">
-                        Quantidade de Itens: <strong>@Model.QuantiadeItens</strong>
+                        Quantidade de Itens: <strong><span class="span_quantidade_itens"> @Model.QuantiadeItens</span></strong>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        Valor Total: <strong>R$ @Model.TotalValor.ToString("N2")</strong>
-                    </div>
-                </div>
-            </div>
+           
 
         </div>
     </div>
@@ -130,50 +186,49 @@
             <div class="card-header">Itens Inclusos</div>
             <div class="card-body">
 
-                @if (Model is not null && Model.ProdutosPedido is not null && Model.ProdutosPedido.Any())
-                {
-                    int _numeroRegistros = Model.ProdutosPedido.Count();
-                    <table class="table table-hover">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Descrição</th>
-                                <th scope="col">Cor</th>
-                                <th scope="col">Tamanho</th>
-                                <th scope="col">Valor Unit.</th>
-                                <th scope="col">Quantidade</th>
-                                <th scope="col">Total</th>
-                                <th scope="col"></th>
-                            <tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                var _cont = 0;
-                            }
-                            @foreach (var i in Model.ProdutosPedido.ToList())
-                            {
-                                _cont++;
-                                <tr>
-                                    <td scope="row">@_cont</td>
-                                    <td>@i.Nome</td>
-                                    <td>Cor</td>
-                                    <td>Tamanho</td>
-                                    <td>@i.PrecoVenda?.ToString("N2")</td>
-                                    <td>@i.Quantidade</td>
-                                    <td>@i.ValorPedido?.ToString("N2")</td>
-                                    <td>
-                                        Remover
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <p><strong>Registro(s): @_numeroRegistros</strong></p>
-                }
-                else
-                {
-                    <p>Nenhum item inserido!</p>
-                }
+                <div row>
+                    <div class="col-md-12">
+                        <div class="card mb-3">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong>Item: </strong> <span class="span_item_produto"></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Cor: </strong> <span class="span_cor"></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Tam: </strong> <span class="span_tamanho"></span>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <strong>Preço Unitário: </strong> R$ <span class="span_preco_unitario"></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Quantidade: </strong> <span class="span_quantidade"></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <strong>Total: </strong> R$ <span class="span_valor_total"></span>
+                                    </div>
+                                    <div class="col-md-2 text-right">
+                                        <button type="button" class="btn btn-info btn-sm btn_remover_item" id_item_produto=""><i class="fa-regular fa-trash-can"></i> Remover</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <p><strong>Registro(s): 23</strong></p>
+
+
 
                 <hr />
 
@@ -222,9 +277,13 @@
                 $("#Produto_Nome").autocomplete({
                     source: function (request, response) {
                         $.ajax({
-                            url: '@Url.Action("ObterProdutos", "Caixa")',
-                            data: { filtro: request.term, limite: _maxResults },
+                            url: '@Url.Action("ObterProdutos", "Produtos")',
+                            data: { filtro: $.trim(request.term), limite: _maxResults },
                             success: function (data) {
+                                if (data.length === 0) {
+                                    $("#Produto_ProdutoId").val('');
+                                }
+
                                 response(data);
                             }
                         });
@@ -234,6 +293,7 @@
                     select: function (event, ui) {
                         $("#Produto_Nome").val(ui.item.label);
                         $("#Produto_ProdutoId").val(ui.item.value);
+
                         return false;
                     }
                 });
@@ -266,9 +326,7 @@
                 $("#submit_button").addClass("disabled").prop("disabled", true);
 
                 if (validarCampoVazio("#Produto_Nome") && validarCampoNumerico("#Produto_PrecoVenda") && validarCampoNumerico("#Produto_Quantidade")) {
-                    console.log("Form válido");
-                } else {
-                    console.log("Form inválido");
+                    addProduto();
                 }
 
                 $("#submit_button").removeClass("disabled").prop("disabled", false);
@@ -299,6 +357,56 @@
                     $(`span[data-valmsg-for='${campo}']`).text("").removeClass("text-danger");
                     return true;
                 }
+            }
+
+            function addProduto() {
+                var data = getDataProdutoItem();
+
+                $.ajax({
+                    url: '/Movimentacoes/AdicionarProdutoPedido',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (response) {
+
+                        console.log('Pedido salvo com sucesso:', response);
+                        console.log(response);
+
+                        preencherHtmlQuantitativo(response.numeroItens, response.quantidadeItens, response.valorTotal);
+                        preencherHTMLProdutos(response.pedido.produtosPedido);
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Erro ao salvar pedido:', error);
+                    }
+                });
+            }
+
+            function getDataProdutoItem() {
+                var data = {
+                    Nome: $('#Produto_Nome').val(),
+                    PrecoVenda: $('#Produto_PrecoVenda').val(),
+                    Quantidade: $('#Produto_Quantidade').val(),
+                    CorId: $('#Produto_CorId').val(),
+                    TamanhoId: $('#Produto_TamanhoId').val(),
+                    PedidoId: $('#PedidoId').val(),
+                    ProdutoId: $('#Produto_ProdutoId').val()
+                };
+
+                return data;
+            }
+
+            function preencherHTMLProdutos(produtos) {
+                console.log("quantidae de produtos" + produtos.length);
+            }
+
+            function preencherHtmlQuantitativo(numeroItens, quantidadeItens, valorTotal) {
+                $(".span_numero_itens").text(numeroItens);
+                $(".span_quantidade_itens").text(quantidadeItens);
+                $(".span_valor_total").text(valorTotal);
+
+                console.log(numeroItens + " : " + quantidadeItens + " : " + valorTotal);
             }
 
         });

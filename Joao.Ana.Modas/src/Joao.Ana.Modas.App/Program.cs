@@ -1,11 +1,10 @@
 using AutoMapper;
-using Joao.Ana.Modas.App.Models.Caixa;
 using Joao.Ana.Modas.App.Models.Clientes;
 using Joao.Ana.Modas.App.Models.Cores;
 using Joao.Ana.Modas.App.Models.Enderecos;
 using Joao.Ana.Modas.App.Models.Fornecedores;
 using Joao.Ana.Modas.App.Models.LogistaAssociado;
-using Joao.Ana.Modas.App.Models.Movimentacoes;
+using Joao.Ana.Modas.App.Models.Pedidos;
 using Joao.Ana.Modas.App.Models.ProdutoEstoques;
 using Joao.Ana.Modas.App.Models.Produtos;
 using Joao.Ana.Modas.App.Models.Tamanhos;
@@ -25,7 +24,7 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -40,7 +39,7 @@ builder.Services.AddControllersWithViews(config =>
            .RequireAuthenticatedUser()
            .Build();
     config.Filters.Add(new AuthorizeFilter(policy));
-});
+}).AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

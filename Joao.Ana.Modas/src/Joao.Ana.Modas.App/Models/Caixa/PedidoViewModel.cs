@@ -7,9 +7,11 @@ namespace Joao.Ana.Modas.App.Models.Caixa
     {
       //  public ProdutoPedidoViewModel Produto { get; set; }
 
-     //   public Guid? ClienteId { get; set; }
+        public Guid? ClienteId { get; set; }
 
-   //     public ClienteViewModel? Cliente { get; set; }
+        public ClienteViewModel? Cliente { get; set; }
+
+        public bool ClienteAnonimo { get; set; } = false; 
 
       //  public IEnumerable<ProdutoPedidoViewModel>? ProdutosPedido { get; set; }
         
