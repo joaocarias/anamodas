@@ -1,5 +1,6 @@
 ﻿using Joao.Ana.Modas.App.Models.Pedidos;
 using Joao.Ana.Modas.Dominio.Entidades;
+using System.Globalization;
 
 namespace Joao.Ana.Modas.App.Models.Movimentacoes
 {
@@ -42,6 +43,14 @@ namespace Joao.Ana.Modas.App.Models.Movimentacoes
             {
                 if (Produtos is null || !Produtos.Any()) { return 0; }
                 return Produtos.Sum(x => x.PrecoVenda.GetValueOrDefault() * x.Quantidade);
+            }
+        }
+
+        public string TotalValorPedidoFormatodo
+        {
+            get
+            {
+                return TotalValor.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"));
             }
         }
     }

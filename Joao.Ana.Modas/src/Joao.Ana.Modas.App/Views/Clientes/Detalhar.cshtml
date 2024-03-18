@@ -70,11 +70,37 @@
                 <div class="card-header">Pedidos</div>
 
                 <div class="card-body">
-                    <a type="button" class="btn btn-dark btn-sm" asp-action="ClientePedido" asp-controller="Movimentacoes" asp-route-clienteId="@Model?.Cliente.Id">
+                    <a type="button" class="btn btn-dark btn-sm mb-3" asp-action="ClientePedido" asp-controller="Movimentacoes" asp-route-clienteId="@Model?.Cliente.Id">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Realizar Novo Pedido
                     </a>
+
+                    @foreach (var pedido in Model?.Pedidos?.OrderBy(x => x.DataCadastro).ToList())
+                    {
+                        <div class="card mb-3">
+                            <div class="card-header">
+
+                                @await Html.PartialAsync("~/Views/Pedidos/_StatusPedidoBargePartialView.cshtml", pedido.Status)
+                                Pedido: <strong> @pedido.Id </strong> - <strong> @pedido.DataCadastro </strong>
+
+                            </div>
+                            <div class="card-body">
+                               
+                                @await Html.PartialAsync("~/Views/Pedidos/_listaProdutosPartialView.cshtml", Model.Produtos.Where(x => x.PedidoId.Equals(pedido.Id)).OrderBy(x => x.Nome).ToList())
+
+                                <div class="text-end">
+                                    <a type="button" class="btn btn-info btn-sm" asp-action="ProdutosPedido" asp-controller="Movimentacoes" asp-route-pedidoId="@pedido.Id">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                       Continuar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
                 </div>
+
+
 
             </div>
         </div>

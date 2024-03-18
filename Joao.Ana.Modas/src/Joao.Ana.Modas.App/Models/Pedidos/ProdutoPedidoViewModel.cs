@@ -2,6 +2,7 @@
 using Joao.Ana.Modas.App.Models.Produtos;
 using Joao.Ana.Modas.App.Models.Tamanhos;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace Joao.Ana.Modas.App.Models.Pedidos
 {
@@ -34,7 +35,7 @@ namespace Joao.Ana.Modas.App.Models.Pedidos
 
         public PedidoViewModel Pedido { get; set; }
 
-        public Guid ProdutoId { get; set; }
+        public Guid? ProdutoId { get; set; }
 
         public ProdutoViewModel? Produto { get; set; }
 
@@ -43,6 +44,22 @@ namespace Joao.Ana.Modas.App.Models.Pedidos
             get
             {
                 return Quantidade * PrecoVenda.GetValueOrDefault();
+            }
+        }
+
+        public string? ValorPedidoFormatodo
+        {
+            get
+            {
+                return ValorPedido is null ? "0,00" : ValorPedido?.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"));
+            }
+        }
+
+        public string? PrecoVendaFormatodo
+        {
+            get
+            {
+                return PrecoVenda is null ? "0,00" : PrecoVenda?.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"));
             }
         }
 

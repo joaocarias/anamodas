@@ -4,6 +4,7 @@ namespace Joao.Ana.Modas.Dominio.IRepositorios
 {
     public interface IProdutoPedidoRepositorio : IRepositorioBase<ProdutoPedido>
     {
-        Task<IEnumerable<ProdutoPedido>> ProdutosPedido(Guid pedidoId);
+        Task<IEnumerable<ProdutoPedido>> ProdutosPedidoAsync(Guid pedidoId);
+        Task<IEnumerable<ProdutoPedido>> ProdutosPedidoByClienteIdAsync(Guid clienteId);
     }
 }

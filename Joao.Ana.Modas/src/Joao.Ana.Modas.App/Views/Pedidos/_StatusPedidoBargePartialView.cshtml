@@ -1,0 +1,15 @@
+﻿@using Joao.Ana.Modas.Dominio.Enums
+@model Joao.Ana.Modas.Dominio.Enums.EPeditoStatus
+
+@if (Model.Equals(EPeditoStatus.Aberto))
+{
+    <span class="badge bg-info text-dark">Em Andamento</span>
+}
+else if (Model.Equals(EPeditoStatus.Cancelado))
+{
+    <span class="badge bg-warning">Cancelado</span>
+}
+else if (Model.Equals(EPeditoStatus.Finalizado))
+{
+    <span class="badge bg-primary">Realizado</span>
+}

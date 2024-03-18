@@ -66,7 +66,7 @@
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-body">
-                            Total Valor: <strong><span class="span_total_valor"> R$ @Model.TotalValor</span></strong>
+                            Total Valor: <strong><span class="span_total_valor"> @Model.TotalValorPedidoFormatodo</span></strong>
                         </div>
                     </div>
                 </div>
@@ -74,6 +74,87 @@
             </div>
         </div>
     </div>
+
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card mb-3">
+                        <div class="card-header">Incluir Produto no Pedido</div>
+                        <div class="card-body">
+
+                            <form asp-action="AdicionarProdutoPedido" method="post">
+
+                                <div asp-validation-summary="All" class="text-danger">
+                                </div>
+
+                                @Html.HiddenFor(m => m.Produto.ProdutoId)
+                                @Html.HiddenFor(m => m.PedidoId)
+
+                                <div class="mb-3 row">
+
+                                    <div class="col-md-4">
+                                        <label asp-for="Produto.Nome" class="col-form-label"></label>
+                                        <input asp-for="Produto.Nome" class="form-control" />
+
+                                        <span asp-validation-for="Produto.Nome" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label asp-for="Produto.PrecoVenda" class="col-form-label"></label>
+                                        <input asp-for="Produto.PrecoVenda" class="form-control money">
+                                        <span asp-validation-for="Produto.PrecoVenda" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <div class="col-md-4">
+                                        <label asp-for="Produto.CorId" class="col-form-label"></label>
+                                        <select asp-for="Produto.CorId" asp-items="ViewBag.Cores" class="form-control"></select>
+                                        <span asp-validation-for="Produto.CorId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label asp-for="Produto.TamanhoId" class="col-form-label"></label>
+                                        <select asp-for="Produto.TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control"></select>
+                                        <span asp-validation-for="Produto.TamanhoId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label asp-for="Produto.Quantidade" class="col-form-label"></label>
+                                        <input asp-for="Produto.Quantidade" class="form-control">
+                                        <span asp-validation-for="Produto.Quantidade" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-3 d-flex align-items-end">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-dark">
+                                                <i class="fa-solid fa-spell-check"></i>
+                                                Adicionar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
 }
 else
 {
@@ -81,4 +162,41 @@ else
         <strong class="mx-2">Error!</strong> Aconteceu um problema no carregamento da página
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
+}
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+
+            $(function () {
+                let _maxResults = 20;
+
+                $("#Produto_Nome").autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            url: '@Url.Action("ObterProdutos", "Produtos")',
+                            data: { filtro: $.trim(request.term), limite: _maxResults },
+                            success: function (data) {
+                                if (data.length === 0) {
+                                    $("#Produto_ProdutoId").val('');
+                                }
+
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 3,
+                    maxResults: _maxResults,
+                    select: function (event, ui) {
+                        $("#Produto_Nome").val(ui.item.label);
+                        $("#Produto_ProdutoId").val(ui.item.value);
+
+                        return false;
+                    }
+                });
+            });
+
+        });
+    </script>
 }

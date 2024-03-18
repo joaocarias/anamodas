@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Joao.Ana.Modas.App.Models.Pedidos.ProdutoPedidoViewModel>
+
+@{
+    int item = 1;
+    int? quantidade = 0;
+    decimal? total = 0;
+}
+
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Item</th>
+            <th>Unit.</th>
+            <th>Quant.</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var produtoPedido in Model.ToList())
+        {
+
+            <tr>
+                <td>@item</td>
+                <td>@produtoPedido.Nome | @produtoPedido.Cor?.Nome | @produtoPedido.Tamanho?.Nome</td>
+                <td>@produtoPedido.PrecoVendaFormatodo</td>
+                <td>@produtoPedido.Quantidade</td>
+                <td>@produtoPedido.ValorPedidoFormatodo</td>
+            </tr>
+
+            quantidade += produtoPedido.Quantidade;
+            total += produtoPedido.ValorPedido;
+            item++;
+        }
+
+    </tbody>
+</table>
+
+<p class="text-end">
+    Itens: @quantidade | Total: <strong> R$ @total?.ToString("0.00")</strong>
+</p>
+

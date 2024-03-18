@@ -68,7 +68,12 @@ namespace Joao.Ana.Modas.Infra.Repositorios
         {
             try
             {
-                return await _appDbContext.ProdutosPedido.Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();                
+                return await _appDbContext.ProdutosPedido
+                                    .Include(p => p.Produto)
+                                    .Include(x => x.Pedido)
+                                    .Include(x => x.Cor)
+                                    .Include(x => x.Tamanho)
+                                    .Where(_ => _.Ativo && _.Id.Equals(id)).AsNoTracking().FirstOrDefaultAsync();                
             }
             catch (Exception ex)
             {
@@ -81,7 +86,11 @@ namespace Joao.Ana.Modas.Infra.Repositorios
         {
             try
             {
-                return await _appDbContext.ProdutosPedido                                
+                return await _appDbContext.ProdutosPedido
+                                .Include(p => p.Produto)
+                                .Include(x => x.Pedido)
+                                .Include(x => x.Cor)
+                                .Include(x => x.Tamanho)
                                 .Where(c => c.Ativo)
                                 .AsNoTracking()
                                 .OrderBy(c => c.DataCadastro)
@@ -98,7 +107,12 @@ namespace Joao.Ana.Modas.Infra.Repositorios
         {
             try
             {
-                var l = _appDbContext.ProdutosPedido.Where(c => c.Ativo)
+                var l = _appDbContext.ProdutosPedido
+                                .Include(p => p.Produto)
+                                .Include(x => x.Pedido)
+                                .Include(x => x.Cor)
+                                .Include(x => x.Tamanho)
+                                .Where(c => c.Ativo)
                                 .OrderBy(c => c.DataCadastro);
 
                 return await Paginacao<ProdutoPedido>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);
@@ -110,15 +124,38 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             }
         }
 
-        public async Task<IEnumerable<ProdutoPedido>> ProdutosPedido(Guid pedidoId)
+        public async Task<IEnumerable<ProdutoPedido>> ProdutosPedidoAsync(Guid pedidoId)
         {
             try
             {
                 return await _appDbContext.ProdutosPedido
                                 .Include(p => p.Pedido)
                                 .Include(p => p.Produto)
+                                .Include(x => x.Cor)
+                                .Include(x => x.Tamanho)
                                 .AsNoTracking()
                                 .Where(c => c.Ativo && c.PedidoId.Equals(pedidoId))
+                                .OrderBy(c => c.DataCadastro)
+                                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<ProdutoPedido>();
+            }
+        }
+
+        public async Task<IEnumerable<ProdutoPedido>> ProdutosPedidoByClienteIdAsync(Guid clienteId)
+        {
+            try
+            {
+                return await _appDbContext.ProdutosPedido
+                                .Include(p => p.Pedido)
+                                .Include(p => p.Produto)
+                                .Include(x => x.Cor)
+                                .Include(x => x.Tamanho)
+                                .AsNoTracking()
+                                .Where(c => c.Ativo && c.Pedido != null && c.Pedido.ClienteId != null && c.Pedido.ClienteId.Equals(clienteId))
                                 .OrderBy(c => c.DataCadastro)
                                 .ToListAsync();
             }

@@ -1,4 +1,6 @@
-﻿namespace Joao.Ana.Modas.App.Models.Clientes
+﻿using Joao.Ana.Modas.App.Models.Pedidos;
+
+namespace Joao.Ana.Modas.App.Models.Clientes
 {
     public class DetalharViewModel
     {
@@ -11,9 +13,15 @@
 
         public bool? PermitirVerCompras { get; set; }   
 
+        public IEnumerable<PedidoViewModel> Pedidos { get; set; }
+
+        public IEnumerable<ProdutoPedidoViewModel> Produtos { get; set; }   
+
         public DetalharViewModel()
         {
             Cliente = new ClienteViewModel();
+            Pedidos = Enumerable.Empty<PedidoViewModel>();   
+            Produtos = Enumerable.Empty<ProdutoPedidoViewModel>(); 
         }
     }
 }

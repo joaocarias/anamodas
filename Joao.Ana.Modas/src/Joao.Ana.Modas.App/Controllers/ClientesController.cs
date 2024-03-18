@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Joao.Ana.Modas.App.Models.Clientes;
+using Joao.Ana.Modas.App.Models.Pedidos;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
@@ -14,13 +15,15 @@ namespace Joao.Ana.Modas.App.Controllers
     {
         private readonly IMapper _mapper; 
         private readonly IClienteRepositorio _clienteRepositorio;
+        private readonly IProdutoPedidoRepositorio _produtoPedidoRepositorio;
         private readonly ILogger<ClientesController> _logger;
 
-        public ClientesController(IClienteRepositorio clienteRepositorio, IMapper mapper, ILogger<ClientesController> logger)
+        public ClientesController(IClienteRepositorio clienteRepositorio, IMapper mapper, ILogger<ClientesController> logger, IProdutoPedidoRepositorio produtoPedidoRepositorio)
         {
             _clienteRepositorio = clienteRepositorio;
             _mapper = mapper;
             _logger = logger;
+            _produtoPedidoRepositorio = produtoPedidoRepositorio;
         }
 
         [HttpGet]
@@ -30,7 +33,7 @@ namespace Joao.Ana.Modas.App.Controllers
             model.Clientes = (!string.IsNullOrEmpty(model?.Filtro)) 
                 ? _mapper.Map<IEnumerable<ClienteViewModel>>(await _clienteRepositorio.ObterPorNomeAsync(model.Filtro))
                 : _mapper.Map<IEnumerable<ClienteViewModel>>(await _clienteRepositorio.ObterTodosAsync());
-            
+           
             return View(model);
         }
 
@@ -73,8 +76,12 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                var model = new DetalharViewModel() { Cliente = _mapper.Map<ClienteViewModel>(await _clienteRepositorio.ObterAsync(guid)) };
+                var model = new Models.Clientes.DetalharViewModel() { Cliente = _mapper.Map<ClienteViewModel>(await _clienteRepositorio.ObterAsync(guid)) };
                 model.PermitirExcluir = User.IsInRole(Constants.LOGISTAASSOCIADO) || User.IsInRole(Constants.ADMINISTRADOR);
+
+                model.Produtos = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(await _produtoPedidoRepositorio.ProdutosPedidoByClienteIdAsync(guid));
+                model.Pedidos = model.Produtos.Select(x => x.Pedido).DistinctBy(x => x.Id).ToList();
+
                 return View(model);
             }
             catch (Exception ex)
