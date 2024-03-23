@@ -58,22 +58,7 @@ namespace Joao.Ana.Modas.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> ClientePedido(Guid clienteId)
-        //{
-        //    try
-        //    {
-        //        var pedido = await ClienteNovoPedido(clienteId);
-        //        return View(new ClientePedidoViewModel());
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError(ex.Message, ex);
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
-
+              
         [HttpPost]
         public async Task<IActionResult> ClientePedido(ClientePedidoViewModel model)
         {

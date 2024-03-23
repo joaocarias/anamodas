@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Joao.Ana.Modas.App.Models.Pedidos;
+using Joao.Ana.Modas.Dominio.Enums;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +31,29 @@ namespace Joao.Ana.Modas.App.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> Cancelar(Guid guid)
+        {
+            try
+            {
+                var pedido = await _pedidoRepositorio.ObterAsync(guid);
+                if(pedido is not null)
+                {
+                    pedido.SetStatus(EPeditoStatus.Cancelado);
+                    pedido.Atualizar();
+
+                    pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
+                    return RedirectToAction(nameof(Detalhar), pedido?.Id);
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.Message, ex);
                 return View();
             }
         }

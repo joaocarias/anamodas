@@ -33,9 +33,9 @@ namespace Joao.Ana.Modas.Dominio.Entidades
             ClienteAnonimo = false;
         }
 
-        public void SetStatus(EPeditoStatus cancelado)
+        public void SetStatus(EPeditoStatus status)
         {
-            Status = cancelado;
+            Status = status;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿@model Joao.Ana.Modas.App.Models.Movimentacoes.ProdutosPedidoViewModel
+﻿@using Joao.Ana.Modas.Dominio.Enums
+@model Joao.Ana.Modas.App.Models.Movimentacoes.ProdutosPedidoViewModel
 
 @{
     ViewData["Title"] = "Produtos de Pedido";
@@ -75,11 +76,6 @@
         </div>
     </div>
 
-
-
-
-
-
     <div class="row">
         <div class="col-md-12">
 
@@ -101,14 +97,14 @@
 
                                     <div class="col-md-4">
                                         <label asp-for="Produto.Nome" class="col-form-label"></label>
-                                        <input asp-for="Produto.Nome" class="form-control" />
+                                        <input asp-for="Produto.Nome" class="form-control form-control-sm" />
 
                                         <span asp-validation-for="Produto.Nome" class="text-danger"></span>
                                     </div>
 
                                     <div class="col-md-3">
                                         <label asp-for="Produto.PrecoVenda" class="col-form-label"></label>
-                                        <input asp-for="Produto.PrecoVenda" class="form-control money">
+                                        <input asp-for="Produto.PrecoVenda" class="form-control money form-control-sm">
                                         <span asp-validation-for="Produto.PrecoVenda" class="text-danger"></span>
                                     </div>
 
@@ -117,25 +113,25 @@
                                 <div class="mb-3 row">
                                     <div class="col-md-4">
                                         <label asp-for="Produto.CorId" class="col-form-label"></label>
-                                        <select asp-for="Produto.CorId" asp-items="ViewBag.Cores" class="form-control"></select>
+                                        <select asp-for="Produto.CorId" asp-items="ViewBag.Cores" class="form-control form-control-sm"></select>
                                         <span asp-validation-for="Produto.CorId" class="text-danger"></span>
                                     </div>
 
                                     <div class="col-md-3">
                                         <label asp-for="Produto.TamanhoId" class="col-form-label"></label>
-                                        <select asp-for="Produto.TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control"></select>
+                                        <select asp-for="Produto.TamanhoId" asp-items="ViewBag.Tamanhos" class="form-control form-control-sm"></select>
                                         <span asp-validation-for="Produto.TamanhoId" class="text-danger"></span>
                                     </div>
 
                                     <div class="col-md-2">
                                         <label asp-for="Produto.Quantidade" class="col-form-label"></label>
-                                        <input asp-for="Produto.Quantidade" class="form-control">
+                                        <input asp-for="Produto.Quantidade" class="form-control form-control-sm">
                                         <span asp-validation-for="Produto.Quantidade" class="text-danger"></span>
                                     </div>
 
                                     <div class="col-md-3 d-flex align-items-end">
                                         <div class="d-grid gap-2">
-                                            <button type="submit" class="btn btn-dark">
+                                            <button type="submit" class="btn btn-sm btn-dark">
                                                 <i class="fa-solid fa-spell-check"></i>
                                                 Adicionar
                                             </button>
@@ -155,6 +151,51 @@
     </div>
 
 
+    if (Model.Produtos.Any())
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card mb-3">
+
+                    <div class="card-header">
+
+                        @await Html.PartialAsync("~/Views/Pedidos/_StatusPedidoBargePartialView.cshtml", Model?.Pedido?.Status)
+                        Pedido: <strong> @Model?.Pedido?.Id </strong> - <strong> @Model?.Pedido?.DataCadastro </strong>
+
+                    </div>
+                    <div class="card-body">
+
+                        @await Html.PartialAsync("~/Views/Pedidos/_listaProdutosPartialView.cshtml", Model?.Produtos.Where(x => x.PedidoId.Equals(Model?.Pedido?.Id)).OrderBy(x => x.Nome).ToList())
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+    if (Model is not null && Model.Pedido is not null && Model.Pedido.Status.Equals(EPeditoStatus.Aberto))
+    {
+        <div class="row">
+            <div class="col-md-6">
+                <a href="#" class="btn btn-danger btn-sm btn-cancelar" cancelar-pedido-id="@Model?.Pedido?.Id"> <i class="far fa-trash-alt"></i> Cancelar Pedido</a>
+            </div>
+
+            @if (Model is not null && Model.Produtos is not null && Model.Produtos.Any())
+            {
+                <div class="col-md-6">
+                    <div class="text-end">
+                        <a type="button" class="btn btn-info btn-sm" asp-action="ProdutosPedido" asp-controller="Movimentacoes" asp-route-pedidoId="@Model.Pedido.Id">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Continuar
+                        </a>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    }
 }
 else
 {
@@ -164,7 +205,27 @@ else
     </div>
 }
 
-@section Scripts {
+
+<!-- Modal Cancelar -->
+<div class="modal fade" id="ModalCancelar" tabindex="-1" aria-labelledby="TituloModalCancelar" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TituloModalCancelar"> <i class="fas fa-exclamation-circle"></i> Cancelar!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja Cancelar o Pedido?</p>
+            </div>
+            <div class="modal-footer">
+                <a id="url-modal-cancelar" href="#" class="btn btn-danger"> <i class="far fa-trash-alt"></i> Cancelar Pedido </a>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal"> <i class="fas fa-ban"></i> Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @section Scripts {
     <script>
 
         $(document).ready(function () {
@@ -197,6 +258,11 @@ else
                 });
             });
 
+            $('.btn-cancelar').on('click', function () {
+                var id = $(this).attr('cancelar-pedido-id');
+                $('#url-modal-cancelar').attr('href', '/Pedido/Cancelar?guid=' + id);
+                $('#ModalCancelar').modal('show');
+            });
         });
     </script>
-}
+    }
