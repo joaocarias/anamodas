@@ -100,7 +100,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             {
                 return await _appDbContext.TipoPagamentos.Where(c => c.Ativo)
                                 .AsNoTracking()
-                                .OrderBy(c => c.Nome)
+                                .OrderBy(c => c.Ordem)
                                 .ToListAsync();
             }
             catch (Exception ex)

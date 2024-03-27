@@ -13,6 +13,10 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         public Cliente? Cliente { get; private set; }
 
         public bool ClienteAnonimo { get; private set; } = false;
+
+        public Guid? TipoPagamentoId { get; private set; }  
+
+        public TipoPagamento? TipoPagamento { get; private set; }
                
         public Pedido()
         {
@@ -35,7 +39,18 @@ namespace Joao.Ana.Modas.Dominio.Entidades
 
         public void SetStatus(EPeditoStatus status)
         {
-            Status = status;
+            Status = status;          
+        }
+
+        public void Cancelar()
+        {
+            Status = EPeditoStatus.Cancelado;
+            Atualizar();
+        }
+
+        public void SetTipoPagamento(Guid tipoPagamentoId)
+        {
+            TipoPagamentoId = tipoPagamentoId;
         }
     }
 }

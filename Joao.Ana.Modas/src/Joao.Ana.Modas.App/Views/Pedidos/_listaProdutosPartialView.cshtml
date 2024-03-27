@@ -6,36 +6,45 @@
     decimal? total = 0;
 }
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Unit.</th>
-            <th>Quant.</th>
-            <th>Total</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach (var produtoPedido in Model.ToList())
-        {
-
+@if (Model.Any())
+{
+    <table class="table table-hover">
+        <thead>
             <tr>
-                <td>@item</td>
-                <td>@produtoPedido.Nome | @produtoPedido.Cor?.Nome | @produtoPedido.Tamanho?.Nome</td>
-                <td>@produtoPedido.PrecoVendaFormatodo</td>
-                <td>@produtoPedido.Quantidade</td>
-                <td>@produtoPedido.ValorPedidoFormatodo</td>
+                <th></th>
+                <th>Item</th>
+                <th>Unit.</th>
+                <th>Quant.</th>
+                <th>Total</th>
             </tr>
+        </thead>
+        <tbody>
 
-            quantidade += produtoPedido.Quantidade;
-            total += produtoPedido.ValorPedido;
-            item++;
-        }
+            @foreach (var produtoPedido in Model.ToList())
+            {
 
-    </tbody>
-</table>
+                <tr>
+                    <td>@item</td>
+                    <td>@produtoPedido.Nome | @produtoPedido.Cor?.Nome | @produtoPedido.Tamanho?.Nome</td>
+                    <td>@produtoPedido.PrecoVendaFormatodo</td>
+                    <td>@produtoPedido.Quantidade</td>
+                    <td>@produtoPedido.ValorPedidoFormatodo</td>
+                </tr>
+
+                quantidade += produtoPedido.Quantidade;
+                total += produtoPedido.ValorPedido;
+                item++;
+            }
+
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Não foi inserido nenhum item neste pedido.
+    </div>
+}
 
 <p class="text-end">
     Itens: @quantidade | Total: <strong> R$ @total?.ToString("0.00")</strong>

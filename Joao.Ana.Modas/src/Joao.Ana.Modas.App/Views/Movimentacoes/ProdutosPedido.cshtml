@@ -21,7 +21,7 @@
 </div>
 
 <div class="progress">
-    <div class="progress-bar bg-dark" role="progressbar" style="width: 25%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress-bar bg-primary" role="progressbar" style="width: 33%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 
 @if (Model is not null)
@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-
+@* 
     <div class="row">
         <div class="col-md-12">
             <div class="row justify-content-center">
@@ -74,7 +74,7 @@
 
             </div>
         </div>
-    </div>
+    </div> *@
 
     <div class="row">
         <div class="col-md-12">
@@ -185,9 +185,9 @@
             {
                 <div class="col-md-6">
                     <div class="text-end">
-                        <a type="button" class="btn btn-info btn-sm" asp-action="ProdutosPedido" asp-controller="Movimentacoes" asp-route-pedidoId="@Model.Pedido.Id">
+                        <a type="button" class="btn btn-info btn-sm" asp-action="FormaPagamentoPedido" asp-controller="Movimentacoes" asp-route-pedidoId="@Model.Pedido.Id">
                             <i class="fa-solid fa-cart-shopping"></i>
-                            Continuar
+                            Forma de Pagamento
                         </a>
                     </div>
                 </div>
@@ -260,7 +260,7 @@ else
 
             $('.btn-cancelar').on('click', function () {
                 var id = $(this).attr('cancelar-pedido-id');
-                $('#url-modal-cancelar').attr('href', '/Pedido/Cancelar?guid=' + id);
+                $('#url-modal-cancelar').attr('href', '/Pedidos/Cancelar?guid=' + id);
                 $('#ModalCancelar').modal('show');
             });
         });

@@ -1,5 +1,4 @@
 ﻿using Joao.Ana.Modas.App.Models.Pedidos;
-using Joao.Ana.Modas.Dominio.Entidades;
 using System.Globalization;
 
 namespace Joao.Ana.Modas.App.Models.Movimentacoes

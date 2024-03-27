@@ -1,7 +1,13 @@
-﻿@model Joao.Ana.Modas.App.Models.Pedidos.DetalharViewModel
+﻿@using Joao.Ana.Modas.Dominio.Enums
+@model Joao.Ana.Modas.App.Models.Pedidos.DetalharViewModel
 
 @{
     ViewData["Title"] = "Pedido";
+
+    var _corProgressBar = Model.Pedido.Status.Equals(EPeditoStatus.Cancelado) ?
+                            "bg-danger"
+                            : "bg-dark";
+
 }
 
 <div class="row text-center">
@@ -32,4 +38,37 @@
         </div>
     </div>
 }
+
+<div class="progress mb-3">
+    <div class="progress-bar @_corProgressBar" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">
+            <h1 class="display-6 text-center">Pedido Cancelado!</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-12">
+        <div class="card mb-3">
+
+            <div class="card-header">
+
+                @await Html.PartialAsync("~/Views/Pedidos/_StatusPedidoBargePartialView.cshtml", Model?.Pedido?.Status)
+                Pedido: <strong> @Model?.Pedido?.Id </strong> - <strong> @Model?.Pedido?.DataCadastro </strong>
+
+            </div>
+            <div class="card-body">
+
+                @await Html.PartialAsync("~/Views/Pedidos/_listaProdutosPartialView.cshtml", Model?.Produtos.Where(x => x.PedidoId.Equals(Model?.Pedido?.Id)).OrderBy(x => x.Nome).ToList())
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
 

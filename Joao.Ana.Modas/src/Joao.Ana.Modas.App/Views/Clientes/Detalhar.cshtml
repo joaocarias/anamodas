@@ -1,4 +1,5 @@
-﻿@model Joao.Ana.Modas.App.Models.Clientes.DetalharViewModel
+﻿@using Joao.Ana.Modas.Dominio.Enums
+@model Joao.Ana.Modas.App.Models.Clientes.DetalharViewModel
 
 @{
     ViewData["Title"] = Model?.Titulo;
@@ -85,15 +86,18 @@
 
                             </div>
                             <div class="card-body">
-                               
+
                                 @await Html.PartialAsync("~/Views/Pedidos/_listaProdutosPartialView.cshtml", Model.Produtos.Where(x => x.PedidoId.Equals(pedido.Id)).OrderBy(x => x.Nome).ToList())
 
-                                <div class="text-end">
-                                    <a type="button" class="btn btn-info btn-sm" asp-action="ProdutosPedido" asp-controller="Movimentacoes" asp-route-pedidoId="@pedido.Id">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                       Continuar
-                                    </a>
-                                </div>
+                                @if (pedido.Status.Equals(EPeditoStatus.Aberto))
+                                {
+                                    <div class="text-end">
+                                        <a type="button" class="btn btn-info btn-sm" asp-action="ProdutosPedido" asp-controller="Movimentacoes" asp-route-pedidoId="@pedido.Id">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                            Continuar
+                                        </a>
+                                    </div>
+                                }
                             </div>
                         </div>
                     }

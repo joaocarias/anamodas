@@ -1,6 +1,4 @@
-﻿using Joao.Ana.Modas.App.Models.Caixa;
-
-namespace Joao.Ana.Modas.App.Models.Pedidos
+﻿namespace Joao.Ana.Modas.App.Models.Pedidos
 {
     public class DetalharViewModel
     {
@@ -9,9 +7,12 @@ namespace Joao.Ana.Modas.App.Models.Pedidos
         public string Titulo { get; set; } = "Pedido";
         public PedidoViewModel Pedido { get; set; }
 
+        public IEnumerable<ProdutoPedidoViewModel> Produtos { get; set; }
+
         public DetalharViewModel()
         {
             Pedido = new PedidoViewModel();
+            Produtos = Enumerable.Empty<ProdutoPedidoViewModel>();
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Joao.Ana.Modas.App.Models.Clientes;
+using Joao.Ana.Modas.App.Models.TipoPagamento;
 using Joao.Ana.Modas.Dominio.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Joao.Ana.Modas.App.Models.Pedidos
 {
@@ -11,8 +13,11 @@ namespace Joao.Ana.Modas.App.Models.Pedidos
 
         public bool ClienteAnonimo { get; set; } = false;
 
-        //  public IEnumerable<ProdutoPedidoViewModel>? ProdutosPedido { get; set; }
-
         public EPeditoStatus Status { get; set; }
+               
+        [Display(Name = "Forma de Pagamento")]
+        public Guid? TipoPagamentoId { get; set; }  
+
+        public TipoPagamentoViewModel? TipoPagamento { get; set; }
     }
 }

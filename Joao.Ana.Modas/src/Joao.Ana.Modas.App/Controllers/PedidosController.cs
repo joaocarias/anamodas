@@ -9,24 +9,29 @@ using Microsoft.AspNetCore.Mvc;
 namespace Joao.Ana.Modas.App.Controllers
 {
     [Authorize(Roles = Constants.ADMINISTRADOR + "," + Constants.LOGISTAASSOCIADO)]
-    public class PedidoController : MeuController
+    public class PedidosController : MeuController
     {
         private readonly IMapper _mapper;
-        private readonly ILogger<PedidoController> _logger;
+        private readonly ILogger<PedidosController> _logger;
         private readonly IPedidoRepositorio _pedidoRepositorio;
+        private readonly IProdutoPedidoRepositorio _produtoPedidoRepositorio;
 
-        public PedidoController(IMapper mapper, ILogger<PedidoController> logger, IPedidoRepositorio pedidoRepositorio)
+        public PedidosController(IMapper mapper, ILogger<PedidosController> logger, IPedidoRepositorio pedidoRepositorio, IProdutoPedidoRepositorio produtoPedidoRepositorio)
         {
             _mapper = mapper;
             _logger = logger;
             _pedidoRepositorio = pedidoRepositorio;
+            _produtoPedidoRepositorio = produtoPedidoRepositorio;
         }
 
         public async Task<IActionResult> Detalhar(Guid guid)
         {
             try
-            {
-                return View(new DetalharViewModel() { Pedido = _mapper.Map<PedidoViewModel>(await _pedidoRepositorio.ObterAsync(guid))});
+            {             
+                return View(new DetalharViewModel() {
+                    Pedido = _mapper.Map<PedidoViewModel>(await _pedidoRepositorio.ObterAsync(guid)) ,
+                    Produtos = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(await _produtoPedidoRepositorio.ProdutosPedidoAsync(guid))       
+                });
             }
             catch (Exception ex)
             {
@@ -42,11 +47,9 @@ namespace Joao.Ana.Modas.App.Controllers
                 var pedido = await _pedidoRepositorio.ObterAsync(guid);
                 if(pedido is not null)
                 {
-                    pedido.SetStatus(EPeditoStatus.Cancelado);
-                    pedido.Atualizar();
-
+                    pedido.Cancelar();
                     pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
-                    return RedirectToAction(nameof(Detalhar), pedido?.Id);
+                    return RedirectToAction(nameof(Detalhar), new { guid });
                 }
 
                 return View();

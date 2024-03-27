@@ -20,8 +20,9 @@ namespace Joao.Ana.Modas.App.Controllers
         private readonly IPedidoRepositorio _pedidoRepositorio;
         private readonly IClienteRepositorio _clienteRepositorio;
         private readonly IProdutoPedidoRepositorio _produtoPedidoRepositorio;
+        private readonly ITipoPagamentoRepositorio _tipoPagamentoRespositorio;
 
-        public MovimentacoesController(IMapper mapper, ILogger<MovimentacoesController> logger, IProdutoRepositorio produtoRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IPedidoRepositorio pedidoRepositorio, IClienteRepositorio clienteRepositorio, IProdutoPedidoRepositorio produtoPedidoRepositorio)
+        public MovimentacoesController(IMapper mapper, ILogger<MovimentacoesController> logger, IProdutoRepositorio produtoRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IPedidoRepositorio pedidoRepositorio, IClienteRepositorio clienteRepositorio, IProdutoPedidoRepositorio produtoPedidoRepositorio, ITipoPagamentoRepositorio tipoPagamentoRespositorio)
         {
             _mapper = mapper;
             _logger = logger;
@@ -31,8 +32,8 @@ namespace Joao.Ana.Modas.App.Controllers
             _pedidoRepositorio = pedidoRepositorio;
             _clienteRepositorio = clienteRepositorio;
             _produtoPedidoRepositorio = produtoPedidoRepositorio;
+            _tipoPagamentoRespositorio = tipoPagamentoRespositorio;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> ClientePedido(Guid? clienteId = null)
@@ -89,6 +90,45 @@ namespace Joao.Ana.Modas.App.Controllers
 
                 await ViewBagsDefault();
                 return View(t);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FormaPagamentoPedido(Guid pedidoId)
+        {
+            try
+            {
+                await SelectListTipoPagamentoViewBag();
+                return View(new FormaPagamentoPedidoViewModel()
+                {
+                    Pedido = _mapper.Map<PedidoViewModel>(await _pedidoRepositorio.ObterAsync(pedidoId)),
+                    Produtos = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(await _produtoPedidoRepositorio.ProdutosPedidoAsync(pedidoId))
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+       
+        [HttpPost]
+        public async Task<IActionResult> FormaPagamentoPedido(FormaPagamentoPedidoViewModel model)
+        {
+            try
+            {
+                await SelectListTipoPagamentoViewBag();
+                //return View(new FormaPagamentoPedidoViewModel()
+                //{
+                //    Pedido = _mapper.Map<PedidoViewModel>(await _pedidoRepositorio.ObterAsync(pedidoId)),
+                //    Produtos = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(await _produtoPedidoRepositorio.ProdutosPedidoAsync(pedidoId))
+                //});
+                return View(model); 
             }
             catch (Exception ex)
             {
@@ -267,6 +307,11 @@ namespace Joao.Ana.Modas.App.Controllers
         private async Task SelectListClientesViewBag(Guid? selected = null)
         {
             ViewBag.Clientes = new SelectList(await _clienteRepositorio.ObterTodosAsync(), "Id", "Nome", selected);
+        }
+
+        private async Task SelectListTipoPagamentoViewBag(Guid? selected = null)
+        {
+            ViewBag.TipoPagamento = new SelectList(await _tipoPagamentoRespositorio.ObterTodosAsync(), "Id", "Nome", selected);
         }
 
         #endregion
