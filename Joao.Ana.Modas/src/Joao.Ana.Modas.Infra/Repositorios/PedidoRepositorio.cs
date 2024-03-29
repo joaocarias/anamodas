@@ -68,11 +68,12 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             try
             {
                 var c = await _appDbContext.Pedidos
-                                                //  .Include(p => p.ProdutosPedido)
-                                                .Include(c => c.Cliente.Endereco)
-                                                .Where(_ => _.Ativo && _.Id.Equals(id))
-                                                .AsNoTracking()
-                                                .FirstOrDefaultAsync();
+                                            //  .Include(p => p.ProdutosPedido)
+                                            .Include(c => c.Cliente.Endereco)
+                                            .Include(c => c.TipoPagamento)
+                                            .Where(_ => _.Ativo && _.Id.Equals(id))
+                                            .AsNoTracking()
+                                            .FirstOrDefaultAsync();
                 return c;
             }
             catch (Exception ex)
@@ -89,6 +90,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 return await _appDbContext.Pedidos
                                // .Include(p => p.ProdutosPedido)
                                 .Include(c => c.Cliente.Endereco)
+                                .Include(c => c.TipoPagamento)
                                 .Where(c => c.Ativo)
                                 .AsNoTracking()
                                 .OrderBy(c => c.DataCadastro)
@@ -105,7 +107,10 @@ namespace Joao.Ana.Modas.Infra.Repositorios
         {
             try
             {
-                var l = _appDbContext.Pedidos.Where(c => c.Ativo)
+                var l = _appDbContext.Pedidos
+                                .Include(c => c.Cliente.Endereco)
+                                .Include(c => c.TipoPagamento)
+                                .Where(c => c.Ativo)
                                 .OrderBy(c => c.DataCadastro);
 
                 return await Paginacao<Pedido>.CreateAsync(l.AsNoTracking(), paginaAtual ?? 1, totalPaginas);

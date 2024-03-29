@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using Joao.Ana.Modas.App.Models.Movimentacoes;
 using Joao.Ana.Modas.App.Models.Pedidos;
 using Joao.Ana.Modas.Dominio.Enums;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
@@ -61,19 +63,6 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
-        public async Task<IActionResult> Novo(Guid? clienteId = null)
-        {
-            try
-            {
-
-
-                return View();
-            }
-            catch (Exception ex)
-            {
-                _logger?.LogError(ex.Message, ex);  
-                return View();
-            }
-        }
+        
     }
 }

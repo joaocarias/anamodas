@@ -7,6 +7,7 @@ using Joao.Ana.Modas.Dominio.Enums;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
@@ -122,13 +123,60 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
-                await SelectListTipoPagamentoViewBag();
-                //return View(new FormaPagamentoPedidoViewModel()
-                //{
-                //    Pedido = _mapper.Map<PedidoViewModel>(await _pedidoRepositorio.ObterAsync(pedidoId)),
-                //    Produtos = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(await _produtoPedidoRepositorio.ProdutosPedidoAsync(pedidoId))
-                //});
-                return View(model); 
+                if (model?.Pedido?.TipoPagamentoId is null)
+                {
+                    return RedirectToAction(nameof(FormaPagamentoPedido), model.Pedido.Id);
+                }
+
+                var pedido = await _pedidoRepositorio.ObterAsync(model.Pedido.Id);
+                pedido.SetTipoPagamento(model?.Pedido?.TipoPagamentoId);
+
+                pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
+
+                return RedirectToAction(nameof(FinalizarPedido), new { pedidoId = pedido?.Id }); 
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FinalizarPedido(Guid pedidoId)
+        {
+            try
+            {
+                return View(new FInalizarPedidoViewModel()
+                {
+                    Pedido = _mapper.Map<PedidoViewModel>(await _pedidoRepositorio.ObterAsync(pedidoId)),
+                    Produtos = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(await _produtoPedidoRepositorio.ProdutosPedidoAsync(pedidoId))
+                });
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> FinalizarPedido(FInalizarPedidoViewModel model)
+        {
+            try
+            {
+                if (model?.Pedido?.Id is not null)
+                {
+                    var pedido = await _pedidoRepositorio.ObterAsync(model.Pedido.Id);
+                    if (pedido != null)
+                    {
+                        pedido.Finalizar();
+                        pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
+                        return RedirectToAction("Detalhar", "Pedidos", new { guid = pedido?.Id });
+                    }
+                }
+
+                return View(model);
             }
             catch (Exception ex)
             {

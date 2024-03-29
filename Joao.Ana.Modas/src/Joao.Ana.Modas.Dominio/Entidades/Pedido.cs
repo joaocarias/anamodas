@@ -39,7 +39,8 @@ namespace Joao.Ana.Modas.Dominio.Entidades
 
         public void SetStatus(EPeditoStatus status)
         {
-            Status = status;          
+            Status = status;
+            Atualizar();
         }
 
         public void Cancelar()
@@ -48,7 +49,13 @@ namespace Joao.Ana.Modas.Dominio.Entidades
             Atualizar();
         }
 
-        public void SetTipoPagamento(Guid tipoPagamentoId)
+        public void Finalizar()
+        {
+            Status = EPeditoStatus.Finalizado;
+            Atualizar();
+        }
+
+        public void SetTipoPagamento(Guid? tipoPagamentoId)
         {
             TipoPagamentoId = tipoPagamentoId;
         }
