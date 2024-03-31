@@ -1,4 +1,4 @@
-﻿@model Joao.Ana.Modas.App.Models.LogistaAssociado.IndexViewModel
+﻿@model Joao.Ana.Modas.App.Models.Vendedores.IndexViewModel
 
 @{
     ViewData["Title"] = Model?.Titulo;
@@ -22,7 +22,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <a asp-controller="LogistasAssociados" asp-action="Novo" class="btn btn-primary">
+                <a asp-controller="Vendedores" asp-action="Novo" class="btn btn-primary">
                     <i class="far fa-file-alt"></i> &nbsp;
                     Cadastrar
                 </a>
@@ -52,31 +52,29 @@
             <div class="card-header">@ViewData["Title"]</div>
             <div class="card-body">
 
-                @if (Model is not null && Model.LogistasAssociados.Any())
+                @if (Model is not null && Model.Vendedores.Any())
                 {
-                    int _numeroRegistros = Model.LogistasAssociados.Count();
+                    int _numeroRegistros = Model.Vendedores.Count();
                     <table class="table table-hover">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">Id</th>                             
-                                <th scope="col">Logista</th>
-                                <th scope="col">Nome Fantasia</th>
+                                <th scope="col">Id</th>
+                                <th scope="col">Logista</th>                               
                                 <th scope="col">E-Mail</th>
                                 <th scope="col">Telefone</th>
                                 <th scope="col"></th>
                             <tr>
                         </thead>
                         <tbody>
-                            @foreach (var i in Model.LogistasAssociados.ToList())
-                            {   
+                            @foreach (var i in Model.Vendedores.ToList())
+                            {
                                 <tr>
-                                    <td scope="row">@i.Id</td>                                  
-                                    <td>@i.Nome</td>
-                                    <td>@i.NomeFantasia</td>
+                                    <td scope="row">@i.Id</td>
+                                    <td>@i.Nome</td>                                   
                                     <td>@i.Email</td>
                                     <td>@i.Telefone</td>
-                                    <td> 
-                                       <a asp-action="Detalhar" asp-controller="LogistasAssociados" asp-route-guid="@i.Id">Detalhes</a>
+                                    <td>
+                                        <a asp-action="Detalhar" asp-controller="Vendedores" asp-route-guid="@i.Id">Detalhes</a>
                                     </td>
                                 </tr>
                             }

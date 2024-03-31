@@ -7,6 +7,8 @@ namespace Joao.Ana.Modas.App.Models.Movimentacoes
         public PedidoViewModel? Pedido { get; set; }
 
         public IEnumerable<ProdutoPedidoViewModel> Produtos { get; set; }
+
+        public Guid? VendedorId { get; set; }   
         
         public FInalizarPedidoViewModel(PedidoViewModel? pedido, IEnumerable<ProdutoPedidoViewModel> produtos)
         {

@@ -1,7 +1,7 @@
-﻿@model Joao.Ana.Modas.App.Models.LogistaAssociado.LogistaAssociadoViewModel
+﻿@model Joao.Ana.Modas.App.Models.Vendedores.VendedorViewModel;
 
 @{
-    ViewData["Title"] = "Logistas";
+    ViewData["Title"] = "Vendedores";
 }
 
 <div class="row text-center">
@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"> <i class="fas fa-home"></i> &nbsp; Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="LogistasAssociados">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Vendedores">@ViewData["Title"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Cadastro</li>
             </ol>
         </nav>
@@ -39,12 +39,7 @@
                                     <label asp-for="Nome" class="col-form-label"></label>
                                     <input asp-for="Nome" class="form-control">
                                     <span asp-validation-for="Nome" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label asp-for="NomeFantasia" class="col-form-label"></label>
-                                    <input asp-for="NomeFantasia" class="form-control">
-                                    <span asp-validation-for="NomeFantasia" class="text-danger"></span>
-                                </div>
+                                </div>                              
 
                             </div>
 
@@ -73,7 +68,7 @@
                                         Salvar
                                     </button>
 
-                                    <a asp-action="Index" asp-controller="LogistasAssociados" class="btn btn-warning">
+                                    <a asp-action="Index" asp-controller="Vendedores" class="btn btn-warning">
                                         <i class="far fa-times-circle"></i>
                                         Cancelar
                                     </a>

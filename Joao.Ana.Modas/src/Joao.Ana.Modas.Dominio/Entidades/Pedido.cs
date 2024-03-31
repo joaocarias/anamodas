@@ -17,7 +17,7 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         public Guid? TipoPagamentoId { get; private set; }  
 
         public TipoPagamento? TipoPagamento { get; private set; }
-               
+       
         public Pedido()
         {
            
