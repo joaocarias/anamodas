@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 
-    @{
+@{
 
     var appName = "Ana's Store App";
 }
@@ -39,25 +39,25 @@
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                               role="button" aria-expanded="false">Cadastros</a>
+                                   role="button" aria-expanded="false">Cadastros</a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item" asp-controller="Clientes"
-                                       asp-action="Index">
+                                           asp-action="Index">
                                             <i class="fas fa-user"></i> &nbsp;
                                             Clientes
                                         </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" asp-controller="Produtos"
-                                       asp-action="Index">
+                                           asp-action="Index">
                                             <i class="fas fa-shirt"></i>
                                             Produtos
                                         </a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" asp-controller="Fornecedores"
-                                       asp-action="Index">
+                                           asp-action="Index">
                                             <i class="fas fa-chalkboard-teacher"></i> &nbsp;
                                             Fornecedores
                                         </a>
@@ -68,7 +68,7 @@
 
                                     <li>
                                         <a class="dropdown-item" asp-controller="Cores"
-                                       asp-action="Index">
+                                           asp-action="Index">
                                             <i class="fa-solid fa-paint-roller"></i> &nbsp;
                                             Cores
                                         </a>
@@ -76,7 +76,7 @@
 
                                     <li>
                                         <a class="dropdown-item" asp-controller="Tamanhos"
-                                       asp-action="Index">
+                                           asp-action="Index">
                                             <i class="fa-solid fa-compass-drafting"></i> &nbsp;
                                             Tamanhos
                                         </a>
@@ -84,7 +84,7 @@
 
                                     <li>
                                         <a class="dropdown-item" asp-controller="TipoPagamento"
-                                       asp-action="Index">
+                                           asp-action="Index">
                                             <i class="fa-solid fa-wallet"></i> &nbsp;
                                             Formas de Pagamento
                                         </a>
@@ -94,15 +94,23 @@
 
                                     <li>
                                         <a class="dropdown-item" asp-controller="LogistasAssociados"
-                                       asp-action="Index">
+                                           asp-action="Index">
                                             <i class="fa-solid fa-city"></i> &nbsp;
                                             Logistas
                                         </a>
                                     </li>
 
                                     <li>
+                                        <a class="dropdown-item" asp-controller="Vendedores"
+                                           asp-action="Index">
+                                            <i class="fa-solid fa-person-chalkboard"></i> &nbsp;
+                                            Vendedores
+                                        </a>
+                                    </li>
+
+                                    <li>
                                         <a class="dropdown-item" asp-controller="Usuarios"
-                                       asp-action="Index">
+                                           asp-action="Index">
                                             <i class="fas fa-users"></i> &nbsp;
                                             Usuários
                                         </a>
@@ -113,20 +121,20 @@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                               role="button" aria-expanded="false">Estoque</a>
+                                   role="button" aria-expanded="false">Estoque</a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a class="dropdown-item" asp-controller="ProdutoEstoque"
-                                       asp-action="Index">
-                                            <i class="fas fa-user"></i> &nbsp;
+                                           asp-action="Index">
+                                            <i class="fa-solid fa-magnifying-glass"></i> &nbsp;
                                             Buscar
                                         </a>
                                     </li>
 
                                     <li>
                                         <a class="dropdown-item" asp-controller="ProdutoEstoque"
-                                       asp-action="CheckEstoque">
-                                            <i class="fas fa-user"></i> &nbsp;
+                                           asp-action="CheckEstoque">
+                                            <i class="fa-solid fa-industry"></i> &nbsp;
                                             Checking
                                         </a>
                                     </li>
@@ -136,17 +144,18 @@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                                role="button" aria-expanded="false">Movimentação</a>
+                                   role="button" aria-expanded="false">Movimentação</a>
                                 <ul class="dropdown-menu">
-                                <li>
-                                <a class="dropdown-item" asp-controller="Movimentacoes"
-                                asp-action="ClientePedido">
-                                <i class="fas fa-user"></i> &nbsp;
-                                        Registrar Pedido</a>
-                                </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Movimentacoes"
+                                           asp-action="ClientePedido">
+                                            <i class="fa-solid fa-cash-register"></i> &nbsp;
+                                            Registrar Pedido
+                                        </a>
+                                    </li>
 
                                 </ul>
-                             </li>
+                            </li>
                         }
 
 
@@ -163,16 +172,16 @@
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-                               role="button" aria-expanded="false">Gerenciar</a>
+                                       role="button" aria-expanded="false">Gerenciar</a>
                                     <ul class="dropdown-menu">
                                         <li>
                                             <a class="dropdown-item" asp-controller="Usuarios"
-                                       asp-action="Index">Usuários</a>
+                                               asp-action="Index">Usuários</a>
                                         </li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li>
                                             <a class="dropdown-item" asp-controller="Regras"
-                                       asp-action="Index">Regras</a>
+                                               asp-action="Index">Regras</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -185,7 +194,7 @@
                             <li class="nav-item">
                                 <form method="post" asp-controller="Usuarios" asp-action="logout">
                                     <button type="submit" style="width:auto"
-                                        class="nav-link btn btn-link">
+                                            class="nav-link btn btn-link">
                                         Sair
                                     </button>
                                 </form>
@@ -195,10 +204,10 @@
                         else
                         {
                             @* <li class="nav-item">
-                                <a class="nav-link" asp-controller="usuarios" asp-action="registrar">
-                                Registrar
-                                </a>
-                                </li>*@
+                        <a class="nav-link" asp-controller="usuarios" asp-action="registrar">
+                        Registrar
+                        </a>
+                        </li>*@
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="usuarios" asp-action="login">
                                     Login
@@ -227,13 +236,13 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js" integrity="sha512-naukR7I+Nk6gp7p5TMA4ycgfxaZBJ7MO5iC3Fp6ySQyKFHOGfpkSZkYVWV5R7u7cfAicxanwYQ5D1e17EfJcMA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+
     @* <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.js"></script> *@
-    
+
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    
+
     <script src="~/js/site.js" asp-append-version="true"></script>
-    
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
