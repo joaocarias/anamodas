@@ -81,6 +81,7 @@ builder.Services.AddScoped<ITipoPagamentoRepositorio, TipoPagamentoRepositorio>(
 builder.Services.AddScoped<ILogistaAssociadoRepositorio, LogistaAssociadoRepositorio>();
 builder.Services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
 builder.Services.AddScoped<IProdutoPedidoRepositorio, ProdutoPedidoRepositorio>();
+builder.Services.AddScoped<IVendedorRepositorio, VendedorRepositorio>();
 
 var app = builder.Build();
 
