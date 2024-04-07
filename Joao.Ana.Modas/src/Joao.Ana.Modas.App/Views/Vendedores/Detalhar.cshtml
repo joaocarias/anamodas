@@ -13,7 +13,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home"><i class="fas fa-home"></i>Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="@ViewData["Title"]">@ViewData["Title"]</a></li>
+                <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Vendedores">Vendedores</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
             </ol>
         </nav>
@@ -43,28 +43,26 @@
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             Nome: <strong>@Model?.Vendedor?.Nome</strong>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            Nome: <strong>@Model?.Vendedor?.Email</strong>
+                        <div class="col-md-4">
+                            E-mail: <strong>@Model?.Vendedor?.Email</strong>
                         </div>
 
-                        <div class="col-md-6">
-                            Nome Fantasia: <strong>@Model?.Vendedor?.Telefone</strong>
+                        <div class="col-md-2">
+                            Telefone: <strong>@Model?.Vendedor?.Telefone</strong>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            Nome: <strong>@Model?.Vendedor?.TipoComissaoDescricao</strong>
+                            Tipo de Comissão: <strong>@Model?.Vendedor?.TipoComissaoDescricao</strong>
                         </div>
 
                         <div class="col-md-6">
-                            Nome Fantasia: <strong>@Model?.Vendedor?.ComissaoFormatodo</strong>
+                            Valor da Comissão: <strong>@Model?.Vendedor?.ComissaoFormatodo</strong>
                         </div>
                     </div>
 

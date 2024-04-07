@@ -1,6 +1,6 @@
 ﻿namespace Joao.Ana.Modas.Dominio.Enums
 {
-    public enum ETipoComissiao
+    public enum ETipoComissao
     {
         Desconhecido = 0,
         Porcentagem,

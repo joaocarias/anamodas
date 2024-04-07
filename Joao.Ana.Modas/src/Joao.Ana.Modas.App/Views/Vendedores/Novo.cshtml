@@ -55,6 +55,24 @@
                                     <span asp-validation-for="Telefone" class="text-danger"></span>
                                 </div>
                             </div>
+                       
+                            <div class="mb-3 row">
+
+                                <div class="col-md-6">
+                                    <label asp-for="TipoComissao" class="col-form-label"></label>
+                                    <select asp-for="TipoComissao" asp-items="ViewBag.TipoComissao" class="form-control">      
+                                        <option value="">-- Selecione --</option>
+                                    </select>
+                                    <span asp-validation-for="TipoComissao" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label asp-for="Comissao" class="col-form-label"></label>
+                                    <input asp-for="Comissao" class="form-control money">
+                                    <span asp-validation-for="Comissao" class="text-danger"></span>
+                                </div>
+
+                            </div>
 
                             <hr />
 

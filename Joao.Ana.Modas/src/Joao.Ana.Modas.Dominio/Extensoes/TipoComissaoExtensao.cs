@@ -4,15 +4,21 @@ namespace Joao.Ana.Modas.Dominio.Extensoes
 {
     public static class TipoComissaoExtensao
     {        
-        public static string ToStringParse(this ETipoComissiao? tipoComissiao)
+        public static string ToStringParse(this ETipoComissao? tipoComissiao)
         {            
+            if (tipoComissiao == null) return string.Empty;
+            return tipoComissiao.ToStringParse();   
+        }
+
+        public static string ToStringParse(this ETipoComissao tipoComissiao)
+        {
             return tipoComissiao switch
             {
-                ETipoComissiao.ValorFixo => "Valor Fixo",
-                ETipoComissiao.Porcentagem => "Porcentagem",
-                ETipoComissiao.Desconhecido => "Desconhecido",
+                ETipoComissao.ValorFixo => "Valor Fixo",
+                ETipoComissao.Porcentagem => "Porcentagem",
+                ETipoComissao.Desconhecido => "Desconhecido",
                 _ => string.Empty
-            };         
+            };
         }
     }
 }

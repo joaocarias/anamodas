@@ -9,6 +9,7 @@ using Joao.Ana.Modas.App.Models.ProdutoEstoques;
 using Joao.Ana.Modas.App.Models.Produtos;
 using Joao.Ana.Modas.App.Models.Tamanhos;
 using Joao.Ana.Modas.App.Models.TipoPagamento;
+using Joao.Ana.Modas.App.Models.Vendedores;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
@@ -66,6 +67,7 @@ var config = new MapperConfiguration(cfg =>
     cfg.CreateMap<LogistaAssociadoViewModel, LogistaAssociado>().ReverseMap();
     cfg.CreateMap<PedidoViewModel, Pedido>().ReverseMap();  
     cfg.CreateMap<ProdutoPedidoViewModel, ProdutoPedido>().ReverseMap();
+    cfg.CreateMap<VendedorViewModel, Vendedor>().ReverseMap();
 });
 
 IMapper mapper = config.CreateMapper();
