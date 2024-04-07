@@ -109,6 +109,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
+                SelectListTipoComissaoViewBag();
                 return View(_mapper.Map<VendedorViewModel>(await _vendedorRepositorio.ObterAsync(guid)));
             }
             catch (Exception ex)
@@ -123,6 +124,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             if (!ModelState.IsValid)
             {
+                SelectListTipoComissaoViewBag();
                 return View(model);
             }
 
