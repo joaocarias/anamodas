@@ -1,4 +1,5 @@
 ﻿using Joao.Ana.Modas.App.Models.Pedidos;
+using System.ComponentModel.DataAnnotations;
 
 namespace Joao.Ana.Modas.App.Models.Movimentacoes
 {
@@ -8,6 +9,7 @@ namespace Joao.Ana.Modas.App.Models.Movimentacoes
 
         public IEnumerable<ProdutoPedidoViewModel> Produtos { get; set; }
 
+        [Display(Name = "Vendedor")]
         public Guid? VendedorId { get; set; }   
         
         public FInalizarPedidoViewModel(PedidoViewModel? pedido, IEnumerable<ProdutoPedidoViewModel> produtos)

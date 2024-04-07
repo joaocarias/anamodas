@@ -79,19 +79,24 @@
                     @foreach (var pedido in Model?.Pedidos?.OrderByDescending(x => x.DataCadastro).ToList())
                     {
                         var card_border = "";
+                        var btn_color = "";
                         switch (pedido.Status)
                         {
                             case EPeditoStatus.Aberto:
                                 card_border = "border-info";
+                                btn_color = "btn-info";
                                 break;
                             case EPeditoStatus.Cancelado:
                                 card_border = "border-danger";
+                                btn_color = "btn-danger";
                                 break;
                             case EPeditoStatus.Finalizado:
-                                card_border = "border-primary";
+                                card_border = "border-success";
+                                btn_color = "btn-success";
                                 break;
                             default:
-                                card_border = "";
+                                card_border = "border-primary";
+                                btn_color = "btn-primary";
                                 break;
                         }
 
@@ -118,7 +123,7 @@
                                 else
                                 {
                                     <div class="text-end">
-                                        <a type="button" class="btn btn-primary btn-sm" asp-action="Detalhar" asp-controller="Pedidos" asp-route-guid="@pedido.Id">
+                                        <a type="button" class="btn @btn_color btn-sm" asp-action="Detalhar" asp-controller="Pedidos" asp-route-guid="@pedido.Id">
                                             <i class="fa-solid fa-print"></i>
                                             Detalhar Pedido
                                         </a>

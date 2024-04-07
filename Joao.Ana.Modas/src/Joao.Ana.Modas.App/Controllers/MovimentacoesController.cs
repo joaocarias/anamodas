@@ -7,7 +7,6 @@ using Joao.Ana.Modas.Dominio.Enums;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 
 namespace Joao.Ana.Modas.App.Controllers
 {
@@ -22,8 +21,9 @@ namespace Joao.Ana.Modas.App.Controllers
         private readonly IClienteRepositorio _clienteRepositorio;
         private readonly IProdutoPedidoRepositorio _produtoPedidoRepositorio;
         private readonly ITipoPagamentoRepositorio _tipoPagamentoRespositorio;
+        private readonly IVendedorRepositorio _vendedorRepositorio;
 
-        public MovimentacoesController(IMapper mapper, ILogger<MovimentacoesController> logger, IProdutoRepositorio produtoRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IPedidoRepositorio pedidoRepositorio, IClienteRepositorio clienteRepositorio, IProdutoPedidoRepositorio produtoPedidoRepositorio, ITipoPagamentoRepositorio tipoPagamentoRespositorio)
+        public MovimentacoesController(IMapper mapper, ILogger<MovimentacoesController> logger, IProdutoRepositorio produtoRepositorio, ICorRepositorio corRepositorio, ITamanhoRepositorio tamanhoRepositorio, IPedidoRepositorio pedidoRepositorio, IClienteRepositorio clienteRepositorio, IProdutoPedidoRepositorio produtoPedidoRepositorio, ITipoPagamentoRepositorio tipoPagamentoRespositorio, IVendedorRepositorio vendedorRepositorio)
         {
             _mapper = mapper;
             _logger = logger;
@@ -34,6 +34,7 @@ namespace Joao.Ana.Modas.App.Controllers
             _clienteRepositorio = clienteRepositorio;
             _produtoPedidoRepositorio = produtoPedidoRepositorio;
             _tipoPagamentoRespositorio = tipoPagamentoRespositorio;
+            _vendedorRepositorio = vendedorRepositorio;
         }
 
         [HttpGet]
@@ -147,6 +148,7 @@ namespace Joao.Ana.Modas.App.Controllers
         {
             try
             {
+                await SelectListVendedoresViewBag();
                 return View(new FInalizarPedidoViewModel()
                 {
                     Pedido = _mapper.Map<PedidoViewModel>(await _pedidoRepositorio.ObterAsync(pedidoId)),
@@ -167,10 +169,13 @@ namespace Joao.Ana.Modas.App.Controllers
             {
                 if (model?.Pedido?.Id is not null)
                 {
+                    await SelectListVendedoresViewBag();
+
                     var pedido = await _pedidoRepositorio.ObterAsync(model.Pedido.Id);
                     if (pedido != null)
                     {
                         pedido.Finalizar();
+                        pedido.SetVendedor(model.VendedorId);   
                         pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
                         return RedirectToAction("Detalhar", "Pedidos", new { guid = pedido?.Id });
                     }
@@ -360,6 +365,11 @@ namespace Joao.Ana.Modas.App.Controllers
         private async Task SelectListTipoPagamentoViewBag(Guid? selected = null)
         {
             ViewBag.TipoPagamento = new SelectList(await _tipoPagamentoRespositorio.ObterTodosAsync(), "Id", "Nome", selected);
+        }
+
+        private async Task SelectListVendedoresViewBag(Guid? selected = null)
+        {
+            ViewBag.Vendedores = new SelectList(await _vendedorRepositorio.ObterTodosAsync(), "Id", "Nome", selected);
         }
 
         #endregion

@@ -57,7 +57,7 @@
 
                     @await Html.PartialAsync("~/Views/Pedidos/_listaProdutosPartialView.cshtml", Model?.Produtos.Where(x => x.PedidoId.Equals(Model?.Pedido?.Id)).OrderBy(x => x.Nome).ToList())
 
-                    @if(Model is not null && Model.Pedido is not null && Model.Pedido.TipoPagamentoId is not null && Model.Pedido.TipoPagamento is not null)
+                    @if (Model is not null && Model.Pedido is not null && Model.Pedido.TipoPagamentoId is not null && Model.Pedido.TipoPagamento is not null)
                     {
                         <p class="text-end">Forma de Pagamento: <strong>@Model.Pedido.TipoPagamento.Nome</strong></p>
                     }
@@ -84,11 +84,21 @@
                                 @Html.HiddenFor(m => m.Pedido.Id)
 
                                 <div class="mb-3 row">
-                                    <div class="col-md-12 text-center">
-                                        <button type="submit" class="btn btn-dark">
-                                            <i class="fa-solid fa-spell-check"></i>
-                                            Finalizar Pedido
-                                        </button>
+                                    <div class="col-md-6">
+                                        <label asp-for="VendedorId" class="col-form-label"></label>
+                                        <select asp-for="VendedorId" asp-items="ViewBag.Vendedores" class="form-control">
+                                            <option value="">-- Selecione --</option>
+                                        </select>
+                                        <span asp-validation-for="VendedorId" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-md-6  d-flex align-items-end">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-dark">
+                                                <i class="fa-solid fa-spell-check"></i>
+                                                Finalizar Pedido
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 

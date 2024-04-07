@@ -71,6 +71,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                             //  .Include(p => p.ProdutosPedido)
                                             .Include(c => c.Cliente.Endereco)
                                             .Include(c => c.TipoPagamento)
+                                            .Include(c => c.Vendedor)
                                             .Where(_ => _.Ativo && _.Id.Equals(id))
                                             .AsNoTracking()
                                             .FirstOrDefaultAsync();
@@ -91,6 +92,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                // .Include(p => p.ProdutosPedido)
                                 .Include(c => c.Cliente.Endereco)
                                 .Include(c => c.TipoPagamento)
+                                .Include(c => c.Vendedor)
                                 .Where(c => c.Ativo)
                                 .AsNoTracking()
                                 .OrderBy(c => c.DataCadastro)
@@ -110,6 +112,7 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 var l = _appDbContext.Pedidos
                                 .Include(c => c.Cliente.Endereco)
                                 .Include(c => c.TipoPagamento)
+                                .Include(c => c.Vendedor)
                                 .Where(c => c.Ativo)
                                 .OrderBy(c => c.DataCadastro);
 

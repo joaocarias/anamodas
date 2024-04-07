@@ -17,6 +17,10 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         public Guid? TipoPagamentoId { get; private set; }  
 
         public TipoPagamento? TipoPagamento { get; private set; }
+
+        public Vendedor? Vendedor { get; private set; }
+
+        public Guid? VendedorId { get; private set; }   
        
         public Pedido()
         {
@@ -58,6 +62,11 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         public void SetTipoPagamento(Guid? tipoPagamentoId)
         {
             TipoPagamentoId = tipoPagamentoId;
+        }
+
+        public void SetVendedor(Guid? vendedorId)
+        {
+            VendedorId = vendedorId;
         }
     }
 }
