@@ -10,9 +10,9 @@ namespace Joao.Ana.Modas.Dominio.Extensoes
             return tipoComissiao.ToStringParse();   
         }
 
-        public static string ToStringParse(this ETipoComissao tipoComissiao)
+        public static string ToStringParse(this ETipoComissao tipoComissao)
         {
-            return tipoComissiao switch
+            return tipoComissao switch
             {
                 ETipoComissao.ValorFixo => "Valor Fixo",
                 ETipoComissao.Porcentagem => "Porcentagem",

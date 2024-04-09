@@ -21,7 +21,11 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         public Vendedor? Vendedor { get; private set; }
 
         public Guid? VendedorId { get; private set; }   
-       
+
+        public decimal Comissao { get; private set; } = decimal.Zero;
+
+        public decimal Total { get; private set; } = decimal.Zero;
+
         public Pedido()
         {
            
@@ -53,9 +57,12 @@ namespace Joao.Ana.Modas.Dominio.Entidades
             Atualizar();
         }
 
-        public void Finalizar()
+        public void Finalizar(Guid? vendedorId = null, decimal total = 0, decimal comissao = 0)
         {
             Status = EPeditoStatus.Finalizado;
+            Total = total;
+            Comissao = comissao;
+            VendedorId = vendedorId;    
             Atualizar();
         }
 
@@ -67,6 +74,11 @@ namespace Joao.Ana.Modas.Dominio.Entidades
         public void SetVendedor(Guid? vendedorId)
         {
             VendedorId = vendedorId;
+        }
+
+        public void SetComissao(decimal comissao)
+        {
+            Comissao = comissao;    
         }
     }
 }

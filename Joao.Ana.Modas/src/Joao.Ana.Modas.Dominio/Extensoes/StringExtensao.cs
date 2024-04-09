@@ -18,9 +18,19 @@ namespace Joao.Ana.Modas.Dominio.Extensoes
             return parts[0];
         }
 
-        public static string? DecimalToString(this decimal? numero)
+        public static string? DecimalToMoedaString(this decimal? numero)
         {
             return numero is null ? "0,00" :  numero?.ToString("C", CultureInfo.CreateSpecificCulture("pt-BR"));
+        }
+        
+        public static string? DecimalToPorcetagemString(this decimal? numero)
+        {
+            return numero is null ? "0,00%" : numero?.ToString("0,00") + "%";
+        }
+
+        public static string? DecimalToBasicString(this decimal? numero)
+        {
+            return numero is null ? "0,00" : numero?.ToString("0,00");
         }
     }
 }

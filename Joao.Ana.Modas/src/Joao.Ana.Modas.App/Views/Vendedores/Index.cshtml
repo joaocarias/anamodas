@@ -58,10 +58,11 @@
                     <table class="table table-hover">
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Logista</th>                               
+                                <th scope="col">Nome</th>                               
                                 <th scope="col">E-Mail</th>
                                 <th scope="col">Telefone</th>
+                                <th scope="col">Tipo Comissão</th>
+                                <th scope="col">Comissão</th>
                                 <th scope="col"></th>
                             <tr>
                         </thead>
@@ -69,10 +70,11 @@
                             @foreach (var i in Model.Vendedores.ToList())
                             {
                                 <tr>
-                                    <td scope="row">@i.Id</td>
-                                    <td>@i.Nome</td>                                   
+                                    <td scope="row">@i.Nome</td>
                                     <td>@i.Email</td>
                                     <td>@i.Telefone</td>
+                                    <td>@i.TipoComissaoDescricao</td>
+                                    <td>@i.ComissaoFormatodo</td>
                                     <td>
                                         <a asp-action="Detalhar" asp-controller="Vendedores" asp-route-guid="@i.Id">Detalhes</a>
                                     </td>

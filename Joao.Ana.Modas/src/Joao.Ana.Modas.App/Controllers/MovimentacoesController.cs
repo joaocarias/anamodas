@@ -4,6 +4,7 @@ using Joao.Ana.Modas.App.Models.Movimentacoes;
 using Joao.Ana.Modas.App.Models.Pedidos;
 using Joao.Ana.Modas.Dominio.Entidades;
 using Joao.Ana.Modas.Dominio.Enums;
+using Joao.Ana.Modas.Dominio.Extensoes;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -174,8 +175,16 @@ namespace Joao.Ana.Modas.App.Controllers
                     var pedido = await _pedidoRepositorio.ObterAsync(model.Pedido.Id);
                     if (pedido != null)
                     {
-                        pedido.Finalizar();
-                        pedido.SetVendedor(model.VendedorId);   
+                        decimal comissao = 0;
+                        decimal valorTotal = await _produtoPedidoRepositorio.ValorTotalPedido(model.Pedido.Id);
+                        if (model.VendedorId != null)
+                        {
+                            var vendedor = await _vendedorRepositorio.ObterAsync(model.VendedorId.Value);
+                            if (vendedor != null && vendedor?.Comissao > 0)
+                                comissao = vendedor.ObterValorComissao(valorTotal);
+                        } 
+
+                        pedido.Finalizar(model.VendedorId, valorTotal, comissao);                     
                         pedido = await _pedidoRepositorio.AtualizarAsync(pedido);
                         return RedirectToAction("Detalhar", "Pedidos", new { guid = pedido?.Id });
                     }
@@ -329,7 +338,7 @@ namespace Joao.Ana.Modas.App.Controllers
                 return null;
             }
         }
-
+        
         #endregion
 
         #region viewBags

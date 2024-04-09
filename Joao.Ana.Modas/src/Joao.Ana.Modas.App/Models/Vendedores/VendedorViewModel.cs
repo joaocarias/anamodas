@@ -22,7 +22,7 @@ namespace Joao.Ana.Modas.App.Models.Vendedores
 
         [Display(Name = "Comissão")]
         public decimal? Comissao { get; set; }
-                
+
         public VendedorViewModel(string nome, string? email = null, string? telefone = null, ETipoComissao tipoComissao = ETipoComissao.Desconhecido, decimal? comissao = null)
         {
             Nome = nome;
@@ -38,6 +38,18 @@ namespace Joao.Ana.Modas.App.Models.Vendedores
 
         public string TipoComissaoDescricao => TipoComissao.ToStringParse();
 
-        public string? ComissaoFormatodo => Comissao.DecimalToString();
+        public string? ComissaoFormatodo
+        {
+            get
+            {
+                return TipoComissao switch
+                {
+                    ETipoComissao.ValorFixo => Comissao.DecimalToMoedaString(),
+                    ETipoComissao.Porcentagem => Comissao.DecimalToPorcetagemString(),
+                    ETipoComissao.Desconhecido => Comissao.DecimalToBasicString(),
+                    _ => string.Empty
+                };
+            }               
+        }
     }
 }

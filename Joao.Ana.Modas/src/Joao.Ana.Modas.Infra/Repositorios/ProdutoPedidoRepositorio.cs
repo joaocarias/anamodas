@@ -165,5 +165,22 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                 return Enumerable.Empty<ProdutoPedido>();
             }
         }
+
+        public async Task<decimal> ValorTotalPedido(Guid pedidoId)
+        {
+            try
+            {
+                var total = await _appDbContext.ProdutosPedido
+                               .Where(x => x.Ativo && x.PedidoId == pedidoId)
+                               .AsNoTracking()
+                               .SumAsync(x => x.PrecoVenda);
+                return total is not null && total >= 0 ? total.Value : 0;  
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return 0;
+            }
+        }
     }
 }
