@@ -1,4 +1,5 @@
 ﻿using Joao.Ana.Modas.Dominio.Entidades;
+using Joao.Ana.Modas.Dominio.Enums;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Utils;
@@ -60,6 +61,26 @@ namespace Joao.Ana.Modas.Infra.Repositorios
             {
                 _logger.LogError(ex.Message, ex);
                 return null;
+            }
+        }
+
+        public async Task<IEnumerable<Pedido>> ObterAbertos()
+        {
+            try
+            {
+                var l = await _appDbContext.Pedidos
+                                            .Include(c => c.Cliente.Endereco)
+                                            .Include(c => c.TipoPagamento)
+                                            .Include(c => c.Vendedor)
+                                            .Where(_ => _.Ativo && _.Status.Equals(EPeditoStatus.Aberto))
+                                            .AsNoTracking()
+                                            .ToListAsync();
+                return l;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<Pedido>();
             }
         }
 

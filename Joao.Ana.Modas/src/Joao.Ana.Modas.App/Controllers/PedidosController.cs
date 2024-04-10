@@ -63,6 +63,24 @@ namespace Joao.Ana.Modas.App.Controllers
             }
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> Abertos()
+        {
+            try
+            {
+                var model = new PedidoAbertosViewModel()
+                {
+                    Pedidos = _mapper.Map<IEnumerable<PedidoViewModel>>(await _pedidoRepositorio.ObterAbertos()),
+                    Produtos = _mapper.Map<IEnumerable<ProdutoPedidoViewModel>>(await _produtoPedidoRepositorio.ObterEmAberto())   
+                };
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError($"{ex.Message}", ex); 
+                return View();
+            }
+        }        
     }
 }

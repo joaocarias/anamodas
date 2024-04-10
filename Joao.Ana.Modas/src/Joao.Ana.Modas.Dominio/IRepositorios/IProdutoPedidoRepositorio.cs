@@ -8,5 +8,7 @@ namespace Joao.Ana.Modas.Dominio.IRepositorios
         Task<IEnumerable<ProdutoPedido>> ProdutosPedidoByClienteIdAsync(Guid clienteId);
 
         Task<decimal> ValorTotalPedido(Guid pedidoId);
+
+        Task<IEnumerable<ProdutoPedido>> ObterEmAberto();
     }
 }

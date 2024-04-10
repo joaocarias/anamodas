@@ -1,4 +1,5 @@
 ﻿using Joao.Ana.Modas.Dominio.Entidades;
+using Joao.Ana.Modas.Dominio.Enums;
 using Joao.Ana.Modas.Dominio.IRepositorios;
 using Joao.Ana.Modas.Infra.Contexts;
 using Joao.Ana.Modas.Infra.Utils;
@@ -156,6 +157,27 @@ namespace Joao.Ana.Modas.Infra.Repositorios
                                 .Include(x => x.Tamanho)
                                 .AsNoTracking()
                                 .Where(c => c.Ativo && c.Pedido != null && c.Pedido.ClienteId != null && c.Pedido.ClienteId.Equals(clienteId))
+                                .OrderBy(c => c.DataCadastro)
+                                .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                return Enumerable.Empty<ProdutoPedido>();
+            }
+        }
+
+        public async Task<IEnumerable<ProdutoPedido>> ObterEmAberto()
+        {
+            try
+            {
+                return await _appDbContext.ProdutosPedido
+                                .Include(p => p.Pedido)
+                                .Include(p => p.Produto)
+                                .Include(x => x.Cor)
+                                .Include(x => x.Tamanho)
+                                .AsNoTracking()
+                                .Where(c => c.Ativo && c.Pedido != null && c.Pedido.Ativo && c.Pedido.Status.Equals(EPeditoStatus.Aberto))
                                 .OrderBy(c => c.DataCadastro)
                                 .ToListAsync();
             }
