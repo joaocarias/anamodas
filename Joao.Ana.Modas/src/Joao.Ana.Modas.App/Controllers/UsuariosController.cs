@@ -92,7 +92,7 @@ namespace Joao.Ana.Modas.App.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
